@@ -59,7 +59,7 @@ import _tkinter
 # 'Cause I figured the master of colors should have all the colors.
 random_theme = str(rc(sg.ListOfLookAndFeelValues()))
 sg.ChangeLookAndFeel(random_theme)
-sg.SetGlobalIcon('icon\\lf_ico.ico')  # Had no befitting icon. So I made one :)...
+sg.SetGlobalIcon('\lf_ico.ico')  # Had no befitting icon. So I made one :)...
 
 # I like to make a custom debug mode when I make apps.
 # So, here's a shameless boolean debug switch and aliases.
