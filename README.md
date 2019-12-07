@@ -24,10 +24,3 @@ As for PEP8, I'll leave that to PyCharm to handle. Hopefully I'll adhere that wa
 
 Development began on 29/11/2019, bare minimum (v1.2) got completed on 1/12/2019
 ____________________________________________________________________________________
-
-LookyFeely uses PySimpleGUI for its GUI as well.
-In this repo, there's two compiled versions created with PyInstaller. One is a
-"onedir"/folder version while the other is a "onefile" executable. Not sure if
-a proprietary PySimpleGUI app compiled with PyInstaller would abide by PySimpleGUI's
-modified LGPL v3 without altering the build process (I can't see PSG as a .dll),
-but that doesn't matter in this case, right?
