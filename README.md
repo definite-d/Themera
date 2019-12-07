@@ -24,3 +24,9 @@ As for PEP8, I'll leave that to PyCharm to handle. Hopefully I'll adhere that wa
 
 Development began on 29/11/2019, bare minimum (v1.2) got completed on 1/12/2019
 ____________________________________________________________________________________
+Have some screenshots, lads and lassies.
+
+![Scr_1](https://user-images.githubusercontent.com/38317208/70368670-e5152b00-18ad-11ea-9a5d-c421b49bee6e.PNG)
+![Scr_2](https://user-images.githubusercontent.com/38317208/70368667-e34b6780-18ad-11ea-9867-b14ca795ebd9.PNG)
+![Scr_3](https://user-images.githubusercontent.com/38317208/70368670-e5152b00-18ad-11ea-9a5d-c421b49bee6e.PNG)
+![Scr_4](https://user-images.githubusercontent.com/38317208/70368668-e47c9480-18ad-11ea-98ee-335435e72ff7.PNG)
