@@ -1,6 +1,7 @@
 # PSG-LookyFeely
 PySimpleGUI LookAndFeel theme code generator.
   Welcome...
+  
 ... to LookyFeely.
 https://www.github.com/definite-d/PSG-LookyFeely/
 
@@ -21,8 +22,8 @@ Well, it's a shameless code generator :).
 It depends on the PySimpleGUI Tkinter version; what I like to call PSG Vanilla.
 As for PEP8, I'll leave that to PyCharm to handle. Hopefully I'll adhere that way.
 
-Development began on 29/11/2019, bare minimum (v1.2) got completed on 1/12/2019.
-===================================================================================
+Development began on 29/11/2019, bare minimum (v1.2) got completed on 1/12/2019
+____________________________________________________________________________________
 
 LookyFeely uses PySimpleGUI for its GUI as well.
 In this repo, there's two compiled versions created with PyInstaller. One is a
