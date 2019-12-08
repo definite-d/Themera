@@ -115,8 +115,26 @@ sg.LOOK_AND_FEEL_TABLE['IrisOfTheDesert'] = {'BACKGROUND': '#deb54d',
     'PROGRESS_DEPTH': 1}
 
 sg.ChangeLookAndFeel('IrisOfTheDesert')
-# This one fully randomly generated. No alteration whatsoever.
+# This one was fully randomly generated. No alteration whatsoever.
 # =======================================================================
+# Custom TrueBarney LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg
+theme = 'TrueBarney'
+sg.LOOK_AND_FEEL_TABLE['TrueBarney'] = {'BACKGROUND': '#5e195a',
+    'TEXT': '#efc5ed',
+    'INPUT': '#388616',
+    'TEXT_INPUT': '#ffb0ff',
+    'SCROLL': '#9ff45b',
+    'BUTTON': ('#1a1339', '#e247dc'),
+    'PROGRESS': ('#4b2082', '#81cfaf'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 1}
+
+sg.ChangeLookAndFeel('TrueBarney')
+=========================================================================
+
 
 sg.ChangeLookAndFeel(theme, force=True)
 preview_layout = [[sg.Text((theme+' is live.'))],
