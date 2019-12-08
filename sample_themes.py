@@ -133,7 +133,7 @@ sg.LOOK_AND_FEEL_TABLE['TrueBarney'] = {'BACKGROUND': '#5e195a',
     'PROGRESS_DEPTH': 1}
 
 sg.ChangeLookAndFeel('TrueBarney')
-=========================================================================
+#========================================================================
 
 
 sg.ChangeLookAndFeel(theme, force=True)
