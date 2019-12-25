@@ -14,10 +14,10 @@ custom PySimpleGUI Look and Feel theme code a breeze, to be a Christmas gift to
 PySimpleGUI users (:santa:), and to act as a bigger 'Thank You' to @MikeTheWatchGuy 
 for PySimpleGUI ('bigger' because I've already said 'Thank You' before).
 
-Now you ~~(newbies)~~ don't have to potentially flunk multiline dicts, mess around
+Now you ~~(newbies)~~ don't have to potentially flunk multiline dicts :see_no_evil:, mess around
 with manually typing color codes or set up a vicious cycle from IDE to color picker
 (although a professional colour picker may help in choosing colours that go well
-with each other). Simply pick your colours, generate your code and have the options 
+with each other). Simply pick your colour(s), generate your code and have the options 
 of previewing the generated stuff instantly, or copy and paste the generated code 
 for use. If you like the theme LookyFeely puts on at the moment, you could even use
 _that_. Every theme it sports comes with PySimpleGUI. Then again, I've got some
@@ -26,7 +26,8 @@ themes generated while testing and playing with LookyFeely. They're in the
 ___________________________________________________________________________________
 
 Version 2:
-With the advent of v2, you can havew a theme within the time it takes to have a
+
+With the advent of v2, you can have a theme within the time it takes to have a
 theme name typed, 2 mouse clicks and some copy-pasting. You've also got some sweet
 options; from auto-generated Dark and Light modes, to updating PySimpleGUI straight
 from LookyFeely, to opening this very page in your browser. And yeah, Random's no
@@ -37,7 +38,7 @@ auto generating the rest.
 
 ___________________________________________________________________________________
 
-Well, it's a shameless (but swanky) code generator :).
+Well, it's a shameless (but swanky) code generator :smiley:.
 It depends on the PySimpleGUI Tkinter version; what I like to call PSG Vanilla.
 As for PEP8, I'll leave that to PyCharm to handle. Hopefully I'll adhere that way.
 
