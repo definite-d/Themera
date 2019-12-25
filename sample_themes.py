@@ -1,5 +1,14 @@
-'''
+﻿'''
 # Sample Themes.
+
+ #######
+ #     #
+ #        ####### #     # ####### #       ####### #######
+ #######  #     # ##   ## #     # #       #       #
+      ##  ####### # # # # ####### #       ####    #######
+ #    ##  #     # #  #  # #       #       #             #    ##   ##   ##
+ #######  #     # #     # #       ####### ####### #######    ##   ##   ##
+
 =======================================================================================================================
 
 Here lies a multitude of themes generated with LookyFeely, ready for use. Simply copy the definition of the required
@@ -14,8 +23,17 @@ observed in form of bright colors on total darkness.
 import PySimpleGUI as sg
 
 # =======================================================================
+
+'''
+Y8b Y88888P                      ,e,                       d88       e88 88e
+ Y8b Y888P   ,e e,  888,8,  dP"Y  "   e88 88e  888 8e     d888      d888 888b
+  Y8b Y8P   d88 88b 888 "  C88b  888 d888 888b 888 88b   d"888     C8888 8888D
+   Y8b Y    888   , 888     Y88D 888 Y888 888P 888 888     888 d8b  Y888 888P
+    Y8P      "YeeP" 888    d,dP  888  "88 88"  888 888     888 Y8P   "88 88"
+'''
+
+# =======================================================================
 # Custom HighlighterGreen LookAndFeel Theme.
-theme = 'HighlighterGreen'
 # Generated using LookyFeely.
 sg.LOOK_AND_FEEL_TABLE['HighlighterGreen'] = {'BACKGROUND': '#000000',
     'TEXT': '#b0e00f',
@@ -32,7 +50,6 @@ sg.ChangeLookAndFeel('HighlighterGreen')
 
 # =======================================================================
 # Custom HighlighterYellow LookAndFeel Theme.
-theme = 'HighlighterYellow'
 # Generated using LookyFeely.
 sg.LOOK_AND_FEEL_TABLE['HighlighterYellow'] = {'BACKGROUND': '#000000',
     'TEXT': '#E0CC10',
@@ -48,7 +65,6 @@ sg.LOOK_AND_FEEL_TABLE['HighlighterYellow'] = {'BACKGROUND': '#000000',
 sg.ChangeLookAndFeel('HighlighterYellow')
 
 # =======================================================================
-theme = 'Rhubarb'
 # Custom Rhubarb LookAndFeel Theme.
 # Generated using LookyFeely.
 sg.LOOK_AND_FEEL_TABLE['Rhubarb'] = {'BACKGROUND': '#000000',
@@ -65,7 +81,6 @@ sg.LOOK_AND_FEEL_TABLE['Rhubarb'] = {'BACKGROUND': '#000000',
 sg.ChangeLookAndFeel('Rhubarb')
 
 # =======================================================================
-theme = 'TealOrange'
 # Custom TealOrange LookAndFeel Theme.
 # Generated using LookyFeely.
 import PySimpleGUI as sg
@@ -83,7 +98,6 @@ sg.LOOK_AND_FEEL_TABLE['TealOrange'] = {'BACKGROUND': '#59cbae',
 sg.ChangeLookAndFeel('TealOrange')
 
 # =======================================================================
-theme = 'Underwater Barney'
 # Custom Underwater Barney LookAndFeel Theme.
 # Generated using LookyFeely.
 sg.LOOK_AND_FEEL_TABLE['UnderwaterBarney'] = {'BACKGROUND': '#0f80bd',
@@ -98,9 +112,9 @@ sg.LOOK_AND_FEEL_TABLE['UnderwaterBarney'] = {'BACKGROUND': '#0f80bd',
     'PROGRESS_DEPTH': 1}
 
 sg.ChangeLookAndFeel('UnderwaterBarney')
+
 # =======================================================================
 # Custom IrisOfTheDesert LookAndFeel Theme.
-theme = 'IrisOfTheDesert'
 # Generated using LookyFeely.
 import PySimpleGUI as sg
 sg.LOOK_AND_FEEL_TABLE['IrisOfTheDesert'] = {'BACKGROUND': '#deb54d',
@@ -115,36 +129,134 @@ sg.LOOK_AND_FEEL_TABLE['IrisOfTheDesert'] = {'BACKGROUND': '#deb54d',
     'PROGRESS_DEPTH': 1}
 
 sg.ChangeLookAndFeel('IrisOfTheDesert')
-# This one was fully randomly generated. No alteration whatsoever.
+# This one fully randomly generated. No alteration whatsoever.
 # =======================================================================
-# Custom TrueBarney LookAndFeel Theme.
+# =======================================================================
+
+'''
+o     o                      o                .oPYo.    .oPYo.
+8     8                                           `8    8  .o8
+8     8 .oPYo. oPYo. .oPYo. o8 .oPYo. odYo.      oP'    8 .P'8
+`b   d' 8oooo8 8  `' Yb..    8 8    8 8' `8   .oP'      8.d' 8
+ `b d'  8.     8       'Yb.  8 8    8 8   8   8'        8o'  8
+  `8'   `Yooo' 8     `YooP'  8 `YooP' 8   8   8ooooo 88 `YooP'
+:::..::::.....:..:::::.....::..:.....:..::..::.........::.....:
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+'''
+
+# =======================================================================
+# =======================================================================
+# Custom CementNGreen LookAndFeel Theme.
 # Generated using LookyFeely.
-import PySimpleGUI as sg
-theme = 'TrueBarney'
-sg.LOOK_AND_FEEL_TABLE['TrueBarney'] = {'BACKGROUND': '#5e195a',
-    'TEXT': '#efc5ed',
-    'INPUT': '#388616',
-    'TEXT_INPUT': '#ffb0ff',
-    'SCROLL': '#9ff45b',
-    'BUTTON': ('#1a1339', '#e247dc'),
-    'PROGRESS': ('#4b2082', '#81cfaf'),
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['CementNGreen'] = {'BACKGROUND': '#217e59',
+    'TEXT': '#e8e5e4',
+    'INPUT': '#e8e5e4',
+    'TEXT_INPUT': '#217e59',
+    'SCROLL': '#c2c7a1',
+    'BUTTON': ('#217e59', 'white'),
+    'PROGRESS': ('#d5d1c4', '#e8e5e4'),
     'BORDER': 1,
     'SLIDER_DEPTH': 1,
-    'PROGRESS_DEPTH': 1}
+    'PROGRESS_DEPTH': 0}
 
-sg.ChangeLookAndFeel('TrueBarney')
-#========================================================================
+sg.ChangeLookAndFeel('CementNGreen')
 
+# =======================================================================
+# Custom BigBlue LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['BigBlue'] = {'BACKGROUND': '#182b9b',
+    'TEXT': '#eae8e5',
+    'INPUT': '#eae8e5',
+    'TEXT_INPUT': '#182b9b',
+    'SCROLL': '#b1cea2',
+    'BUTTON': ('#182b9b', 'white'),
+    'PROGRESS': ('#2a8db8', '#eae8e5'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
 
-sg.ChangeLookAndFeel(theme, force=True)
-preview_layout = [[sg.Text((theme+' is live.'))],
-						[sg.Text('This window does nothing.')],
-						[sg.Text('Only the exit button works.')],
-						[sg.InputText('...just a textbox', size=(60, 8))],
-						[sg.Exit(' Exit ', key='Exit')]]
-preview = sg.Window(title=('Theme Preview for '+theme+' Theme.'), layout=preview_layout, resizable=False)
+sg.ChangeLookAndFeel('BigBlue')
+
+# =======================================================================
+# Custom ClassyCoffeeJoint LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['ClassyCoffeeJoint'] = {'BACKGROUND': '#f0e68c',
+    'TEXT': '#000000',
+    'INPUT': '#e0c466',
+    'TEXT_INPUT': 'black',
+    'SCROLL': '#9c6e3d',
+    'BUTTON': ('khaki', 'black'),
+    'PROGRESS': ('#42302a', '#e0c466'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('ClassyCoffeeJoint')
+# =======================================================================
+# Custom AshCool LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['AshCool'] = {'BACKGROUND': '#495a4c',
+    'TEXT': '#e7e6e6',
+    'INPUT': '#637461',
+    'TEXT_INPUT': 'white',
+    'SCROLL': '#9fa296',
+    'BUTTON': ('white', '#495a4c'),
+    'PROGRESS': ('#e7e6e6', '#637461'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('AshCool')
+# =======================================================================
+# Custom TracesOfGold LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['TracesOfGold'] = {'BACKGROUND': '#121212',
+    'TEXT': 'darkgray',
+    'INPUT': '#262626',
+    'TEXT_INPUT': 'gold',
+    'SCROLL': '#98631e',
+    'BUTTON': ('#121212', '#7d7d7d'),
+    'PROGRESS': ('#5a3a2d', '#262626'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('TracesOfGold')
+# =======================================================================
+# Custom MindMadness LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['MindMadness'] = {'BACKGROUND': 'Black',
+    'TEXT': 'Blue',
+    'INPUT': 'Red',
+    'TEXT_INPUT': '#0f6',
+    'SCROLL': 'blue',
+    'BUTTON': ('black', '#0f6'),
+    'PROGRESS': ('#1f7a43', 'Red'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('MindMadness')
+# =======================================================================
+# =======================================================================
+# =======================================================================
+# =======================================================================
+
+preview_layout = [[sg.Text(('The theme is live.'))],
+                        [sg.Text('This window does nothing.')],
+                        [sg.Text('Only the exit button works.')],
+                        [sg.InputText('...just a textbox', size=(60, 8))],
+                        [sg.Exit(' Exit ', key='Exit')]]
+preview = sg.Window(title=('Theme Preview'), layout=preview_layout, resizable=False)
 while True:
-						preview_events, preview_values = preview.Read()
-						if preview_events in (None, 'Exit'):
-							preview.Close()
-							break
+    preview_events, preview_values = preview.Read()
+    if preview_events in (None, 'Exit'):
+        preview.Close()
+        break
