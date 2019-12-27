@@ -245,11 +245,64 @@ sg.LOOK_AND_FEEL_TABLE['MindMadness'] = {'BACKGROUND': 'Black',
 
 sg.ChangeLookAndFeel('MindMadness')
 # =======================================================================
+# Custom HeartOfPurple LookAndFeel Theme.
+# (Fully) Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['HeartOfPurple'] = {'BACKGROUND': 'indigo',
+    'TEXT': 'gainsboro',
+    'INPUT': '#0c18a2',
+    'TEXT_INPUT': 'gainsboro',
+    'SCROLL': '#b8c699',
+    'BUTTON': ('indigo', 'gainsboro'),
+    'PROGRESS': ('#3dca94', '#0c18a2'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('HeartOfPurple')
+
+# Custom HeartOfPurple - Light LookAndFeel Theme.
+# Generated using LookyFeely.
+#import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['HeartOfPurpleLight'] = {'BACKGROUND': 'gainsboro',
+   'TEXT': '#0c18a2',
+   'INPUT': '#cec8be',
+   'TEXT_INPUT': 'indigo',
+   'SCROLL': '#b8c699',
+   'BUTTON': ('indigo', '#cec8be'),
+   'PROGRESS': ('#71c56e', '#cec8be'),
+   'BORDER': 1,
+   'SLIDER_DEPTH': 1,
+   'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('HeartOfPurpleLight')
+# =======================================================================
+
+# Custom JustLime LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['JustLime'] = {'BACKGROUND': 'olivedrab',
+    'TEXT': 'chartreuse',
+    'INPUT': '#709c20',
+    'TEXT_INPUT': 'chartreuse',
+    'SCROLL': '#7edc0d',
+    'BUTTON': ('olivedrab', 'chartreuse'),
+    'PROGRESS': ('#79bb18', '#709c20'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('JustLime')
+# =======================================================================
+# =======================================================================
 # =======================================================================
 # =======================================================================
 # =======================================================================
 
-preview_layout = [[sg.Text(('The theme is live.'))],
+# theme_name = str(sg.theme())
+theme_name = 'theme'
+
+preview_layout = [[sg.Text(('The '+theme_name+' is live.'))],
                         [sg.Text('This window does nothing.')],
                         [sg.Text('Only the exit button works.')],
                         [sg.InputText('...just a textbox', size=(60, 8))],
