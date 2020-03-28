@@ -10,7 +10,7 @@ Colorpiq
                                           \ \_\           \ \_\
                                            \/_/            \/_/
 
-Color picker extension module for the PySimpleGUI SDK
+Color picker window extension module for the PySimpleGUI SDK
 by definite_d (https://www.github.com/definite-d/).
 This is NOT a standalone color picker app.
 It can be imported and used via its functions, or modified under the terms of the LGPLv3.
@@ -43,7 +43,8 @@ def colorpiqr(title='Pick a color...', confirm_button_text='OK', no_titlebar=Fal
         given_format = color_format
         color_format = accepted_color_formats[0]
         raise ValueError(('The '+str(given_format)+' color format is not supported.'))
-    
+
+
     slider_layout = []
     for i in color_format:
         a = str(i)
@@ -54,7 +55,7 @@ def colorpiqr(title='Pick a color...', confirm_button_text='OK', no_titlebar=Fal
     colorpiqr_layout = [
         [Text('Please adjust the sliders to pick a color.')],
         [Column(slider_layout, pad=(0, 0))],
-        [DummyButton('', size=(preview_box_width, preview_box_height), key='PreviewBox', disabled=True, pad=(2, (6, 2)))],
+        [DummyButton('s', size=(preview_box_width, preview_box_height), key='PreviewBox', pad=(2, (6, 2)))],
         [InputText('', key='Color', size=output_size), Button(confirm_button_text, size=(12, 1), key='Confirm', focus=True, bind_return_key=True, pad=((68, 1), 2)), Button('Cancel', size=(12, 1), key='Cancel')]
     ]
     colorpiqr_window = Window(title=title, layout=colorpiqr_layout, no_titlebar=no_titlebar, icon=DEFAULT_ICON, location=location)
