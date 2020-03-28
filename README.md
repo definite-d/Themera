@@ -1,10 +1,11 @@
 ﻿# PSG-LookyFeely
 
-#####Welcome...
+Welcome...
 
-####... to LookyFeely.
+... to LookyFeely.
 
 https://www.github.com/definite-d/PSG-LookyFeely/
+
 https://www.github.com/PySimpleGUI/PySimpleGUI/
 ___________________________________________________________________________________
 
