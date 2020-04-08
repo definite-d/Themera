@@ -1,6 +1,6 @@
 # Welcome...
 # ... to the code of LookyFeely.
-# https://www.github.com/definite-d/Looky-Feely/
+# https://github.com/definite-d/PSG-LookyFeely
 
 version = __version__ = 'v2.2.2'
 
