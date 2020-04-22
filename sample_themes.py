@@ -391,6 +391,53 @@ sg.LOOK_AND_FEEL_TABLE['PurpleBarbieLight'] = {'BACKGROUND': 'thistle',
 
 sg.ChangeLookAndFeel('PurpleBarbieLight')
 # =======================================================================
+# Custom WeAreBlue LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['WeAreBlue'] = {'BACKGROUND': '#136fa4',
+    'TEXT': '#5dd6e2',
+    'INPUT': '#36cbdd',
+    'TEXT_INPUT': '#030512',
+    'SCROLL': '#022a6a',
+    'BUTTON': ('#010010', '#2ab1d8'),
+    'PROGRESS': ('#1596d4', '#36cbdd'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('WeAreBlue')
+
+## Custom WeAreBlue - Dark LookAndFeel Theme.
+## Generated using LookyFeely.
+#import PySimpleGUI as sg  # Please change 'sg' to your liking.
+#sg.LOOK_AND_FEEL_TABLE['WeAreBlueDark'] = {'BACKGROUND': '#010010',
+#    'TEXT': '#36cbdd',
+#    'INPUT': '#030512',
+#    'TEXT_INPUT': '#5dd6e2',
+#    'SCROLL': '#022a6a',
+#    'BUTTON': ('#5dd6e2', '#030512'),
+#    'PROGRESS': ('#136fa4', '#030512'),
+#    'BORDER': 1,
+#    'SLIDER_DEPTH': 1,
+#    'PROGRESS_DEPTH': 0}
+
+#sg.ChangeLookAndFeel('WeAreBlueDark')
+
+## Custom WeAreBlue - Light LookAndFeel Theme.
+## Generated using LookyFeely.
+#import PySimpleGUI as sg  # Please change 'sg' to your liking.
+#sg.LOOK_AND_FEEL_TABLE['WeAreBlueLight'] = {'BACKGROUND': '#5dd6e2',
+#    'TEXT': '#030512',
+#    'INPUT': '#36cbdd',
+#    'TEXT_INPUT': '#010010',
+#    'SCROLL': '#2ab1d8',
+#    'BUTTON': ('#010010', '#36cbdd'),
+#    'PROGRESS': ('#1596d4', '#36cbdd'),
+#    'BORDER': 1,
+#    'SLIDER_DEPTH': 1,
+#    'PROGRESS_DEPTH': 0}
+
+#sg.ChangeLookAndFeel('WeAreBlueLight')
 # =======================================================================
 # =======================================================================
 # =======================================================================

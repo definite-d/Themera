@@ -1,8 +1,7 @@
 # Welcome...
 # ... to the code of LookyFeely.
-# https://github.com/definite-d/PSG-LookyFeely
-
-version = __version__ = 'v2.2.2'
+# https://github.com/definite-d/PSG-LookyFeely/
+version = __version__ = 'v2.2.18'
 
 '''
 
@@ -219,6 +218,7 @@ while True:
     except:
         break
         pass
+
     if 'choose' in window_1_events:
         window_1[window_1_events.replace('_choose', '')].Update(colorpiq.colorpiqr(preview_box_width=53, location=(window_1.CurrentLocation()[0]+4, window_1.CurrentLocation()[1]+150)))
 
@@ -236,10 +236,9 @@ while True:
             window_1['name'](window_1_values['name'])
         for i in window_1_values:
             # I found that 'Navajo White' (unsupported color) isn't the same as 'NavajoWhite' (supported color).
-            if '_c' in i and window_1_values[str(i)] not in ('...color value', 'None'):
+            if '_c' in i and window_1_values[str(i)] not in ['...color value', 'None'] and str(window_1_values[str(i)]).lower() not in lowercase_color_names_list and window_1_values[str(i)].startswith('#') is False and window_1_values[str(i)].isspace() is False and window_1_values[str(i)] is not '':
                 given_value = str(window_1_values[str(i)])
                 window_1_values[str(i)] = (str(window_1_values[str(i)])).replace(' ', '')
-            if '_c' in i and window_1_values[str(i)] not in ('...color value', 'None') and str(window_1_values[str(i)]).lower() not in lowercase_color_names_list and window_1_values[str(i)].startswith('#') is False and window_1_values[str(i)].isspace() is False and window_1_values[str(i)] is not '':
                 sg.Popup(('The color name \''+given_value+'\' is not supported.\nYou should use the hex value of the '
                 'intended color instead.'), title='Warning: Unsupported Color!', button_type='Cancel',
                          location=(window_1_c[0] + 40, window_1_c[1] + 50))
@@ -301,12 +300,6 @@ while True:
                 sorter_list = list(zip(luminance_list, color_values))
                 sorter_list = sorted(sorter_list, key=lambda color: color[0])
                 sorted_list = [i[1] for i in sorter_list]
-                if window_1_values['dark'] is True:
-                    dark_list = [sorted_list[0], sorted_list[6], sorted_list[2], sorted_list[0], sorted_list[2],
-                                 sorted_list[7], sorted_list[1], sorted_list[3]]
-                if window_1_values['light'] is True:
-                    light_list = [sorted_list[5], sorted_list[0], sorted_list[1], sorted_list[7], sorted_list[0],
-                                  sorted_list[7], sorted_list[2], sorted_list[2]]
                 done = True
             if unspecified is True:
                 unspec_no = len(color_values) - len(selected)
@@ -350,7 +343,7 @@ while True:
                                     if c in ('None', '...color value'):
                                         color_values[color_values.index(c)] = random_color()
                                 if not window_1_values['H_Random']:
-                                    #Sort things out...
+                                    # Sort things out...
                                     luminance_list = []
                                     for i in color_values:
                                         i_c = colour.Color(i)
@@ -462,63 +455,46 @@ while True:
                                                                         sg.InputText(default_text='', key='im_subject',
                                                                                      size=(25, 1)),
                                                                         sg.FileBrowse(file_types=(('Image Files', (filetypes)),))],
-                                                                       [sg.Checkbox('Sort image\'s colors.', key='im_sort')],
+                                                                       [sg.Checkbox('Don\'t sort the image\'s colors.', key='im_sort')]
                                                                    ], element_justification='center')],
                                                                    [sg.Text('\"' * 86, pad=(0, 1))],
                                                                    [sg.Button(button_text=' Obtain Colors ',
                                                                               key='im_color',
                                                                               bind_return_key=True)]
-                                                               ], element_justification='center')]]
+                                                               ], element_justification='center')],
+                                                     [sg.Button('Cancel')]]
                                 im_palette = sg.Window(title='ImagePalette', layout=im_palette_layout,
                                                        location=(window_1_c[0]-8, window_1_c[1]+50))
+
                                 while True:
                                     im_events, im_values = im_palette.Read()
 
-                                    if im_events in (None, 'Exit'):
+                                    if im_events in (None, 'Cancel'):
                                         im_palette.Close()
                                         break
 
                                     im_subject = im_values['im_subject']
                                     if isfile(str(im_subject)) and im_events is 'im_color':
+                                        image_factor = int(filesize(im_subject) / 400) + 1
+                                        if not im_values['im_sort']:
+                                            image_factor = image_factor * 1.5
+                                        image_factor = int(image_factor)
+
                                         im_colors_true = []
                                         image = img.open(im_subject)
-                                        image = image.resize((4, 4))
+                                        image = image.resize((32, 32))
                                         im_colors = image.getcolors(maxcolors=(image.size[0] * image.size[1]))
                                         for i in im_colors:
                                             r = float(i[1][0] / 255)
                                             g = float(i[1][1] / 255)
                                             b = float(i[1][2] / 255)
                                             im_colors_true.append(colour.Color(colour.rgb2hex((r, g, b))))
-                                        del im_colors
                                         im_colors = []
-                                        im_colors_number = len(im_colors_true)
-                                        if im_colors_number == 0:
-                                            im_colors_true.append(colour.Color(random_color()))
-                                            im_colors_number = 1
-                                        if im_colors_number == 1:
-                                            im_colors.extend(list(im_colors_true[0].range_to('white', 8)))
-                                        if im_colors_number in range(2, 9):
-                                            number = abs(int(-8//im_colors_number)+1)
-                                            if DebugMode is on:
-                                                Print('Number of colors to fill in: ', number)
-                                            for color in im_colors_true:
-                                                im_colors.append(color)
-                                                try:
-                                                    for n in im_colors_true[0:(len(im_colors_true) - 1)]:
-                                                        next_color = im_colors_true[((im_colors_true.index(n)) + 1)]
-                                                        n = colour.Color(n)
-                                                        next_color = colour.Color(next_color)
-                                                        shadegradient = list(n.range_to(next_color, number * 2))
-                                                        im_colors.extend(shadegradient)
-                                                except IndexError:
-                                                    pass
-                                        else:
-                                            number = abs(int(-im_colors_number//8))
-                                            for n in range(8):
-                                                im_colors.append(im_colors_true[(int((len(im_colors_true) * n) / 8))])
+                                        for i in range(8):
+                                            im_colors.append(im_colors_true[(int((len(im_colors_true) * i) / 8))])
 
-                                        if im_values['im_sort']:
-                                            # Sort things out...
+                                        # Sort things out...
+                                        if not im_values['im_sort']:
                                             luminance_list = []
                                             for i in im_colors:
                                                 i_c = colour.Color(i)
@@ -527,53 +503,31 @@ while True:
                                             sorter_list = list(zip(luminance_list, im_colors))
                                             sorter_list = sorted(sorter_list, key=lambda color: color[0])
                                             sorted_list = [i[1] for i in sorter_list]
-                                            if window_1_values['dark'] is True:
-                                                dark_list = [sorted_list[0], sorted_list[6], sorted_list[7],
-                                                             sorted_list[1], sorted_list[2], sorted_list[7],
-                                                             sorted_list[1], sorted_list[3]]
-                                            if window_1_values['light'] is True:
-                                                light_list = [sorted_list[7], sorted_list[1], sorted_list[0],
-                                                              sorted_list[6], sorted_list[5], sorted_list[0],
-                                                              sorted_list[6], sorted_list[4]]
-                                            # Now, to make the 'neutral' theme. No light or dark tilts.
-                                            if im_colors_number == 1:  # I found that pure mono themes need this little spice-up.
-                                                if selected[0] != 0:
-                                                    shade_list = [sorted_list[1], sorted_list[5], sorted_list[0],
-                                                                  sorted_list[5], sorted_list[3], sorted_list[0],
-                                                                  sorted_list[7], sorted_list[6]]
-                                                else:
-                                                    shade_list = [sorted_list[1], sorted_list[5], sorted_list[0],
-                                                                  sorted_list[5], sorted_list[3], sorted_list[0],
-                                                                  sorted_list[7], sorted_list[6]]
+                                            im_colors = sorted_list
+                                            im_colors = [im_colors[3], im_colors[7], im_colors[1], im_colors[6], im_colors[2], im_colors[0], im_colors[5], im_colors[4]]
 
-                                            else:
-                                                shade_list = [sorted_list[0], sorted_list[6], sorted_list[7],
-                                                              sorted_list[1], sorted_list[5], sorted_list[0],
-                                                              sorted_list[7], sorted_list[3]]
-                                            for i in selected:
-                                                shade_list[i] = color_values[i]
-                                            color_values = shade_list
-                                        else:
-                                            color_values = im_colors
+                                        for color in im_colors:
+                                            im_colors[im_colors.index(color)] = color.get_web()
+                                        color_values = im_colors
 
-                                        image_factor = int(filesize(im_subject)/80)+1
+                                        # Progress bar code.
                                         prog_c_l = [[sg.Text('Please wait...')],
-                                                    [sg.ProgressBar(image_factor, orientation='h', size=(35, 20), key='progbar')]]
-                                        prog_c = sg.Window('Obtaining Colors from Image...', prog_c_l, location=window_1_c, disable_close=True)
+                                                    [sg.ProgressBar(image_factor, orientation='h', size=(35, 20),
+                                                                    key='progbar')]]
+                                        prog_c = sg.Window('Obtaining Colors from Image...', prog_c_l,
+                                                           location=window_1_c, disable_close=True)
                                         for i in range(image_factor):
                                             prog_c_e, prog_c_v = prog_c.Read(timeout=0)
-                                            if prog_c_e is None:
-                                                prog_c.Close()
-                                                break
                                             prog_c['progbar'].UpdateBar(i + 1)
+
                                         prog_c.Close()
                                         im_palette.Close()
                                         no_image = False
                                         done = True
                                         unspec_opts.Close()
                                         break
-                                    break
                                 break
+                                
                         if unspec_opts_events in (None, 'Cancel'):
                             done = False
                             unspec_opts.Close()
@@ -586,7 +540,7 @@ while True:
                 # Set the names of colors just right...
                 for i in color_values:
                     if not str(i).startswith('#'):
-                        color_values[color_values.index(i)] = str(i).lower()  # Lowercase doesn't discriminate.
+                        color_values[(color_values.index(i))] = str(i).lower()  # Lowercase doesn't discriminate.
                 # Reset all colors to their values in the color_values list.
                 bg_c = str(color_values[0])
                 txt_c = str(color_values[1])
@@ -630,8 +584,8 @@ while True:
                     bt_txt_c = str(dark_list[5])
                     bt_c = str(dark_list[6])
                     pb_c = str(dark_list[7])
-                    theme = theme + str(f'# Custom {name} - Dark LookAndFeel Theme.\n'
-                                        f'# Generated using LookyFeely.\n'
+                    theme = theme + str(f'## Custom {name} - Dark LookAndFeel Theme.\n'
+                                        f'## Generated using LookyFeely.\n'
                                         f'#import PySimpleGUI as sg  '
                                         f'# Please change \'sg\' to your liking.\n'
                                         f'#sg.LOOK_AND_FEEL_TABLE[\'{name}Dark\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
@@ -657,8 +611,8 @@ while True:
                     bt_txt_c = str(light_list[5])
                     bt_c = str(light_list[6])
                     pb_c = str(light_list[7])
-                    theme = theme + str(f'# Custom {name} - Light LookAndFeel Theme.\n'
-                                        f'# Generated using LookyFeely.\n'
+                    theme = theme + str(f'## Custom {name} - Light LookAndFeel Theme.\n'
+                                        f'## Generated using LookyFeely.\n'
                                         f'#import PySimpleGUI as sg  '
                                         f'# Please change \'sg\' to your liking.\n'
                                         f'#sg.LOOK_AND_FEEL_TABLE[\'{name}Light\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
@@ -679,7 +633,6 @@ while True:
                         i = colour.Color(i)
                         i.saturation = 0
                         gray_list.append(i.get_web())
-
                     bg_c = str(gray_list[0])
                     txt_c = str(gray_list[1])
                     txt_in_c = str(gray_list[2])
@@ -688,8 +641,8 @@ while True:
                     bt_txt_c = str(gray_list[5])
                     bt_c = str(gray_list[6])
                     pb_c = str(gray_list[7])
-                    theme = theme + str(f'# Custom {name} - Gray LookAndFeel Theme.\n'
-                                        f'# Generated using LookyFeely.\n'
+                    theme = theme + str(f'## Custom {name} - Gray LookAndFeel Theme.\n'
+                                        f'## Generated using LookyFeely.\n'
                                         f'#import PySimpleGUI as sg  '
                                         f'# Please change \'sg\' to your liking.\n'
                                         f'#sg.LOOK_AND_FEEL_TABLE[\'{name}Gray\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
@@ -752,7 +705,6 @@ while True:
                                 exec(theme)             # Nifty as ever for adjusting the background color in a pinch.
                     
                             # Let's give 'em a feel of their custom theme.
-                            previewtimer = 60
                             preview_layout = [[sg.Text(' '*40), sg.Text('Theme Preview')],
                                               [sg.Text(' '*19),
                                                sg.Text('This is how your theme will look when used.')],
@@ -772,23 +724,44 @@ while True:
                                                             'proident, sunt in culpa qui officia deserunt\n mollit '
                                                             'anim id est laborum.', size=(58, 5))],
                                               # Yeah, that's Latin. Copied obviously.
-                                              [sg.Button(' Button A '),
-                                               sg.Button(' Button B '),
-                                               sg.Button(' Button C '),
-                                               sg.Button(' Another useless button. ')],
+                                              [sg.Frame(title='Progress Bar Preview', layout=[
+                                                  [sg.Text('Click to preview this theme\'s progress bar.')],
+                                                  [sg.Button('Show progress bar.', key='p_bar_show')]
+                                                  ])],
+                                              [sg.Frame(title='Slider Preview', layout=[
+                                                  [sg.Text('This is a useless slider.')],
+
+                                                  [sg.Slider(range=(0, 1000), size=(35, 10), default_value=rc([0, 500, 1000]), orientation='h')]
+                                              ])],
+                                              [sg.Frame(title='Useless Buttons!', layout=[[sg.Button(' Button A ', key='btn_a'),
+                                               sg.Button(' Button B ', key='btn_b'),
+                                               sg.Button(' Button C ', key='btn_c'),
+                                               sg.Button(' Another useless button. ', key='btn_d')]])],
                                               [sg.Exit(' Exit ', key='Exit')]]
                             preview = sg.Window(title=(name+' Preview Popup'), layout=preview_layout, resizable=False,
-                                                location=(output_window.CurrentLocation()[0]+45, output_window.CurrentLocation()[1]+50), progress_bar_color=pb_c)
+                                                location=(output_window.CurrentLocation()[0]+45, output_window.CurrentLocation()[1]+10), progress_bar_color=pb_c)
+
                             while True:
                                 preview_events, preview_values = preview.Read()
+
+                                if preview_events is 'p_bar_show':
+                                    p_bar_preview_l = [[sg.ProgressBar(max_value=1000, orientation='h', size=(35, 20), key='p_bar')]]
+                                    p_bar_preview = sg.Window('Progress Bar Preview', p_bar_preview_l)
+                                    for i in range(1000):
+                                        p_bar_preview_e, p_bar_preview_v = p_bar_preview.Read(timeout=10)
+                                        p_bar_preview['p_bar'].UpdateBar(i + 1)
+                                        if p_bar_preview_e in (None, 'Exit'):
+                                            p_bar_preview.Close()
+                                            break
+                                    p_bar_preview.Close()
+
                                 if preview_events in (None, 'Exit'):
                                     preview.Close()
                                     window_1.BringToFront()
                                     output_window.BringToFront()
+                                    # Change back to the previous LookyFeely theme.
+                                    sg.ChangeLookAndFeel(random_theme)
                                     break
-                                preview.Close()
-                            # Change back to the previous LookyFeely theme.
-                            sg.ChangeLookAndFeel(random_theme)
                         except:
                             sg.ChangeLookAndFeel(random_theme)
                             sg.Popup('An error occured! Please check your entries! You may have typed in an '
@@ -838,7 +811,6 @@ while True:
                 cmd('python -m pip install --upgrade --no-cache-dir PySimpleGUI')
                 confirmation.Close()
                 break
-    
     if window_1_events is 'col_name_view':
         color_names = []
         for j in color_names_list:
@@ -864,7 +836,6 @@ while True:
             if viewer_e in (None, 'Exit'):
                 viewer.Close()
                 break
-    
     if 'checkout' in window_1_events:
         # I don't want to go importing this big dog if I'm not going to use him.
         from webbrowser import open_new_tab as hyp_lnk
@@ -874,20 +845,21 @@ while True:
             hyp_lnk('https://www.github.com/definite-d/PSG-LookyFeely/')
         if window_1_events is 'checkout_psg':
             hyp_lnk('https://www.github.com/PySimpleGUI/PySimpleGUI/')
-    
     if window_1_events is 'Help':
         help_text = 'Current Version: {0}\n' \
                     'Username: {1}\n\n' \
+                    'Specifier Tab:\n' \
                     'Specifying your theme\'s parameters is done using the Specifier tab. ' \
-                    'Simply click the buttons or type them in to choose colors. \n\n' \
-                    'Tkinter color names also work. ' \
+                    'Simply click the buttons or type them in to choose colors manually. ' \
+                    'Tkinter color names also work.  \n\n' \
+                    'View Supported Colors:\n' \
                     'You can view all supported colors and their names from the \'Other Options\' tab, ' \
                     'in the \'Color Options\' panel.\n\n' \
+                    'Unspecified Colors:\n' \
                     'If no color is given, LookyFeely will prompt you to choose what to do about that ' \
                     'and present you with the options to fill in the colors not supplied with random colors, ' \
-                    'base the colors not given off those given or go back to supply those colors fully. ' \
-                    'If no color is chosen at all and the option to use existing colors is chosen, ' \
-                    'LookyFeely will work with a random color.\n\n' \
+                    'base the colors not given off those given, choose colors from an image' \
+                    ' or go back to supply those colors fully.\n\n' \
                     'There\'s also some options that affect what happens with whatever option you choose at ' \
                     'that point. They can be found in the \'Other Options\' tab under the ' \
                     '\'\'Unspecified Color\' Actions\' panel.\n\n' \
@@ -904,28 +876,24 @@ while True:
             [sg.Text('Help', font=('Helvetica', 18)), sg.Text(' '*104), sg.Button('Close', key='exit')],
             [sg.Multiline(default_text=help_text, disabled=True, size=(60, 10))]
         ]
-        
         help_window = sg.Window('Help', help_layout, location=(window_1.CurrentLocation()[0]-17, window_1.CurrentLocation()[1]+100))
         while True:
             help_events = help_window.Read()[0]
             if help_events in (None, 'exit'):
                 help_window.Close()
                 break
-    
     if window_1_events is 'logo':
         if DebugMode is True:
             Print('Yes, the logo is a button.')
-    
     if window_1_events in (None, 'Exit', 'Cancel'):  # The customary exit route.
         try:
             output_window.Close()
             preview.Close()
             window_1.Close()
             break
-        except(Exception):
+        except:
             pass
             break
-    
     if DebugMode is on:
         Print(window_1_events)
         Print(window_1_values)
