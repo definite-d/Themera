@@ -407,39 +407,38 @@ sg.LOOK_AND_FEEL_TABLE['WeAreBlue'] = {'BACKGROUND': '#136fa4',
 
 sg.ChangeLookAndFeel('WeAreBlue')
 
-## Custom WeAreBlue - Dark LookAndFeel Theme.
-## Generated using LookyFeely.
-#import PySimpleGUI as sg  # Please change 'sg' to your liking.
-#sg.LOOK_AND_FEEL_TABLE['WeAreBlueDark'] = {'BACKGROUND': '#010010',
-#    'TEXT': '#36cbdd',
-#    'INPUT': '#030512',
-#    'TEXT_INPUT': '#5dd6e2',
-#    'SCROLL': '#022a6a',
-#    'BUTTON': ('#5dd6e2', '#030512'),
-#    'PROGRESS': ('#136fa4', '#030512'),
-#    'BORDER': 1,
-#    'SLIDER_DEPTH': 1,
-#    'PROGRESS_DEPTH': 0}
-
-#sg.ChangeLookAndFeel('WeAreBlueDark')
-
-## Custom WeAreBlue - Light LookAndFeel Theme.
-## Generated using LookyFeely.
-#import PySimpleGUI as sg  # Please change 'sg' to your liking.
-#sg.LOOK_AND_FEEL_TABLE['WeAreBlueLight'] = {'BACKGROUND': '#5dd6e2',
-#    'TEXT': '#030512',
-#    'INPUT': '#36cbdd',
-#    'TEXT_INPUT': '#010010',
-#    'SCROLL': '#2ab1d8',
-#    'BUTTON': ('#010010', '#36cbdd'),
-#    'PROGRESS': ('#1596d4', '#36cbdd'),
-#    'BORDER': 1,
-#    'SLIDER_DEPTH': 1,
-#    'PROGRESS_DEPTH': 0}
-
-#sg.ChangeLookAndFeel('WeAreBlueLight')
 # =======================================================================
+# Custom TreeVibe LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['TreeVibe'] = {'BACKGROUND': '#2b2b2b',
+    'TEXT': '#40baf4',
+    'INPUT': '#544f47',
+    'TEXT_INPUT': 'black',
+    'SCROLL': '#4c4839',
+    'BUTTON': ('#021002', '#575e3d'),
+    'PROGRESS': ('#56683f', '#433e36'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('TreeVibe')
 # =======================================================================
+# Custom CafeAuLait LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['CafeAuLait'] = {'BACKGROUND': 'navajowhite',
+    'TEXT': 'black',
+    'INPUT': '#f5b97a',
+    'TEXT_INPUT': '#231b1a',
+    'SCROLL': '#4f322c',
+    'BUTTON': ('black', '#e28e50'),
+    'PROGRESS': ('#c06434', '#f5b97a'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('CafeAuLait')
 # =======================================================================
 # =======================================================================
 

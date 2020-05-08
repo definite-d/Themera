@@ -68,7 +68,7 @@ def colorpiqr(title='Pick a color...', confirm_button_text='OK', no_titlebar=Fal
 			
 			for i in colorpiqr_window_sliders:
 				colorpiqr_window_sliders[colorpiqr_window_sliders.index(i)] = float(i / 255)
-			sliders_color = col.rgb2hex(((colorpiqr_window_sliders[0], colorpiqr_window_sliders[1], colorpiqr_window_sliders[2])), force_long=True)
+			sliders_color = col.Color(col.rgb2hex(((colorpiqr_window_sliders[0], colorpiqr_window_sliders[1], colorpiqr_window_sliders[2])), force_long=True)).web
 			
 			colorpiqr_window['PreviewBox'](button_color=(sliders_color, sliders_color))
 			colorpiqr_window['Color'](sliders_color)
