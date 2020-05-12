@@ -65,6 +65,7 @@ from PySimpleGUI import Print as Print
 from pyperclip import copy
 from random import choice as rc
 from random import randint as rn
+from random import shuffle as rs
 
 sg.SetOptions(font=('Helvetica', 9),
               auto_size_text=True,
@@ -201,13 +202,13 @@ window_1_layout = [
         [sg.Text('Developed by definite_d')],
         [sg.Text('Click this text for help.', tooltip='I\'m here to help.', key='Help', enable_events=True)]],
          pad=(0, 0), element_justification='center')
-     ],  # Tsk. PEP-8. [sg.Text(('*'*70))],
+     ],
     [sg.TabGroup(layout=tab_layout)],
     [sg.Button(button_text=' Generate LookAndFeel Code ', key='gen', bind_return_key=True)],
     [sg.Text(('\"'*100))],
     [sg.Text('Current Theme: '+str(random_theme))]
 ]
-window_1 = sg.Window(('LookyFeely'+' - '+version), layout=window_1_layout, element_justification='center',
+window_1 = sg.Window((f'LookyFeely - {version}'), layout=window_1_layout, element_justification='center',
                      grab_anywhere=False, resizable=False)
 
 while True:
@@ -219,7 +220,7 @@ while True:
         pass
 
     if 'choose' in window_1_events:
-        window_1[window_1_events.replace('_choose', '')].Update(colorpiq.colorpiqr(preview_box_width=53, location=(window_1.CurrentLocation()[0]+4, window_1.CurrentLocation()[1]+150)))
+        window_1[window_1_events.replace('_choose', '')].Update(colorpiq.colorpiqr(preview_box_height=2, slider_width=50, slider_height=15, location=(window_1.CurrentLocation()[0]+4, window_1.CurrentLocation()[1]+150)))
 
     if window_1_events == 'gen':
         unsupported_entry = False
@@ -540,240 +541,316 @@ while True:
                         pass
                     break
             # This is where the real code generation happens.
-            if done:  # Yep. Real shameless signal system.
-                # Set the names of colors just right...
-                for i in color_values:
-                    if not str(i).startswith('#'):
-                        color_values[(color_values.index(i))] = str(i).lower()  # Lowercase doesn't discriminate.
-                bg_c = str(color_values[0])
-                txt_c = str(color_values[1])
-                txt_in_c = str(color_values[2])
-                in_c = str(color_values[3])
-                scr_c = str(color_values[4])
-                bt_txt_c = str(color_values[5])
-                bt_c = str(color_values[6])
-                pb_c = str(color_values[7])
-                theme = str(f'# Custom {name} LookAndFeel Theme.\n'
-                            f'# Generated using LookyFeely.\n'
-                            f'import PySimpleGUI as sg  # Please change \'sg\' to your liking.\n'
-                            f'sg.LOOK_AND_FEEL_TABLE[\'{name_safe}\'] = {{\'BACKGROUND\': \'{bg_c}\',\n    \''
-                            f'TEXT\': \'{txt_c}\',\n    \'INPUT\': \'{in_c}\',\n    \''
-                            f'TEXT_INPUT\': \'{txt_in_c}\',\n    \'SCROLL\': \'{scr_c}\',\n    \''
-                            f'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n    \''
-                            f'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n    \'BORDER\': {str(bor_w)},\n    \''
-                            f'SLIDER_DEPTH\': {str(sl_bor_w)},\n    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
-                            f'sg.ChangeLookAndFeel(\''+name_safe+'\')\n\n')
+            def finisher(color_values):
+                if done:  # Yep. Real shameless signal system.
+                    # Set the names of colors just right...
+                    for i in color_values:
+                        if not str(i).startswith('#'):
+                            color_values[(color_values.index(i))] = str(i).lower()  # Lowercase doesn't discriminate.
+                    bg_c = str(color_values[0])
+                    txt_c = str(color_values[1])
+                    txt_in_c = str(color_values[2])
+                    in_c = str(color_values[3])
+                    scr_c = str(color_values[4])
+                    bt_txt_c = str(color_values[5])
+                    bt_c = str(color_values[6])
+                    pb_c = str(color_values[7])
+                    theme = str(f'# Custom {name} LookAndFeel Theme.\n'
+                                f'# Generated using LookyFeely.\n'
+                                f'import PySimpleGUI as sg  # Please change \'sg\' to your liking.\n'
+                                f'sg.LOOK_AND_FEEL_TABLE[\'{name_safe}\'] = {{\'BACKGROUND\': \'{bg_c}\',\n    \''
+                                f'TEXT\': \'{txt_c}\',\n    \'INPUT\': \'{in_c}\',\n    \''
+                                f'TEXT_INPUT\': \'{txt_in_c}\',\n    \'SCROLL\': \'{scr_c}\',\n    \''
+                                f'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n    \''
+                                f'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n    \'BORDER\': {str(bor_w)},\n    \''
+                                f'SLIDER_DEPTH\': {str(sl_bor_w)},\n    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
+                                f'sg.ChangeLookAndFeel(\''+name_safe+'\')\n\n')
 
-                # Dark and Light modes (and most recently Gray mode) ... I nearly got confused about where to put their code.
-                # Sort things out...
-                luminance_list = []
-                for i in color_values:
-                    i_c = colour.Color(i)
-                    i_c_l = i_c.get_luminance()
-                    luminance_list.append(i_c_l)
-                sorter_list = list(zip(luminance_list, color_values))
-                sorter_list = sorted(sorter_list, key=lambda color: color[0])
-                sorted_list = [i[1] for i in sorter_list]
-                # Dark and Light modes implementation.
-                if window_1_values['dark'] == True:
-                    dark_list = [sorted_list[0], sorted_list[6], sorted_list[7],
-                                 sorted_list[1], sorted_list[2], sorted_list[7],
-                                 sorted_list[1], sorted_list[3]]
-                    bg_c = str(dark_list[0])
-                    txt_c = str(dark_list[1])
-                    txt_in_c = str(dark_list[2])
-                    in_c = str(dark_list[3])
-                    scr_c = str(dark_list[4])
-                    bt_txt_c = str(dark_list[5])
-                    bt_c = str(dark_list[6])
-                    pb_c = str(dark_list[7])
-                    theme = theme + str(f'## Custom {name} - Dark LookAndFeel Theme.\n'
-                                        f'## Generated using LookyFeely.\n'
-                                        f'#import PySimpleGUI as sg  '
-                                        f'# Please change \'sg\' to your liking.\n'
-                                        f'#sg.LOOK_AND_FEEL_TABLE[\'{name_safe}Dark\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
-                                        f'#    \'TEXT\': \'{txt_c}\',\n'
-                                        f'#    \'INPUT\': \'{in_c}\',\n'
-                                        f'#    \'TEXT_INPUT\': \'{txt_in_c}\',\n'
-                                        f'#    \'SCROLL\': \'{scr_c}\',\n'
-                                        f'#    \'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n'
-                                        f'#    \'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n'
-                                        f'#    \'BORDER\': {str(bor_w)},\n'
-                                        f'#    \'SLIDER_DEPTH\': {str(sl_bor_w)},\n'
-                                        f'#    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
-                                        f'#sg.ChangeLookAndFeel(\'{name_safe}Dark\')\n\n')
-                if window_1_values['light'] == True:
-                    light_list = [sorted_list[7], sorted_list[1], sorted_list[0],
-                                  sorted_list[6], sorted_list[5], sorted_list[0],
-                                  sorted_list[6], sorted_list[4]]
-                    bg_c = str(light_list[0])
-                    txt_c = str(light_list[1])
-                    txt_in_c = str(light_list[2])
-                    in_c = str(light_list[3])
-                    scr_c = str(light_list[4])
-                    bt_txt_c = str(light_list[5])
-                    bt_c = str(light_list[6])
-                    pb_c = str(light_list[7])
-                    theme = theme + str(f'## Custom {name} - Light LookAndFeel Theme.\n'
-                                        f'## Generated using LookyFeely.\n'
-                                        f'#import PySimpleGUI as sg  '
-                                        f'# Please change \'sg\' to your liking.\n'
-                                        f'#sg.LOOK_AND_FEEL_TABLE[\'{name_safe}Light\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
-                                        f'#    \'TEXT\': \'{txt_c}\',\n'
-                                        f'#    \'INPUT\': \'{in_c}\',\n'
-                                        f'#    \'TEXT_INPUT\': \'{txt_in_c}\',\n'
-                                        f'#    \'SCROLL\': \'{scr_c}\',\n'
-                                        f'#    \'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n'
-                                        f'#    \'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n'
-                                        f'#    \'BORDER\': {str(bor_w)},\n'
-                                        f'#    \'SLIDER_DEPTH\': {str(sl_bor_w)},\n'
-                                        f'#    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
-                                        f'#sg.ChangeLookAndFeel(\'{name_safe}Light\')\n\n')
-                if window_1_values['grayout'] == True:
-                    # This is the Gray-Out feature. It gives a black-and-white effect to themes.
-                    gray_list = []
-                    for i in sorted_list:
-                        i = colour.Color(i)
-                        i.saturation = 0
-                        gray_list.append(i.get_web())
-                    bg_c = str(gray_list[0])
-                    txt_c = str(gray_list[1])
-                    txt_in_c = str(gray_list[2])
-                    in_c = str(gray_list[3])
-                    scr_c = str(gray_list[4])
-                    bt_txt_c = str(gray_list[5])
-                    bt_c = str(gray_list[6])
-                    pb_c = str(gray_list[7])
-                    theme = theme + str(f'## Custom {name} - Gray LookAndFeel Theme.\n'
-                                        f'## Generated using LookyFeely.\n'
-                                        f'#import PySimpleGUI as sg  '
-                                        f'# Please change \'sg\' to your liking.\n'
-                                        f'#sg.LOOK_AND_FEEL_TABLE[\'{name_safe}Gray\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
-                                        f'#    \'TEXT\': \'{txt_c}\',\n'
-                                        f'#    \'INPUT\': \'{in_c}\',\n'
-                                        f'#    \'TEXT_INPUT\': \'{txt_in_c}\',\n'
-                                        f'#    \'SCROLL\': \'{scr_c}\',\n'
-                                        f'#    \'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n'
-                                        f'#    \'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n'
-                                        f'#    \'BORDER\': {str(bor_w)},\n'
-                                        f'#    \'SLIDER_DEPTH\': {str(sl_bor_w)},\n'
-                                        f'#    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
-                                        f'#sg.ChangeLookAndFeel(\'{name_safe}Gray\')\n\n')
-                # I decided to add a progress meter for the code generation because... why not?
-                prog_l = [[sg.Text('Please wait...')],
-                          [sg.ProgressBar(1000, orientation='h', size=(20, 20), key='progbar')]]
-                prog = sg.Window('Generating Theme...', prog_l, location=window_1_c, disable_close=True)
-                for i in range(1000):
-                    prog_e, prog_v = prog.Read(timeout=0)
-                    try:
-                        prog_location = prog.CurrentLocation()
-                    except _tkinter.TclError:
-                        break
-                        pass
-                    if prog_e is None:
-                        prog.Close()
-                        break
-                    prog['progbar'].UpdateBar(i + 1)
-                sg.PopupOK('All done!', 'Your theme code is ready.', location=prog.CurrentLocation(), auto_close=True,
-                           auto_close_duration=5)
-                prog.Close()
-                # Dole out the code for the user's harvest.
-                output_window_layout = [
-                    [sg.Text('Code for '+str(name)+' Look and Feel theme.')],
-                    [sg.Text('Please copy and paste the code below into your source code.')],
-                    [sg.Text('This output is directly modifiable.')],
-                    [sg.Multiline(default_text=theme, key='output', size=(70, 8))],
-                    [sg.Button(' Exit ', key='Exit'), sg.Button(' Preview Theme ', key='preview'), sg.Button('Copy Theme Code to Clipboard', key='copy')]
-                ]
-                try:  # I've found that these 'weirdly positioned' try and except blocks stop all error breaks.
-                    output_window = sg.Window(title=('Look and Feel Theme - '+str(name)), layout=output_window_layout,
-                                              grab_anywhere=False, element_justification='center',
-                                              location=(window_1_c[0]-50, window_1_c[1]+50))
-                except _tkinter.TclError:
-                    break
-                    pass
-                while True:
-                    output_window_events, output_window_values = output_window.Read()
-                    if output_window_events in (None, 'Exit'):
-                        output_window.Close()
-                        window_1.BringToFront()
-                        break
-                    if output_window_events == 'copy':
-                        copy((output_window_values['output']))
-                        sg.Popup("Your theme code has been copied!", title='Copied!', auto_close=True, auto_close_duration=4, location=(output_window.CurrentLocation()[0], output_window.CurrentLocation()[1]))
-                    if output_window_events in 'preview':
+                    # Dark and Light modes (and most recently Gray mode) ... I nearly got confused about where to put their code.
+                    # Sort things out...
+                    luminance_list = []
+                    for i in color_values:
+                        i_c = colour.Color(i)
+                        i_c_l = i_c.get_luminance()
+                        luminance_list.append(i_c_l)
+                    sorter_list = list(zip(luminance_list, color_values))
+                    sorter_list = sorted(sorter_list, key=lambda color: color[0])
+                    sorted_list = [i[1] for i in sorter_list]
+                    # Dark and Light modes implementation.
+                    if window_1_values['dark'] == True:
+                        dark_list = [sorted_list[0], sorted_list[6], sorted_list[7],
+                                     sorted_list[1], sorted_list[2], sorted_list[7],
+                                     sorted_list[1], sorted_list[3]]
+                        bg_c = str(dark_list[0])
+                        txt_c = str(dark_list[1])
+                        txt_in_c = str(dark_list[2])
+                        in_c = str(dark_list[3])
+                        scr_c = str(dark_list[4])
+                        bt_txt_c = str(dark_list[5])
+                        bt_c = str(dark_list[6])
+                        pb_c = str(dark_list[7])
+                        theme = theme + str(f'## Custom {name} - Dark LookAndFeel Theme.\n'
+                                            f'## Generated using LookyFeely.\n'
+                                            f'#import PySimpleGUI as sg  '
+                                            f'# Please change \'sg\' to your liking.\n'
+                                            f'#sg.LOOK_AND_FEEL_TABLE[\'{name_safe}Dark\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
+                                            f'#    \'TEXT\': \'{txt_c}\',\n'
+                                            f'#    \'INPUT\': \'{in_c}\',\n'
+                                            f'#    \'TEXT_INPUT\': \'{txt_in_c}\',\n'
+                                            f'#    \'SCROLL\': \'{scr_c}\',\n'
+                                            f'#    \'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n'
+                                            f'#    \'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n'
+                                            f'#    \'BORDER\': {str(bor_w)},\n'
+                                            f'#    \'SLIDER_DEPTH\': {str(sl_bor_w)},\n'
+                                            f'#    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
+                                            f'#sg.ChangeLookAndFeel(\'{name_safe}Dark\')\n\n')
+                    if window_1_values['light'] == True:
+                        light_list = [sorted_list[7], sorted_list[1], sorted_list[0],
+                                      sorted_list[6], sorted_list[5], sorted_list[0],
+                                      sorted_list[6], sorted_list[4]]
+                        bg_c = str(light_list[0])
+                        txt_c = str(light_list[1])
+                        txt_in_c = str(light_list[2])
+                        in_c = str(light_list[3])
+                        scr_c = str(light_list[4])
+                        bt_txt_c = str(light_list[5])
+                        bt_c = str(light_list[6])
+                        pb_c = str(light_list[7])
+                        theme = theme + str(f'## Custom {name} - Light LookAndFeel Theme.\n'
+                                            f'## Generated using LookyFeely.\n'
+                                            f'#import PySimpleGUI as sg  '
+                                            f'# Please change \'sg\' to your liking.\n'
+                                            f'#sg.LOOK_AND_FEEL_TABLE[\'{name_safe}Light\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
+                                            f'#    \'TEXT\': \'{txt_c}\',\n'
+                                            f'#    \'INPUT\': \'{in_c}\',\n'
+                                            f'#    \'TEXT_INPUT\': \'{txt_in_c}\',\n'
+                                            f'#    \'SCROLL\': \'{scr_c}\',\n'
+                                            f'#    \'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n'
+                                            f'#    \'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n'
+                                            f'#    \'BORDER\': {str(bor_w)},\n'
+                                            f'#    \'SLIDER_DEPTH\': {str(sl_bor_w)},\n'
+                                            f'#    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
+                                            f'#sg.ChangeLookAndFeel(\'{name_safe}Light\')\n\n')
+                    if window_1_values['grayout'] == True:
+                        # This is the Gray-Out feature. It gives a black-and-white effect to themes.
+                        gray_list = []
+                        for i in sorted_list:
+                            i = colour.Color(i)
+                            i.saturation = 0
+                            gray_list.append(i.get_web())
+                        bg_c = str(gray_list[0])
+                        txt_c = str(gray_list[1])
+                        txt_in_c = str(gray_list[2])
+                        in_c = str(gray_list[3])
+                        scr_c = str(gray_list[4])
+                        bt_txt_c = str(gray_list[5])
+                        bt_c = str(gray_list[6])
+                        pb_c = str(gray_list[7])
+                        theme = theme + str(f'## Custom {name} - Gray LookAndFeel Theme.\n'
+                                            f'## Generated using LookyFeely.\n'
+                                            f'#import PySimpleGUI as sg  '
+                                            f'# Please change \'sg\' to your liking.\n'
+                                            f'#sg.LOOK_AND_FEEL_TABLE[\'{name_safe}Gray\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
+                                            f'#    \'TEXT\': \'{txt_c}\',\n'
+                                            f'#    \'INPUT\': \'{in_c}\',\n'
+                                            f'#    \'TEXT_INPUT\': \'{txt_in_c}\',\n'
+                                            f'#    \'SCROLL\': \'{scr_c}\',\n'
+                                            f'#    \'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n'
+                                            f'#    \'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n'
+                                            f'#    \'BORDER\': {str(bor_w)},\n'
+                                            f'#    \'SLIDER_DEPTH\': {str(sl_bor_w)},\n'
+                                            f'#    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
+                                            f'#sg.ChangeLookAndFeel(\'{name_safe}Gray\')\n\n')
+                    # I decided to add a progress meter for the code generation because... why not?
+                    prog_l = [[sg.Text('Please wait...')],
+                              [sg.ProgressBar(1000, orientation='h', size=(20, 20), key='progbar')]]
+                    prog = sg.Window('Generating Theme...', prog_l, location=window_1_c, disable_close=True)
+                    for i in range(1000):
+                        prog_e, prog_v = prog.Read(timeout=0)
                         try:
-                            user_output = output_window_values['output']
-                            if user_output == theme:    # This guy here and his alternate allow for
-                                exec(theme)             # on-the-fly editing of the theme code even from the
-                            if user_output != theme:    # output panel.
-                                theme = user_output     # Tried and tested :).
-                                exec(theme)             # Nifty as ever for adjusting the background color in a pinch.
+                            prog_location = prog.CurrentLocation()
+                        except _tkinter.TclError:
+                            break
+                            pass
+                        if prog_e is None:
+                            prog.Close()
+                            break
+                        prog['progbar'].UpdateBar(i + 1)
+                    sg.PopupOK('All done!', 'Your theme code is ready.', location=prog.CurrentLocation(), auto_close=True,
+                               auto_close_duration=5)
+                    prog.Close()
+                    # Dole out the code for the user's harvest.
+                    output_window_layout = [
+                        [sg.Text('Code for '+str(name)+' Look and Feel theme.')],
+                        [sg.Text('Please copy and paste the code below into your source code.')],
+                        [sg.Text('This output is directly modifiable.')],
+                        [sg.Multiline(default_text=theme, key='output', size=(70, 8))],
+                        [sg.Button(' Exit ', key='Exit'), sg.Button(' Preview Theme ', key='preview'), sg.Button('Copy Theme Code to Clipboard', key='copy'), sg.Button('Shuffle Theme Colors', key='shuffle')],
+                        [sg.Frame('Theme Shuffler', layout=[
+                            [sg.Column(layout=[[sg.Frame('Shuffle These Guys', layout=[
+                                [sg.Checkbox('Background Color', key='bg')],
+                                [sg.Checkbox('Text Color', key='txt')],
+                                [sg.Checkbox('Input Panel Color', key='in')],
+                                [sg.Checkbox('Input Panel\'s Text Color', key='txt_in')],
+                                [sg.Checkbox('Scroll Color', key='scr')],
+                                [sg.Checkbox('Button Text Color', key='bt_txt')],
+                                [sg.Checkbox('Button Color', key='bt')],
+                                [sg.Checkbox('Progress Bar Color', key='pb')]
+                            ])]]),
+                             sg.Column(layout=[
+                                 [sg.Text('Shuffled Theme:')],
+                                 [sg.Multiline(default_text='', key='shuffled_theme', size=(45, 8))],
+                                 [sg.Button(' Preview Scrambled Theme ', key='shf_preview'), sg.Button('Copy Theme Code to Clipboard', key='shf_copy')]
+                             ])]
+                        ], visible=False, key='shuffle_frame')]
+                    ]
 
-                            # Let's give 'em a feel of their custom theme.
-                            preview_layout = [[sg.Text(' '*40), sg.Text('Theme Preview')],
-                                              [sg.Text(' '*19),
-                                               sg.Text('This is how your theme will look when used.')],
-                                              [sg.Text(' '*5),
-                                               sg.Text('This window serves no other purpose than being a mannequin.')],
-                                              [sg.Text('Only the exit button works.')],
-                                              [sg.InputText('...just a textbox', size=(60, 8))],
-                                              [sg.Multiline('This is just a Multiline element. Play with it as you '
-                                                            'deem fit.\n\nHave some Latin too.\nLorem ipsum '
-                                                            'dolor sit amet, consectetur adipisici elit, '
-                                                            'sed eiusmod\n tempor incidunt ut labore et dolore magna '
-                                                            'aliqua. Ut enim ad minim\n veniam, quis nostrud '
-                                                            'exercitation ullamco laboris nisi ut aliquid\n ex ea '
-                                                            'commodi consequat. Quis aute iure reprehenderit in '
-                                                            'voluptate\n velit esse cillum dolore eu fugiat nulla '
-                                                            'pariatur. Excepteur sint\n obcaecat cupiditat non '
-                                                            'proident, sunt in culpa qui officia deserunt\n mollit '
-                                                            'anim id est laborum.', size=(58, 5))],
-                                              # Yeah, that's Latin. Copied obviously.
-                                              [sg.Frame(title='Progress Bar Preview', layout=[
-                                                  [sg.Text('Click to preview this theme\'s progress bar.')],
-                                                  [sg.Button('Show progress bar.', key='p_bar_show')]
-                                              ])],
-                                              [sg.Frame(title='Slider Preview', layout=[
-                                                  [sg.Text('This is a useless slider.')],
+                    try:  # I've found that these 'weirdly positioned' try and except blocks stop all error breaks.
+                        output_window = sg.Window(title=('Look and Feel Theme - '+str(name)), layout=output_window_layout,
+                                                  grab_anywhere=False, element_justification='center',
+                                                  location=(window_1_c[0]-50, window_1_c[1]+50))
+                    except _tkinter.TclError:
+                        # break
+                        pass
 
-                                                  [sg.Slider(range=(0, 1000), size=(35, 10), default_value=rc([0, 500, 1000]), orientation='h')]
-                                              ])],
-                                              [sg.Frame(title='Useless Buttons!', layout=[[sg.Button(' Button A ', key='btn_a'),
-                                                                                           sg.Button(' Button B ', key='btn_b'),
-                                                                                           sg.Button(' Button C ', key='btn_c'),
-                                                                                           sg.Button(' Another useless button. ', key='btn_d')]])],
-                                              [sg.Exit(' Exit ', key='Exit')]]
-                            preview = sg.Window(title=(name+' Preview Popup'), layout=preview_layout, resizable=False,
-                                                location=(output_window.CurrentLocation()[0]+45, output_window.CurrentLocation()[1]+10))
+                    # Shuffle Preliminaries
+                    shuffle_counter = 1
 
-                            while True:
-                                preview_events, preview_values = preview.Read()
+                    def shuffler(counter=shuffle_counter):
+                        shuffle_these = []
+                        for i in checklist:
+                            if not output_window[i]:
+                                shuffle_these.append(checklist.index(i))
+                        shuffles = zip(shuffle_these, color_values)
+                        for i in range(len(shuffle_these)):
+                            change = shuffles.__next__()
+                            shuffled[(change[0])] = change[1]
+                        output_window['shuffle_frame'](visible=True)
+                        s_bg_c = str(shuffled[0])
+                        s_txt_c = str(shuffled[1])
+                        s_txt_in_c = str(shuffled[2])
+                        s_in_c = str(shuffled[3])
+                        s_scr_c = str(shuffled[4])
+                        s_bt_txt_c = str(shuffled[5])
+                        s_bt_c = str(shuffled[6])
+                        s_pb_c = str(shuffled[7])
+                        s_theme = str(f'# Custom {name} LookAndFeel Theme.\n'
+                                      f'# Generated using LookyFeely.\n'
+                                      f'import PySimpleGUI as sg  # Please change \'sg\' to your liking.\n'
+                                      f'sg.LOOK_AND_FEEL_TABLE[\'{name_safe}_shuffled{str(counter)}\'] = {{\'BACKGROUND\': \'{s_bg_c}\',\n    \''
+                                      f'TEXT\': \'{s_txt_c}\',\n    \'INPUT\': \'{s_in_c}\',\n    \''
+                                      f'TEXT_INPUT\': \'{s_txt_in_c}\',\n    \'SCROLL\': \'{s_scr_c}\',\n    \''
+                                      f'BUTTON\': (\'{s_bt_txt_c}\', \'{s_bt_c}\'),\n    \''
+                                      f'PROGRESS\': (\'{s_pb_c}\', \'{s_in_c}\'),\n    \'BORDER\': {str(bor_w)},\n    \''
+                                      f'SLIDER_DEPTH\': {str(sl_bor_w)},\n    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
+                                      f'sg.ChangeLookAndFeel(\'{name_safe}_shuffled{str(counter)}\')\n\n')
+                        return s_theme
 
-                                if preview_events == 'p_bar_show':
-                                    p_bar_preview_l = [[sg.ProgressBar(max_value=1000, orientation='h', size=(35, 20), key='p_bar')]]
-                                    p_bar_preview = sg.Window('Progress Bar Preview', p_bar_preview_l)
-                                    for i in range(1000):
-                                        p_bar_preview_e, p_bar_preview_v = p_bar_preview.Read(timeout=10)
-                                        p_bar_preview['p_bar'].UpdateBar(i + 1)
-                                        if p_bar_preview_e in (None, 'Exit'):
-                                            p_bar_preview.Close()
-                                            break
-                                    p_bar_preview.Close()
+                    while True:
+                        output_window_events, output_window_values = output_window.Read()
+                        if output_window_events in (None, 'Exit'):
+                            output_window.Close()
+                            window_1.BringToFront()
+                            break
+                        if output_window_events == 'shuffle':
+                            checklist = ['bg', 'txt', 'in', 'txt_in', 'scr', 'bt_txt', 'bt', 'pb']
+                            for i in checklist:
+                                output_window[i](True)
+                            shuffled = color_values
+                            rs(shuffled)
+                            shuffle_counter = shuffle_counter + 1
+                            s_theme = shuffler()
+                            output_window['shuffled_theme'](s_theme)
 
-                                if preview_events in (None, 'Exit'):
-                                    preview.Close()
-                                    window_1.BringToFront()
-                                    output_window.BringToFront()
-                                    # Change back to the previous LookyFeely theme.
-                                    sg.ChangeLookAndFeel(random_theme)
-                                    break
-                        except:
-                            sg.ChangeLookAndFeel(random_theme)
-                            sg.Popup('An error occured! Please check your entries! You may have typed in an '
-                                     'unsupported character or put in a wrong color value format.', title='Error!')
-                            if DebugMode is on:
-                                Print('Error!')
+                        if output_window_events == 'copy':
+                            copy((output_window_values['output']))
+                            sg.Popup("Your theme code has been copied!", title='Copied!', auto_close=True, auto_close_duration=4, location=(output_window.CurrentLocation()[0], output_window.CurrentLocation()[1]))
+                        if output_window_events == 'shf_copy':
+                            copy((output_window_values['shuffled_theme']))
+                            sg.Popup("Your shuffled theme code has been copied!", title='Copied!', auto_close=True, auto_close_duration=4, location=(output_window.CurrentLocation()[0], output_window.CurrentLocation()[1]))
+                        if 'preview' in output_window_events:
+                            try:
+                                if output_window_events == 'preview':
+                                    user_output = output_window_values['output']
+                                    if user_output == theme:    # This guy here and his alternate allow for
+                                        exec(theme)             # on-the-fly editing of the theme code even from the
+                                    if user_output != theme:    # output panel.
+                                        theme = user_output     # Tried and tested :).
+                                        exec(theme)             # Nifty as ever for adjusting the background color in a pinch.
+                                if output_window_events == 'shf_preview':
+                                    s_theme = shuffler()
+                                    user_output = output_window_values['shuffled_theme']
+                                    if user_output == s_theme:
+                                        exec(s_theme)
+                                    if user_output != s_theme:
+                                        s_theme = user_output
+                                        exec(s_theme)
+
+                                # Let's give 'em a feel of their custom theme.
+                                preview_layout = [[sg.Text(' '*40), sg.Text('Theme Preview')],
+                                                  [sg.Text(' '*19),
+                                                   sg.Text('This is how your theme will look when used.')],
+                                                  [sg.Text(' '*5),
+                                                   sg.Text('This window serves no other purpose than being a mannequin.')],
+                                                  [sg.Text('Only the exit button works.')],
+                                                  [sg.InputText('...just a textbox', size=(60, 8))],
+                                                  [sg.Multiline('This is just a Multiline element. Play with it as you '
+                                                                'deem fit.\n\nHave some Latin too.\nLorem ipsum '
+                                                                'dolor sit amet, consectetur adipisici elit, '
+                                                                'sed eiusmod\n tempor incidunt ut labore et dolore magna '
+                                                                'aliqua. Ut enim ad minim\n veniam, quis nostrud '
+                                                                'exercitation ullamco laboris nisi ut aliquid\n ex ea '
+                                                                'commodi consequat. Quis aute iure reprehenderit in '
+                                                                'voluptate\n velit esse cillum dolore eu fugiat nulla '
+                                                                'pariatur. Excepteur sint\n obcaecat cupiditat non '
+                                                                'proident, sunt in culpa qui officia deserunt\n mollit '
+                                                                'anim id est laborum.', size=(58, 5))],
+                                                  # Yeah, that's Latin. Copied obviously.
+                                                  [sg.Frame(title='Progress Bar Preview', layout=[
+                                                      [sg.Text('Click to preview this theme\'s progress bar.')],
+                                                      [sg.Button('Show progress bar.', key='p_bar_show')]
+                                                  ])],
+                                                  [sg.Frame(title='Slider Preview', layout=[
+                                                      [sg.Text('This is a useless slider.')],
+
+                                                      [sg.Slider(range=(0, 1000), size=(35, 10), default_value=rc([0, 500, 1000]), orientation='h')]
+                                                  ])],
+                                                  [sg.Frame(title='Useless Buttons!', layout=[[sg.Button(' Button A ', key='btn_a'),
+                                                                                               sg.Button(' Button B ', key='btn_b'),
+                                                                                               sg.Button(' Button C ', key='btn_c'),
+                                                                                               sg.Button(' Another useless button. ', key='btn_d')]])],
+                                                  [sg.Exit(' Exit ', key='Exit')]]
+                                preview = sg.Window(title=(name+' Preview Popup'), layout=preview_layout, resizable=False,
+                                                    location=(output_window.CurrentLocation()[0]+45, output_window.CurrentLocation()[1]+10))
+
+                                while True:
+                                    preview_events, preview_values = preview.Read()
+
+                                    if preview_events == 'p_bar_show':
+                                        p_bar_preview_l = [[sg.ProgressBar(max_value=1000, orientation='h', size=(35, 20), key='p_bar')]]
+                                        p_bar_preview = sg.Window('Progress Bar Preview', p_bar_preview_l)
+                                        for i in range(1000):
+                                            p_bar_preview_e, p_bar_preview_v = p_bar_preview.Read(timeout=10)
+                                            p_bar_preview['p_bar'].UpdateBar(i + 1)
+                                            if p_bar_preview_e in (None, 'Exit'):
+                                                p_bar_preview.Close()
+                                                break
+                                        p_bar_preview.Close()
+
+                                    if preview_events in (None, 'Exit'):
+                                        preview.Close()
+                                        window_1.BringToFront()
+                                        output_window.BringToFront()
+                                        # Change back to the previous LookyFeely theme.
+                                        sg.ChangeLookAndFeel(random_theme)
+                                        break
+                            except:
+                                sg.ChangeLookAndFeel(random_theme)
+                                sg.Popup('An error occured! Please check your entries! You may have typed in an '
+                                         'unsupported character or put in a wrong color value format.', title='Error!')
+                                if DebugMode is on:
+                                    Print('Error!')
+            finisher(color_values=color_values)
     
     if window_1_events == 'preview':
         meta_layout = [[sg.Text(('This is a window of all {0} themes that are built into PySimpleGUI'.format(
