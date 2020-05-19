@@ -687,20 +687,10 @@ while True:
                         [sg.Multiline(default_text=theme, key='output', size=(70, 8))],
                         [sg.Button(' Exit ', key='Exit'), sg.Button(' Preview Theme ', key='preview'), sg.Button('Copy Theme Code to Clipboard', key='copy'), sg.Button('Shuffle Theme Colors', key='shuffle')],
                         [sg.Frame('Theme Shuffler', layout=[
-                            [sg.Column(layout=[[sg.Frame('Shuffle These Guys', layout=[
-                                [sg.Checkbox('Background Color', key='bg')],
-                                [sg.Checkbox('Text Color', key='txt')],
-                                [sg.Checkbox('Input Panel Color', key='in')],
-                                [sg.Checkbox('Input Panel\'s Text Color', key='txt_in')],
-                                [sg.Checkbox('Scroll Color', key='scr')],
-                                [sg.Checkbox('Button Text Color', key='bt_txt')],
-                                [sg.Checkbox('Button Color', key='bt')],
-                                [sg.Checkbox('Progress Bar Color', key='pb')]
-                            ])]]),
-                             sg.Column(layout=[
+                            [sg.Column(layout=[
                                  [sg.Text('Shuffled Theme:')],
-                                 [sg.Multiline(default_text='', key='shuffled_theme', size=(45, 8))],
-                                 [sg.Button(' Preview Scrambled Theme ', key='shf_preview'), sg.Button('Copy Theme Code to Clipboard', key='shf_copy')]
+                                 [sg.Multiline(default_text='', key='shuffled_theme', size=(65, 8))],
+                                 [sg.Button(' Preview Shuffled Theme ', key='shf_preview'), sg.Button('Copy Theme Code to Clipboard', key='shf_copy'), sg.Button('Adjust Readability', key='adjust'), sg.Button('Revert Adjustments', key='revert', visible=False)]
                              ])]
                         ], visible=False, key='shuffle_frame')]
                     ]
@@ -713,53 +703,82 @@ while True:
                         # break
                         pass
 
-                    # Shuffle Preliminaries
-                    shuffle_counter = 1
+                    # Shuffle Preliminaries and Functions
+                    shuffle_counter = 0
+                    def generate_shuffled_theme(colors):
+                        s_bg_c = str(colors[0])
+                        s_txt_c = str(colors[1])
+                        s_txt_in_c = str(colors[2])
+                        s_in_c = str(colors[3])
+                        s_scr_c = str(colors[4])
+                        s_bt_txt_c = str(colors[5])
+                        s_bt_c = str(colors[6])
+                        s_pb_c = str(colors[7])
 
-                    def shuffler(counter=shuffle_counter):
-                        shuffle_these = []
-                        for i in checklist:
-                            if not output_window[i]:
-                                shuffle_these.append(checklist.index(i))
-                        shuffles = zip(shuffle_these, color_values)
-                        for i in range(len(shuffle_these)):
-                            change = shuffles.__next__()
-                            shuffled[(change[0])] = change[1]
-                        output_window['shuffle_frame'](visible=True)
-                        s_bg_c = str(shuffled[0])
-                        s_txt_c = str(shuffled[1])
-                        s_txt_in_c = str(shuffled[2])
-                        s_in_c = str(shuffled[3])
-                        s_scr_c = str(shuffled[4])
-                        s_bt_txt_c = str(shuffled[5])
-                        s_bt_c = str(shuffled[6])
-                        s_pb_c = str(shuffled[7])
                         s_theme = str(f'# Custom {name} LookAndFeel Theme.\n'
                                       f'# Generated using LookyFeely.\n'
                                       f'import PySimpleGUI as sg  # Please change \'sg\' to your liking.\n'
-                                      f'sg.LOOK_AND_FEEL_TABLE[\'{name_safe}_shuffled{str(counter)}\'] = {{\'BACKGROUND\': \'{s_bg_c}\',\n    \''
+                                      f'sg.LOOK_AND_FEEL_TABLE[\'{name_safe}_shuffled{str(shuffle_counter)}\'] = {{\'BACKGROUND\': \'{s_bg_c}\',\n    \''
                                       f'TEXT\': \'{s_txt_c}\',\n    \'INPUT\': \'{s_in_c}\',\n    \''
                                       f'TEXT_INPUT\': \'{s_txt_in_c}\',\n    \'SCROLL\': \'{s_scr_c}\',\n    \''
                                       f'BUTTON\': (\'{s_bt_txt_c}\', \'{s_bt_c}\'),\n    \''
                                       f'PROGRESS\': (\'{s_pb_c}\', \'{s_in_c}\'),\n    \'BORDER\': {str(bor_w)},\n    \''
                                       f'SLIDER_DEPTH\': {str(sl_bor_w)},\n    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
-                                      f'sg.ChangeLookAndFeel(\'{name_safe}_shuffled{str(counter)}\')\n\n')
+                                      f'sg.ChangeLookAndFeel(\'{name_safe}_shuffled{str(shuffle_counter)}\')\n\n')
                         return s_theme
+
+                    def shuffler(colors=color_values):
+                        rs(colors)
+                        s_theme = generate_shuffled_theme(colors=colors)
+                        scrambled_values = colors
+                        return [s_theme, scrambled_values]
+
+                    def adjust_readability(colors):
+                        for i in colors:
+                            colors[colors.index(i)] = colour.Color(colors[colors.index(i)])
+                        if colors[0].luminance < 0.5:
+                            predisposition = 'dark'
+                            lum = [round(colors[0].luminance, 1), 1, 0.3, 0.8, 0.4, 0.2, 0.9, 0.7]
+                            for y in range(8):
+                                lum[y] = lum[y] * colors[y].luminance
+                                colors[y].luminance = lum[y]
+                        else:
+                            predisposition = 'light'
+                            lum = [round(colors[0].luminance, 1), 0.2, 0.3, 0.1, 0.4, 0.9, 0.5, 0.7]
+                            for y in range(8):
+                                lum[y] = lum[y] * colors[y].luminance
+                                colors[y].luminance = lum[y]
+                        return colors
 
                     while True:
                         output_window_events, output_window_values = output_window.Read()
+
+
                         if output_window_events in (None, 'Exit'):
                             output_window.Close()
                             window_1.BringToFront()
                             break
                         if output_window_events == 'shuffle':
-                            checklist = ['bg', 'txt', 'in', 'txt_in', 'scr', 'bt_txt', 'bt', 'pb']
-                            for i in checklist:
-                                output_window[i](True)
-                            shuffled = color_values
-                            rs(shuffled)
                             shuffle_counter = shuffle_counter + 1
-                            s_theme = shuffler()
+                            global s
+                            global s_theme
+                            global s_colors
+                            s = shuffler()
+                            s_theme = s[0]
+                            s_colors = s[1]
+                            output_window['shuffle_frame'](visible=True)
+                            output_window['shuffled_theme'](s_theme)
+
+                        if output_window_events == 'adjust':
+                            output_window['adjust'](visible=False)
+                            output_window['revert'](visible=True)
+                            adjusted = adjust_readability(colors=s_colors)
+                            adjusted_theme = generate_shuffled_theme(adjusted)
+                            output_window['shuffled_theme'](adjusted_theme)
+
+                        if output_window_events == 'revert':
+                            output_window['revert'](visible=False)
+                            output_window['adjust'](visible=True)
                             output_window['shuffled_theme'](s_theme)
 
                         if output_window_events == 'copy':
@@ -778,7 +797,7 @@ while True:
                                         theme = user_output     # Tried and tested :).
                                         exec(theme)             # Nifty as ever for adjusting the background color in a pinch.
                                 if output_window_events == 'shf_preview':
-                                    s_theme = shuffler()
+                                    s_theme = shuffler()[0]
                                     user_output = output_window_values['shuffled_theme']
                                     if user_output == s_theme:
                                         exec(s_theme)
@@ -918,7 +937,7 @@ while True:
             viewer.NonBlocking = True
             if viewer_e in (None, 'Exit'):
                 viewer.Close()
-                break
+                breaki
     if 'checkout' in window_1_events:
         # I don't want to go importing this big dog if I'm not going to use him.
         from webbrowser import open_new_tab as hyp_lnk
@@ -928,6 +947,7 @@ while True:
             hyp_lnk('https://www.github.com/definite-d/PSG-LookyFeely/')
         if window_1_events == 'checkout_psg':
             hyp_lnk('https://www.github.com/PySimpleGUI/PySimpleGUI/')
+
     if window_1_events == 'Help':
         help_text = 'Current Version: {0}\n' \
                     'Username: {1}\n\n' \

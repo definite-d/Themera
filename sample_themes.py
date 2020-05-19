@@ -440,19 +440,151 @@ sg.LOOK_AND_FEEL_TABLE['CafeAuLait'] = {'BACKGROUND': 'navajowhite',
 
 sg.ChangeLookAndFeel('CafeAuLait')
 # =======================================================================
+# Custom Weird LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['Weird'] = {'BACKGROUND': '#9587be',
+    'TEXT': '#f6deee',
+    'INPUT': '#fccfb9',
+    'TEXT_INPUT': '#fa1486',
+    'SCROLL': '#83f636',
+    'BUTTON': ('#57916b', '#89eaae'),
+    'PROGRESS': ('#afa1c7', '#fccfb9'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('Weird')
+# =======================================================================
+# Custom Weird LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['Weird_shuffled1'] = {'BACKGROUND': '#57916b',
+    'TEXT': '#83f636',
+    'INPUT': '#9587be',
+    'TEXT_INPUT': '#89eaae',
+    'SCROLL': '#afa1c7',
+    'BUTTON': ('#fa1486', '#f6deee'),
+    'PROGRESS': ('#fccfb9', '#9587be'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('Weird_shuffled1')
+# =======================================================================
+# Custom Grayson LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['Grayson'] = {'BACKGROUND': '#444',
+    'TEXT': 'white',
+    'INPUT': '#ededed',
+    'TEXT_INPUT': '#090909',
+    'SCROLL': '#0d0d0d',
+    'BUTTON': ('#020202', '#dedede'),
+    'PROGRESS': ('#535353', '#ededed'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('Grayson')
+# =======================================================================
+# Custom adf LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['FauxChocolat'] = {'BACKGROUND': '#31231e',
+    'TEXT': 'white',
+    'INPUT': '#b5866e',
+    'TEXT_INPUT': '#241b18',
+    'SCROLL': '#2d221e',
+    'BUTTON': ('#201916', '#ad7c66'),
+    'PROGRESS': ('#402e22', '#b5866e'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('FauxChocolat')
+# =======================================================================
+# Custom adf LookAndFeel Theme.
+# Generated using LookyFeely.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+sg.LOOK_AND_FEEL_TABLE['FauxChocolat2'] = {'BACKGROUND': '#ad7c66',
+    'TEXT': '#2d221e',
+    'INPUT': 'white',
+    'TEXT_INPUT': '#201916',
+    'SCROLL': '#402e22',
+    'BUTTON': ('#b5866e', '#31231e'),
+    'PROGRESS': ('#241b18', 'white'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.ChangeLookAndFeel('FauxChocolat2')
+# =======================================================================
 # =======================================================================
 
 theme_name = str(sg.theme())
 # theme_name = 'theme'
 
-preview_layout = [[sg.Text((f'This is the {theme_name} theme.'))],
-                        [sg.Text('This window does nothing.')],
-                        [sg.Text('Only the exit button works.')],
-                        [sg.InputText('...just a textbox', size=(60, 8))],
-                        [sg.Exit(' Exit ', key='Exit')]]
-preview = sg.Window(title=(f'{theme_name} Theme Preview'), layout=preview_layout, icon=icon, resizable=False)
-while True:
-    preview_events, preview_values = preview.Read()
-    if preview_events in (None, 'Exit'):
-        preview.Close()
-        break
+# preview_layout = [[sg.Text((f'This is the {theme_name} theme.'))],
+#                         [sg.Text('This window does nothing.')],
+#                         [sg.Text('Only the exit button works.')],
+#                         [sg.InputText('...just a textbox', size=(60, 8))],
+#                         [sg.Exit(' Exit ', key='Exit')]]
+# preview = sg.Window(title=(f'{theme_name} Theme Preview'), layout=preview_layout, icon=icon, resizable=False)
+# while True:
+#     preview_events, preview_values = preview.Read()
+#     if preview_events in (None, 'Exit'):
+#         preview.Close()
+#         break
+
+# color_names = []
+# for j in color_names_list:
+#     color_names.append(([sg.Text(text=(str(j)),
+#                                  size=(20, 1),
+#                                  text_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['TEXT_INPUT'],
+#                                  background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['INPUT']),
+#                          sg.DummyButton('', button_color=('#000000', str(colour.Color(str(j)).get_hex_l())),
+#                                         size=(10, 1))]))
+#
+# viewer_layout = [
+#     [sg.Text('Valid Color Names', font=('Helvetica', 18))],
+#     [sg.Text(text=('These are the names of ' + str(len(color_names)) + ' valid color names.'))],
+#     [sg.Text('Just for reference.')],
+#     [sg.Text('Ranked from darkest to lightest.')],
+#     [sg.Column(layout=color_names, size=(250, 200), scrollable=True, vertical_scroll_only=True,
+#                background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['INPUT'])],
+#     [sg.Button('Exit')]
+# ]
+# viewer = sg.Window('Valid Color Name List', layout=viewer_layout,
+#                    location=(window_1.CurrentLocation()[0] + 60, window_1.CurrentLocation()[1] + 100))
+# while True:
+#     viewer_e = viewer.Read()[0]
+#     viewer.NonBlocking = True
+#     if viewer_e in (None, 'Exit'):
+#         viewer.Close()
+#         breakcolor_names = []
+# for j in color_names_list:
+#     color_names.append(([sg.Text(text=(str(j)),
+#                                  size=(20, 1),
+#                                  text_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['TEXT_INPUT'],
+#                                  background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['INPUT']),
+#                          sg.DummyButton('', button_color=('#000000', str(colour.Color(str(j)).get_hex_l())),
+#                                         size=(10, 1))]))
+#
+# viewer_layout = [
+#     [sg.Text('Valid Color Names', font=('Helvetica', 18))],
+#     [sg.Text(text=('These are the names of ' + str(len(color_names)) + ' valid color names.'))],
+#     [sg.Text('Just for reference.')],
+#     [sg.Text('Ranked from darkest to lightest.')],
+#     [sg.Column(layout=color_names, size=(250, 200), scrollable=True, vertical_scroll_only=True,
+#                background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['INPUT'])],
+#     [sg.Button('Exit')]
+# ]
+# viewer = sg.Window('Valid Color Name List', layout=viewer_layout,
+#                    location=(window_1.CurrentLocation()[0] + 60, window_1.CurrentLocation()[1] + 100))
+# while True:
+#     viewer_e = viewer.Read()[0]
+#     viewer.NonBlocking = True
+#     if viewer_e in (None, 'Exit'):
+#         viewer.Close()
+#         break
