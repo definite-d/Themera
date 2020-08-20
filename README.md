@@ -10,7 +10,7 @@ https://www.github.com/definite-d/PSG-LookyFeely/
 https://www.github.com/PySimpleGUI/PySimpleGUI/
 ___________________________________________________________________________________
 
-##What's LookyFeely?
+## What's LookyFeely?
 
 LookyFeely is a utility created by definite_d (me) to make the creation of
 custom PySimpleGUI Look and Feel theme code a breeze while allowing for express 
@@ -46,7 +46,7 @@ All themes generated with LookyFeely are free to be used as you choose; the LGPL
 the Sample Themes too.
 ______________________________________________________________________________________
 
-##Summary, Other Details...
+## Summary, Other Details...
 
 Well, in summary, it's a swanky theme code generator :smiley:.
 
