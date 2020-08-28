@@ -519,72 +519,52 @@ sg.LOOK_AND_FEEL_TABLE['FauxChocolat2'] = {'BACKGROUND': '#ad7c66',
     'PROGRESS_DEPTH': 0}
 
 sg.ChangeLookAndFeel('FauxChocolat2')
+
+# =======================================================================
+# =======================================================================
+                 #
+#  #                            ##     ###
+#  #  #  # #  ## #  ##  ###    #  #   #
+#  # # # ##  #   # #  # #  #      #   ###
+#  # ### #    ## # #  # #  #     #    #  #
+# #  #   #     # # #  # #  #    #     #  #
+ #    ## #   ##  #  ##  #  #   #### #  ##
+# =======================================================================
+# =======================================================================
+# Custom Unravel_TokyoGhoul PySimpleGUI Theme.
+# Generated using LookyFeely v2.6.34.
+import PySimpleGUI as sg  # Please change 'sg' to your liking.
+Unravel_TokyoGhoul_themedict = {'BACKGROUND': 'black',
+    'TEXT': '#c50000',
+    'INPUT': '#9d0c0c',
+    'TEXT_INPUT': '#100c0c',
+    'SCROLL': '#241414',
+    'BUTTON': ('black', '#791414'),
+    'PROGRESS': ('#581818', '#9d0c0c'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.theme_add_new('Unravel_TokyoGhoul', Unravel_TokyoGhoul_themedict)
+sg.theme('Unravel_TokyoGhoul')
 # =======================================================================
 # =======================================================================
 
 theme_name = str(sg.theme())
 # theme_name = 'theme'
 
-# preview_layout = [[sg.Text((f'This is the {theme_name} theme.'))],
-#                         [sg.Text('This window does nothing.')],
-#                         [sg.Text('Only the exit button works.')],
-#                         [sg.InputText('...just a textbox', size=(60, 8))],
-#                         [sg.Exit(' Exit ', key='Exit')]]
-# preview = sg.Window(title=(f'{theme_name} Theme Preview'), layout=preview_layout, icon=icon, resizable=False)
-# while True:
-#     preview_events, preview_values = preview.Read()
-#     if preview_events in (None, 'Exit'):
-#         preview.Close()
-#         break
+def main():
+    preview_layout = [[sg.Text((f'This is the {theme_name} theme.'))],
+                        [sg.Text('This window does nothing.')],
+                        [sg.Text('Only the exit button works.')],
+                        [sg.InputText('...just a textbox', size=(60, 8))],
+                        [sg.Exit(' Exit ', key='Exit')]]
+    preview = sg.Window(title=(f'{theme_name} Theme Preview'), layout=preview_layout, icon=icon, resizable=False)
+    while True:
+        preview_events, preview_values = preview.Read()
+        if preview_events in (None, 'Exit'):
+            preview.Close()
+        break
 
-# color_names = []
-# for j in color_names_list:
-#     color_names.append(([sg.Text(text=(str(j)),
-#                                  size=(20, 1),
-#                                  text_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['TEXT_INPUT'],
-#                                  background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['INPUT']),
-#                          sg.DummyButton('', button_color=('#000000', str(colour.Color(str(j)).get_hex_l())),
-#                                         size=(10, 1))]))
-#
-# viewer_layout = [
-#     [sg.Text('Valid Color Names', font=('Helvetica', 18))],
-#     [sg.Text(text=('These are the names of ' + str(len(color_names)) + ' valid color names.'))],
-#     [sg.Text('Just for reference.')],
-#     [sg.Text('Ranked from darkest to lightest.')],
-#     [sg.Column(layout=color_names, size=(250, 200), scrollable=True, vertical_scroll_only=True,
-#                background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['INPUT'])],
-#     [sg.Button('Exit')]
-# ]
-# viewer = sg.Window('Valid Color Name List', layout=viewer_layout,
-#                    location=(window_1.CurrentLocation()[0] + 60, window_1.CurrentLocation()[1] + 100))
-# while True:
-#     viewer_e = viewer.Read()[0]
-#     viewer.NonBlocking = True
-#     if viewer_e in (None, 'Exit'):
-#         viewer.Close()
-#         breakcolor_names = []
-# for j in color_names_list:
-#     color_names.append(([sg.Text(text=(str(j)),
-#                                  size=(20, 1),
-#                                  text_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['TEXT_INPUT'],
-#                                  background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['INPUT']),
-#                          sg.DummyButton('', button_color=('#000000', str(colour.Color(str(j)).get_hex_l())),
-#                                         size=(10, 1))]))
-#
-# viewer_layout = [
-#     [sg.Text('Valid Color Names', font=('Helvetica', 18))],
-#     [sg.Text(text=('These are the names of ' + str(len(color_names)) + ' valid color names.'))],
-#     [sg.Text('Just for reference.')],
-#     [sg.Text('Ranked from darkest to lightest.')],
-#     [sg.Column(layout=color_names, size=(250, 200), scrollable=True, vertical_scroll_only=True,
-#                background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['INPUT'])],
-#     [sg.Button('Exit')]
-# ]
-# viewer = sg.Window('Valid Color Name List', layout=viewer_layout,
-#                    location=(window_1.CurrentLocation()[0] + 60, window_1.CurrentLocation()[1] + 100))
-# while True:
-#     viewer_e = viewer.Read()[0]
-#     viewer.NonBlocking = True
-#     if viewer_e in (None, 'Exit'):
-#         viewer.Close()
-#         break
+if __name__ == __main__:
+    main()

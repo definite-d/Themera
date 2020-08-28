@@ -11,3 +11,13 @@ PyInstaller ^
 --icon="icon\lf_ico.ico" ^
 --name="PSGLookyFeely" ^
 PSGLookyFeely.py
+
+python ^
+-m ^
+PyInstaller ^
+--windowed ^
+--onedir ^
+--clean ^
+--icon="icon\lf_ico.ico" ^
+--name="PSGLookyFeely" ^
+PSGLookyFeely.py

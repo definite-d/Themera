@@ -1,7 +1,7 @@
 # Welcome...
 # ... to the code of LookyFeely.
 # https://github.com/definite-d/PSG-LookyFeely/
-version = __version__ = 'v2.3'
+version = __version__ = 'v2.6.34'
 
 '''
 
@@ -14,9 +14,9 @@ version = __version__ = 'v2.3'
 %  %            % %   % %   % %   % %   %     \     %  %  %  %
 %  %,,,,,,,,,   % \,,,% %   % \,,,% %   %  %\  \    %  \,,%  %
 %,,,,,,,,,,,/    \,,,,,%     \,,,,,%    %,,% \,,\   \,,,,,,  %
-                                                           % %
-                                                    ,,,,,,,% %
-                                                   /,,,,,,,,%
+														   % %
+													,,,,,,,% %
+												   /,,,,,,,,%
 fffffffffffff                       lll
 fff                                 lll
 fff                                 lll
@@ -27,50 +27,55 @@ fff         eeeeeeee    eeeeeeee    lll       yyy   yyy
 fff         eee         eee         lll       yyy   yyy
 fff         eee   eee   eee   eee   lll  lll  yyy   yyy
 fff          eeeeee      eeeeee      llllll    yyyyyyyy
-                                                    yyy
-                                            yyy	    yyy
-                                              yyyyyyy
-
-wow... I typed that by hand.
-(EDIT: Just found out there was a Python module to automatically type this stuff. [14/12/2019])
+													yyy
+											yyy	    yyy
+											  yyyyyyy
+											  
+See the GitHub repo for more details.
 
 '''
-
-# ___________________________________________________________________________________
-# LookyFeely is a utility created by definite_d (me) to make the creation of
-# custom PySimpleGUI Look and Feel theme code a breeze, to be a christmas gift to
-# PySimpleGUI users, and to act as a bigger 'Thank You' to MikeTheWatchGuy for
-# PySimpleGUI ('bigger because I've already said 'Thank You' before).
-#
-# Well, it's a shameless code generator :).
-# It depends on the PySimpleGUI Tkinter version; what I like to call PSG Vanilla.
-# As for PEP8, I'll leave that to PyCharm to handle. Hopefully I'll adhere that way.
-#
 # Development began on 29/11/2019, bare minimum was completed on 1/12/2019.
 # ===================================================================================
 # ___...:::---=== Code Starts Here. ===---:::...___
 
 # Necessary import calls.
 import _tkinter
-import colorpiq
-import colour
-import PySimpleGUI as sg  # I'm calling it 'sg' to comply with the PySimpleGUI Docs.
-from os.path import getsize as filesize
-from os.path import isfile
+from os import getcwd as cwd
 from os import getlogin as user
 from os import system as cmd
-from PIL_supported_image_types import rw_types
+from os.path import getsize as filesize
+from os.path import isfile
+from random import choice as rc
+from random import shuffle as rs
+
+import PySimpleGUI as sg  # I'm calling it 'sg' to comply with the PySimpleGUI Docs.
+import colour
 from PIL import Image as img
 from PySimpleGUI import Print as Print
 from pyperclip import copy
-from random import choice as rc
-from random import randint as rn
-from random import shuffle as rs
+
+import colorpiq
+from PIL_supported_image_types import rw_types
+from PSG_Loc8 import Locator
 
 sg.SetOptions(font=('Helvetica', 9),
               auto_size_text=True,
               element_padding=(8, 2),
               ttk_theme='alt')
+
+# User preferences.
+prefs_path = f'{cwd()}/lookyfeely_config.py'
+def generate_prefs_file():
+	with open(prefs_path, 'w') as file:
+		print('\'\'\'', file=file)
+		print('LookyFeely Config File\nExternal resource for controlling user preferences on the fly.', file=file)
+		print('\'\'\'\n', file=file)
+		print('theme_switch = \'LookyFeely Light Mode\'', file=file)
+		file.close()
+if not isfile(prefs_path):
+    generate_prefs_file()
+try:from lookyfeely_config import *
+except ValueError: generate_prefs_file()
 
 # Icons
 colorpiq.DEFAULT_ICON = b64icon = b'iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAYAAAD0eNT6AAAAAXNSR0IArs4c6QAAAARnQU1BAACx\njwv8YQUAAAAJcEhZcwAAimgAAIpoAWMiUdYAAD0zSURBVHhe7d0JeJXVtfBxZsIYCDMyEyYhyCSj\nQAQSFBktCKKiDBJQERVEEQcEtSiIQx0Qrai9KvrV2VrHWoc6tLXW2tbaa/0+LbW1WuzgdLV372+t\ncNLXmDeB4wZy3nX+63l+D69hAzlJzPonOTmpsT/He1/7gw8+OGbt2rUnb9myZedZZ53lhw8f7gcO\nHOgHDx4MAEBW0L2n+0/3oO7D9evXn6z7UfdkamUme/SG/OIXvxj5ne9859tLlix5ctasWTuLi4v9\n6NGjfUFBQekLYOjQoX7YsGEAAGQV3X+6B3Uf6l7U/ah7Uvel7k3dn4kLgk8//bTj1q1bv11SUvLa\n5MmTS2/YwQcf7AcNGlRKb3D//v197969fbdu3Xznzp19hw4d/AEHHAAAgGm673Tv6f7TPXjQQQeV\n7sWyHan7Uvem7k+Jgdd0nzrnOqZWbGbOjh07Rl544YW3Tpky5cPCwsLSG1L2qY4+ffr4jh07+ubN\nm/sGDRr42rVre/kjAABkNd2Huhd1P+qe1H351SDQfTp16tQPdb/qnpU/kzmjZXLOOedcM3fuXD9i\nxIj/fI1Db0S7du18Tk5O7I0GAAAV6d7U/al7tGyn6n495phjvO7bav+MgPe+zsaNG+fPnj37Q33G\n9NMY+kzm5+f7pk2bxt4oAACw53Sf6l7V/ap7VvftnDlzPrz88svn6x6WM/t3duzY0XHlypXP6p0W\nBgwY4IcMGeK7d+/uGzVqFHsDAADAN6f7Vfes7lvdu7p/V61a9azuY/n9/TO33377pGOPPfZvZV/j\n13sw6tcu5LcAAMA+pPtW967uX93Duo+3b98+SX5v387NN9980fTp00s/DaH3VNR7MnKHPgAA9h/d\nu7p/dQ/rPp4xY4bX/Sy/t29m7dq16w877LDSTz1odbRo0SL2GQMAAPue7mHdx7qXdT+vW7duvTx9\n786qVavWjxs3rvQf0tpo2LBh7DMDAAD2H93Hupd1P+uePvvss/deBGzatGn9hAkTSv/yfv36+fr1\n68c+EwAAYP/Tvaz7Wfe07uvNmzeHR8D3vve9s6dMmfKfhyusW7du7D8OAACqj+7nsofZnzp1qr/9\n9tvPlqd/s3nsscfGTJs27XP92oLiAX0AAMhcuqfLdvb06dM/f+qpp8bI09Mb51yL448//m39NgPV\nuHHj2H8MAABkDt3XZbv7hBNOeFv3uTx9z+fCCy98QB9tSL/FoHXr1rH/CAAAyDy6t3V/6x5fv379\nA/K0PZubb765SO9EoPWgjzokTwIAAAmi+1v3uO7z2267rUieVvXozx6eP3/+7/UP6R0JuNMfAADJ\no/tb97ju8wULFvxe97s8vfK57rrrzhkzZgyf+gcAIOHKvhSge33Lli3nyNPixznXYfHixR/rvQcP\nPPBAX7Nmzdi/EAAAZD7d47rP9YGCSkpKPtY9L0+vOJs2bTp5/PjxpT9pKC8vL/YvAwAAyaH7XPe6\nPkrg5s2bT5anlR+pggbHH3/8r/VRhPr27ctH/wAAGKD7XPe67vfjjjvude99HXl6NI8++uh0fcQ/\nvbNAq1atYv8SAACQPLrX9bMA+h0B27ZtGyVPi2bFihXfGz58OPf8BwDAGN3rev8+fVyAs8466w55\n2q7x3jefPXv2+/rpAb7vHwAAe3S/656fM2fO+7r35Wk1ajz44IOHT5o0qfTT/9z5DwAAe3S/awAc\nccQR/qGHHpokT6tR47zzzrtk1KhRpZ/+r1evXuwfBAAAyaX7Xff8IYcc4s8999xdPy64pKTkOX2g\ngD59+sT+IQAAkHy653XfL1q06DH57xo1jj322L9rFXTs2DH2DwAAgOTTPa/7fs6cOW/p9/93PPTQ\nQ/+lRdCyZcvYPwAAAJJP97zue9n779V48803T5k4cWJpETRt2jT2DwAAgOTTPa/7Xu8IWGPhwoXH\n6g8J0O8PzMnJif0DAAAg+XTP674fPXq0r3H11Vf/RH9IgKpdu3bsHwAAAMmne173vT4qYI177rnH\n9+vXr1StWrVi/wAAAEg+3fO67/V+ADW2bNni+/fvzw8AAgDAuLIfDFQaAFdeeWXppwP05wUTAAAA\n2KV7Xvd9aQBcccUVpQHAgwABAELocilTp04d36xZM9+2bVvfqVMn361bN9+gQYPPcnJydrZu3Xqn\n/PdO+Uh058CBA3fKMto5YsSInaNHj945atSoncOGDds5ePDgnf3799/Zu3fvnV27dt3ZqlWrnfXq\n1dvZokWL0r9L/8727duXPryt3rHtq/+2inv+sAsBAABIm34NWe9I1q5du9LlLsv8w8LCwg9laf9m\nwIAB2xcsWLD99NNPv0WW9NELFy6cdeWVV8564IEHZv385z+ftWbNmu7Dhw/Pu/HGG/P+/ve/5znn\n9si7776bd/nll+fJ4sq79957R+jf9fDDD8+64YYbZi1fvnyW/LuzTjjhhEvPPffc7ccff/x2WW7b\n5d9/euLEiR8WFBR8KCHykUSE79Chg2/YsGFpIGTzfd4IAABAlXTR6yPHyaL/Qpb8B/JR+TOLFy++\nY/LkyWds3rx55mOPPTbm7rvvzvXeqzryZzJqUs9X7saNG1u/9NJL02+55ZaZI0aMmFlSUnKFxMkd\nEgX3jR8//v38/PwPNA70turj5VuPAwIAAPAfuvT00+nt27f/YsyYMe9Pmzbt3pkzZ5556623Hvns\ns88eKB+JN5Vz5kZvl/rJT34y7s477zxSQuf4U0899b+GDBlyf3Fx8fsSBso3b968NIgsxAEBAABZ\nrlGjRl4++tUfBf/m0Ucffdu555577Msvv9xXFmIT+f2sH305fPDBB02eeuqpcQsWLJh6+umnXzN6\n9Ojbxo4d+4cuXbr8RcNAX4ZJewwdAgAAspDeMa9Xr14fzZo16/lVMj/96U/Heu/ryu8xezgSBvXl\nZdb4kUceGb9w4cL5J5100i0SBS9LSP25TZs2Tj+ToneClKMZiQAAgCyRm5vre/bsuXPSpEnfP+us\ns46V5dVWns7s5ZEwaPTjH/944JIlS6YuXbr0GgmCB4cOHfonvcOkfgkhU6KAAAikr8jOnTt/0KVL\nl3fl11J6jS7vduvW7d2GDRt+GvdyA7B/6Neqe/To4YuKip5bt27dmSz96hl5uTd84YUXBmkUiGsH\nDhz4B31ydSIAAum9RR944IFp+qkgVNS4ceOH4l5uAPatJk2a6KO7/u2444679cEHHxwrT6vWkQVY\nR3Tyfqd4UGwQx4nBorn4dqFzD5c4t13ckvr1QTH1QO/bye93ExPEqeJW8XPxqfCd5H1NXuqfScwc\ndthht8ovsa+7/YUACCQf8fvt27dPlGsmZnJycu6XX2JfdgD2Pv2688iRI3fIR5lny2JsI0/b5yP/\nTgfnruns3Krhzl221LmR4pBLnJv3uHPDRXvR5XV52v8410d0Em1EM9FA1P4f7xvLLm8v2om2qV/b\ne+fq/a9zdeRMPdFItBAHiO6irxguBv7ZuVbyb/QXE8SJQv/9YfJ8LBdbFzo3Jd+5m+R5dJ3lL66Z\netarZeR5aDJ06FA+A5B0+ihUt99++yS5ZmJGAuAB+SX2ZQdg79GvLU+YMGHHZZdddrYsuJbytL0+\nsrgOcG5ld+fW6EJd79zRP3Ku6zOyeD9xrt0X3jfSf1rkCP2gv7rp89FMtJKQaPSlPPtfODdIdH1V\nwkGe99kPS0gsc27Jyc7dON/7C7rJbeyaurn7bH71q1817969+8dyGfu63F8IgEAEQNVDAAD7lj5g\njbzv/tPq1av3+uJ37l5Z9ucscG7BTfIRtSz6gn/JR+Bf7lqq+hn9uKWbNHo79HGCWkoktJJIGCR6\nvuLczKed+9YW55ZJIFxymPe/6iaHGqdeNEFz7733Frdu3fpLuYx9ne4vBEAgAqDqIQCAfadXr15f\nLFq0aJNuL/nv4HHu9x2cW7fIuamy8Af9wrlO/961HGuKuOWZDXY9wKFz+f92rsfbzo2XECq+3rnT\nTnfuionOvdM99eLb4znqqKPm6HdkyGW1IgACEQBVDwEA7H0tW7b0hx122I8eeOCB/vLfQeP9K4Od\nO32dc4c+51znf3qfJwsvmxf+ntIwyJMw6CVh0PNnEgb3OXfECueunef98mapF2/sHHPMMd+RX2Jf\nt/sTARCIAKh6CABg75L305+sXbt2hVx/43Hu047OnXyGc4e/6n0PWWT6tfu4JYf0NBTdJArWLE29\nqCuMHKg9duzYx/SyuhEAgXYXAPLKrnfXS+7Aqx5xB17/pCFye/R23feqr7J0CQBg72jatKmfPHny\nj37729/2k//+RuPc1snOHXajfi2fpb9vONfo394vH5B6kVcYOZQ7ZsyYv+lldSMAAu0uAJxzvS5/\n2PuTb/b+tFvsWL7N+7UPeL/taX9C6qbGDgEAhMvPz/+3fNR/qVynPfI+qKlza090bshT3h8g+6d2\nuYWFvUve5X/h3JsHpF78Fea5556TtdHpn3IZ+7renwiAQHsSABff5/0J13t/4lY7Ft3g/ar/4/31\nTxIAwL6ijzQqHy3+6a677jpC/jutSS3+5c6N+X/et45dVtj7nOv6olzUS70aKsy99957pP7wILms\ndgRAoD0KgHu9ny8BsFiWphUnbpEAuNv7LU+441M3NXYIAOCbkf93/IwZM56W9yHt5b/TGucuP3XX\n4m9RYUFh33Ju0qOpV0PszJkz58QGDRrEvs73NwIgEAFAAAB7W9euXf3ChQuvlOu0xrlbxzo3/ik+\n4q8udSUADl2denXEjrxe75BfYl/v+xsBEIgAIACAvemAAw744pJLLjlDrvd45P1Ma+dKbnSu05fx\niwn7h34L5QWLU6+WCiO/WbugoOCHepkJCIBABAABAOwtAwcO/OLKK6+cLNd7PM7d9C3nxrzDvfqr\nn3Mt/u3clZV+l4Ycajxs2LCM+A4ARQAEIgAIAGBvGDt27BePPfbYFLneo5H3LY2cm3eZ9z0rLCJU\nD+f6feHcJx1Sr6IK88QTT3Rq1arVP+Qy9m1gfyMAAhEABAAQaujQoe/+8pe/3OOP/J37zWjvJ/+c\nj/ozi3N9X5aLuqlXU4XZunXrjPbt28e+DVQHAiAQAUAAACHGjRv35Q9+8IOecr1H49yF33JuwCdx\nCwjVy7nZT6ReTbEzceLEkrp168a+HVQHAiAQAUAAAN9UYWHhl+l95H/SRd53j10+qG45EgAz16Re\nVbEze/bs78kvsW8L1YEACEQAEADANzF48OAvn3322T1a/rJdcmX5P+p9068tHWQK5+RV5FYflXqV\nVRg5lDNq1KhX9DJTEACBCAACAEhXjx49Pr/zzjvTWP5TfsLX+zObc22c99/uknq1VRg51FCi7yO9\nzBQEQCACgAAA0tG9e3d/8cUXz5Hr3Y5zv2zt3GBZ/jx+f6ZzrvcHctE29aqrMD/72c+Gtm/f/jO5\njH27qA4EQCACgAAA9lTz5s39+vXr9+gR/pz761jnJu7gZ/Mng3P9n0m96mLnoosumtG2bdvYt4vq\nQgAEIgAIAGBPNGrUyM+fP3+7XO92nPt9d+emfxy3aJCZ5PVV5et24cKF62vXrh37tlFdCIBABAAB\nAOyJsWPH/kLeH7SS6yrHuQ+bOnfgC3FLBpmqkQTA1FNTr8LYmTRp0u01a9aMfduoLgRAIAKAAAB2\nR97Rfron3+sv7y9k+Y/9ifd1YpYMMpVzzeVVd8Xs1KuxwsihnCFDhryql5mEAAhEABAAQFVatWrl\n5f3raXJd5cj7ivrOzZXlX7/CgkGm6yjuq/Q7AN59990GvXv3zpifAVCGAAhEABAAQGXq1KmjP9P/\nbrne7Tj3rU3eN/naYkESONfvr/K+vk3qVVlhnnzyyaGtW7fOqO8AUARAIAKAAAAqI+9T35cN0VKu\nqxznvn0+P8M/uZwb8VzqVRk7ixcvntKyZcvYt5HqRAAEIgAIACCOvsO/4IILKn1kuLLx/s5C53q4\nuMWCJKilAXB56tUZO8cdd9z6TLsDoCIAAhEABADwdfrOfu7cuc/KdZUj26OZc6P/HL9YkAxNJADm\nV3ofDzlQs6io6J5atWrFvq1UJwIgEAFAAABf17dvX/fiiy/2kesqx7lpt3KP/2Rzrom8m189OvUq\nrTDymw0KCwv/KJexbyvViQAIRAAQAMBXydu8P/XUU6v8lLCOc1cs5ev+FuRLBDzTNfVqrTDvvPNO\n8y5dunwol7FvL9WJAAhEABAAwFcNGTLkL/L/fSO5rnSc+6irc0P/Fb9QkCTOdf1NVa/vp556qlj2\nhJPL2LeX6kQABCIACACgTG5urt+wYcNqua5ydn3qv27sQkGyODf++dSrNXaOOeaYo5o0aRL79lLd\nCIBABAABAJSZOHHiX2Qr5Mp1peP91RN2PXBMxWWCpKmtAbAx9aqNnWXLlm3NxDsAKgIgEAFAAAAq\nLy/P33DDDVV+9K+fKnZu5GvxywTJkysBsPKM1Ku3wsiBmgMGDLgrE78FUBEAgQgAAgBQxcXF+rX/\npnJd6Th33mnet/jaEkFS7foZAJeNSr16K4wcyhk1atQOvcxEBEAgAoAAAPRr/5s2bTpHrisdWQYN\nnTvoj3GLBEl1oHinW+pVXGGeeOKJFm3atPlALmPfbqobARCIACAAgAEDBvxZNkGVX/t3bsFyaYCv\nLA8knXN935CLhqlXcYW54447xnXo0CEjvwNAEQCBCAACANmtXr16fubMmWvkutKR9wONZFnsiFsi\nSC7nDv1h6lUcO8uXLz+1YcOGsW83mYAACEQAEADIbt27d//i17/+db5cVzrOnSYf/fOT/mypJwEw\ntMo7fS5atOi7tWvXjn27yQQEQCACgABAdps+ffpP5NdKZ9dH/4fw0b85+jMAzl6SejVXGDlQZ9So\nUU9m6ncAKAIgEAFAACB76bf+XXrppUfLdaXj3KojvG/+teWB5GspAbD6wNSrucLIgXoSAO/rZaYi\nAAIRAAQAstegQYN26iaQ60rHuXGPxS8QJJlzvT/Vh3ROvZorzB/+8Iee7du3/4dcxr7tZAICIBAB\nQAAgO6V+5O99cl3pOPdUL+fafxa3QJBsEgAvp17NsXPttdcWd+jQIfZtJ1MQAIEIAAIA2alFixb+\nmmuuOUauKx3nTrjQ+waxCwTJ5tyUR1Ov5tg58cQTl9etWzf2bSdTEACBCAACANlJ3lf+TTZBpZ/+\nl9+r7dxwHvbXpBwJgIlVPvDTrFmzbszk7wBQBEAgAoAAQHYqLCx8SH6tdLx/bID3nWKWBypXS+i3\nS+oDJuWJ7uIgWbZ5bzjX5lXnOoleor8YJsaIQ8RwMVQMEN1FO9FEr//pfX/5O7qK1kI/G9NUNBL1\nRNzzsCf0ZwBcUtV3ANQeMmTIj/QykxEAgQgAAgDZR96u/dKlS1fJdaXj3Mnr+PR/VXJEM9Fblmn+\nm85Nf8W5kVc4t/p851bN8f54CSiNqP8Rvk7qxZrWyJ+TAvtY/vx9YuUA54qGObdpjbxu5N8YqW52\nbpr8uz1Fpx3e95I/kptSX3z9eS7TXp7na/qm/pkKIwdqDRgw4D29zGQEQCACgABA9mnfvv2X9913\n30i5rnTkI9Pn4pdHNtPvne/5pXNDnnVukizgS4527o0C+Y16qRdbtY08D82ce63AucUjnNt4rnNj\nxaTHnSv4md7j3/t2ckTDQKOun9wOV+l3ALz22mu92rRpk9HfAaAIgEAEAAGA7CPvK9+X/7cbyXXs\neP9+W/mo9l/xSzDb6KfLu3/ofdHdzp10jHNv9Ui9mBIzuuyd29BXwuAU546UcDn1itRvxc66desm\nt2vXLvZtJ5MQAIEIAAIA2aewsPBB2Wy15Dp2ZFEczo/9bSeLf9ivnDtlhXPvtE+9aLJizj777Msy\n/TsAFAEQiAAgAJBd9J7dy5Yt2yTXlY5zc79d9deQLWsli3/ia85tPk7+o9o/tV8dU1xcfFOmfweA\nIgACEQAEALJL27Zt/caNG4+U60rHueFPxS9Hy/SH4wx6z7mz5sl/1E29KLJu5LbXmTBhwm/0MtMR\nAIEIAAIA2aVz586f/OY3v6nqHuDNnevyTvyStEofF3/uHfL+Lqs+1R838jKo37Nnzx1yGfv2k0kI\ngEAEAAGA7DJ06NC/yMbLkevYce76HrvuMR63KC3S79O/rMpviUx35C+to955551ub7/99thrr712\n7MyZM8e2bNly7NKlS5fJvrrykksuuXLDhg1Xbty4sZQ+bcaMGfPatm07dvLkyWPPO++8sY888sjY\nnTt3jpW/p2/Z36lS/8w+mddff31Uly5dvpTL2LefTEIABCIACABkD338/4KCgvtkiVRxB8Bz5jmX\n6+KXpS3O9f+bczePS930bzTyPrLp888/f+jKlStLVqxYcbV89HyLLPC38/Pz327duvUnupP0MfWb\nNWvm69Sp4/XOdQ0aNIilv6+aNm3q27Rp47t27er79eunf/7LFi1avD1kyJC3p0+f/vYhhxzyjOy7\nqyUSrj7ppJNOnzdv3qFvvPHGob/73e9ayg2rK2qmnr2058QTTzy8efPmsW8/mYYACEQAEADIHhoA\nixcv3ibXlY5zky/etUPil6YVzg2Q5X/Pwambnda8/PLLQ+Qj+AunTZv2w6FDh74ny943atTI169f\nP/blvi/onfTk/VNpUOiPde7du7f++tfhw4f/v8MPP/zXkyZNum716tUbFixYMP61114bLjdaHzpw\nt2GwfPnyjRohcpnxCIBABAABgOyhC6OoqOhYua50nCv6UdzCtMS5/I+duyGt5S/vCzvLR9yL5aP7\nX+jCb9y4cezLOFPoEq9Xr15pHHTp0sX36tXrnfHjx78+derULfPmzTvltttuK/rv//7vfLld9eX8\nf0YW6g21atWK/TszDQEQiAAgAJA99P/3u+66a6Zcx478/95A/pd/NW5p2tFGAuC6k1M3ebeji//k\nk0++bMiQIf9IyqfGq1L2ZQZ9W+jYseMnY8aMebegoOC/Vq5cef1pp5121MiRI/8Q9+cyEQEQiAAg\nAJA9Wrdu/a8f//jHfeQ6dpz7tLNzA/43fnFaoN/qt/SO1M3d7Vx00UWnjBo16u/66X35T9P0Swka\nOHpfhLjfz0QEQCACgABA9hg4cOBH8v90pQ8B7NxV3Z1r9UX88kw+50b9WW5/q9TNrXTkcNspU6bc\npo+ZoP+JzEQABCIACABkD3ln+YYst4ZyHTvO3bhI9qPR7wDQR/i7eE7qplY67733XuepU6e+uT/v\n0IdvhgAIRAAQAMgO+h0A3bt3/y+5rnScm7rE+8YxyzP5nJv8ulxU+T30n332WZfi4uI35TL2ZYjM\nQgAEIgAIAGQHDYBFixbdLdeVjnOHXux9rQrLM/naSgDcODt1M2NHDtWaPXv2j5LwGPjYhQAIRAAQ\nAMgOGgCrVq26Ta4rHeeOfSZ+gSabc8N/KRdVfvR/xhlnLM/NzY192SEzEQCBCAACANlB3pb9mDFj\n5sp1pePckMfjFmiy6c/zP/WU1E2MnU8//bTjoEGDPpbL2JcdMhMBEIgAIACQHfQe7Rs2bKj0pwDK\npqzlXHtznwFwrttO5/7aLnUzY6ekpORqfdAcuUSCEACBCAACANmhW7du/tlnn630XvDy/3oH5wZ/\nGrdEk6uWBMDo21M3MXZ27tzZqX///v+Sy9iXGzIXARCIACAAkB1yc3P/tXXr1p5yHTvOvdLZuXxj\njwHQWAKgZFrqJsbOySefvLxhw4axLzNkNgIgEAFAACA7HHDAAR8+/fTTjeU6dpxb1MG5Fv8Tv0iT\nSYPGuXcPSN3ECiOH6hYVFf1OL5E8BEAgAoAAQHYYNGjQ32ThNZfr2HHu6B7ONTT1GQDnhj0lF5X+\nBDwJoiFdu3b9X7mMfZkhsxEAgQgAAgDZYfz48fowwHlyHTvO3b5If1BO3CJNphwJgMlrUjcvdo4+\n+uhTeMS/5CIAAhEABACyQ2Fh4Z9kK+bKdew4d9ES71t+bYkmmT7073XfSt28CiMHahUXFz+rl0gm\nAiAQAUAAIDvI2/L35ddKx7l5Jd43/doSTS7nun3m3DvtUzevwsihlgUFBR/pJZKJAAhEABAAyA69\nevW6S36tdJwbKgGQU2GRJpVzfV6Ri0q//n/PPfeM69Chg5PL2JcXMh8BEIgAIACQHYqKiqr8OQDe\n1z3B+zoVFmlSOTeqyoc9XrJkyal8/T/ZCIBABAABAPv05wDMmTNnNz8IaPxG+YA5dpkmTwMJgMIz\nUjctdmbOnHlbrVq1Yl9eSAYCIBABQADAPg2AkpKS3QTAKYYeBriZBMClJ6VuWoWRAzmFhYW/1ksk\nFwEQiAAgAGCfBsBpp522mwCYa+gHAeVJACzvlbppFUYO1C0oKPizXiK5CIBABAABAPs0AFavXn2v\nXFc6zk01FAD9JAD+b5/UTaswzz//fK9WrVr9Qy5jX15IBgIgEAFAAMA+DYBly5bdJNeVjnOFZgLA\nud475H1Xq9RNqzA/+MEPJusPR5JLJBgBEIgAIACQNY4SlY5zgwwFQP4zqZsVOyNHjixu1KhR3MsI\nCUIABCIACADYV7t2bd+8efPdBEAfQwFw+E9TNyt2Vq5ceVmdOnViX1ZIDgIgEAFAAMA+/X53ed84\nW64rHed6GAqAmT9M3azYOfPMM2+uW7du7MsKyUEABCIACADYpz/vfuTIkbsJgC5GAqC2BECHM1M3\nK3YmT568VT8rIpdIMAIgEAFAAMC+Jk2aeFl6uwmADkYCoL4EwCGrUjcrdvLy8q7RO0bKJRKMAAhE\nABAAsC83N9fPlpHrSse5tkYCoJEEwLFnpW5WhZEDdQYNGqR3Eox9WSE5CIBABAABAPuaN2/uFy9e\nvJsAaGkkAJpKAKyoNADkfVqDGTNm/FUuY19WSA4CIBABQADAvhYtWvgzzjhjNwHQzEgA5EoArK3q\nMwA5xcXFO/QSyUYABCIACADY16pVK79mzZrdBEATIwHQXALg0ioDYPTo0QSAAQRAIAKAAIB92RUA\nLSQAtpybulkVRg7kDB48mAAwgAAIRAAQALAvuwJA7wOweVHqZlUYOZAzcOBAAsAAAiAQAUAAwL7s\nCoBaEgA1qvpJgDmDBg0iAAwgAAIRAAQA7MuuANDHAcg/MHWzKowcyCkoKCAADCAAAhEABADsy64A\nyJEAOLDKAMjPzycADCAAAhEABADsIwCi0QM9e/YkAAwgAAIRAAQA7CMAotEDBIANBEAgAoAAgH0E\nQDR6gACwgQAIRAAQALCPAIhGDxAANhAAgQgAAgD2EQDR6AECwAYCIBABQADAPgIgGj1AANhAAAQi\nAAgA2EcARKMHCAAbCIBABAABAPsIgGj0AAFgAwEQiAAgAGAfARCNHiAAbCAAAhEABADsIwCi0QME\ngA0EQCACgACAfQRANHqAALCBAAhEABAAsI8AiEYPEAA2EACBCAACAPYRANHoAQLABgIgEAFAAMA+\nAiAaPUAA2EAABCIACADYRwBEowcIABsIgEAEAAEA+wiAaPQAAWADARCIACAAYF/Lli0JgNTogfz8\nfALAAAIgEAFAACB9NWvW9PK24evXr58I+v/5BRdcME+e90onWwJA3qc16Nu372dJev19E3r75Oaa\nRgAEIgAIAKSnQYMGfv78+U8tX75889KlSxPhvPPO23z//fcPlOe/0smizwDUWbt27QXLli2LfVlZ\noW+fS5Ysed5yCBAAgQgAAgDpadOmjb/zzjuPk2tTky0BkE3z8MMPn9qiRYvYt2MLCIBABAABgPTo\nHerk/c1SuTY1BIC9ufnmm1fn5eXFvh1bQAAEIgAIAKSHAMh0BEDZEACoEgFAACA9BECmIwDKhgBA\nlQgAAgDpIQAyHQFQNgQAqkQAEABIDwGQ6QiAsiEAUCUCgABAeuwGQO7D8Qs1aRqISW1TNyurhwBA\nlQgAAgDp2V0AyPbJcW7iaudqrHOudoLU/UP8Qk2aOt65nOvjb6Ml+vY1YqXe4NSbXoUhAFAlAoAA\nQHr2IACaeV/0lYUE7BvODftELnJSb3oVhgBAlQgAAgDp2YMAyHWu6MO4d9jA3iQB8K68j66fetOr\nMAQAqkQAEABIDwGATEEAEABBCAACAOkhAJApCAACIAgBQAAgPQQAMgUBQAAEIQAIAKSHAECmIAAI\ngCAEAAGA9BAAyBQEAAEQhAAgAJAeAgCZggAgAIIQAAQA0kMAIFMQAARAEAKAAEB6CABkCgKAAAhC\nABAASA8BgExBABAAQQgAAgDpIQCQKQgAAiAIAUAAID0EADIFAUAABCEACACkhwBApiAACIAgBAAB\ngPQQAMgUBAABEIQAIACQHgIAmYIAIACCEAAEANJDACBTEAAEQBACgABAeggAZAoCgAAIQgAQAEgP\nAYBMQQAQAEEIAAIA6SEAkCkIAAIgCAFAACA9BAAyBQFAAAQhAAgApIcAQKYgAAiAIAQAAYD0EADI\nFAQAARCEACAAkB4CAJmCACAAghAABADSQwAgUxAABEAQAoAAQHoIAGQKAoAACEIAEABIDwGATEEA\nEABBCAACAOkhAJApCAACIAgBQAAgPQQAMgUBQAAEIQAIAKSHAECmIAAIgCAEAAGA9BAAyBQEAAEQ\nhAAgAJAeAgCZggAgAIIQAAQA0kMAIFMQAARAEAKAAEB6CABkCgKAAAhCABAASA8BgExBABAAQQgA\nAgDpIQCQKQgAAiAIAUAAID0EADIFAUAABCEACACkZ88CYBwBgH3OuYMJAALgmyMACACkZw8CoJn3\nR8ovLRKkpagrKi6ZZMoVcbfTFucmfCIXOak3vQpDAKBKBAABgPTsLgD0IzLnHjrFua1nOnddAmwR\n20TnN+OXadLUk8V45kbnbvrKbbRI377uK5EbXDv1pldhCABUiQAgAJCe3QVAUse5Rg/HL9SkydFf\n26ZuVlYPAYAqEQAEANJjNwCaPF5xmSZRjnfuwANTNyurhwBAlQgAAgDpIQAyHQFQNgQAqkQAEABI\nDwGQ6QiAsiEAUCUCgABAegiATEcAlA0BgCoRAAQA0qMBsHnz5sVybWoIAHvz3e9+dxUBgEoRAAQA\n0tOyZUv//e9/f7lsmoYJU+m3i+lkUwDI+7UGcjDuZWTKo48+en7z5s1j344tIAACEQAEANJTq1Yt\nP3z48L8XFxf/ady4cYlw1FFH/emmm26aKs9/pZMtASDv0+qXlJS8UlRUFPuyskLfPkeOHPkPfXuV\nm20SARCIACAAYF/jxo39qlWr5sp1pZMtAaAHZHF8oJdINgIgEAFAAMA+vd/CmjVrZst1pZNNATBw\n4MAdeolkIwACEQAEAOwjAKLRAwSADQRAIAKAAIB9BEA0eoAAsIEACEQAEACwjwCIRg8QADYQAIEI\nAAIA9hEA0egBAsAGAiAQAUAAwD4CIBo9QADYQAAEIgAIANhHAESjBwgAGwiAQAQAAQD7CIBo9AAB\nYAMBEIgAIABgHwEQjR4gAGwgAAIRAAQA7CMAotEDBIANBEAgAoAAgH0EQDR6gACwgQAIRAAQALCP\nAIhGDxAANhAAgQgAAgD2EQDR6AECwAYCIBABQADAPgIgGj1AANhAAAQiAAgA2EcARKMHCAAbCIBA\nBAABAPsIgGj0AAFgAwEQiAAgAGAfARCNHiAAbCAAAhEABADsIwCi0QMEgA0EQCACgACAfQRANHqA\nALCBAAhEABAAsI8AiEYPEAA2EACBCAACAPYRANHoAQLABgIgEAFAAMA+AiAaPUAA2EAABCIACADY\nRwBEowcIABsIgEAEAAEA+wiAaPQAAWADARCIACAAYB8BEI0eIABsIAACEQAEAOwjAKLRAwSADQRA\nIAKAAIB9BEA0eoAAsIEACEQAEACwjwCIRg8QADYQAIEIAAIA9hEA0egBAsAGAiAQAUAAwD4CIBo9\nQADYQAAEIgAIANhHAESjBwgAGwiAQAQAAQD7CIBo9AABYAMBEIgAIABgHwEQjR4gAGwgAAIRAAQA\n7CMAotEDBIANBEAgAoAAgH0EQDR6gACwgQAIRAAQALCPAIhGDxAANhAAgQgAAgD2EQDR6AECwAYC\nIBABQADAPgIgGj1AANhAAAQiAAgA2EcARKMHCAAbCIBABAABAPsIgGj0AAFgAwEQiAAgAGAfARCN\nHiAAbCAAAhEABADsIwCi0QMEgA0EQCACgACAfQRANHqAALCBAAhEABAAsI8AiEYPEAA2EACBCAAC\nAPYRANHoAQLABgIgEAFAAMA+AiAaPUAA2EAABCIACADYRwBEowcIABsIgEAEAAEA+wiAaPQAAWAD\nARCIACAAYB8BEI0eIABsIAACEQAEAOwjAKLRAwSADQRAIAKAAIB9BEA0eoAAsIEACEQAEACwjwCI\nRg8QADYQAIEIAAIA9hEA0egBAsAGAiAQAUAAwD4CIBo9QADYQAAEIgAIANhHAESjBwgAGwiAQAQA\nAQD7CIBo9AABYAMBEIgAIABgHwEQjR4gAGwgAAIRAAQA7CMAotEDBIANBEAgAoAAgH0EQDR6gACw\ngQAIRAAQALCPAIhGDxAANhAAgQgAAgD2EQDR6AECwAYCIBABQADAPgIgGj1AANhAAAQiAAgA2EcA\nRKMHCAAbCIBABAABAPsIgGj0AAFgAwEQiAAgAGAfARCNHiAAbCAAAhEABADsIwCi0QMEgA0EQCAC\ngACAfQRANHqAALCBAAhEABAAsI8AiEYPEAA2EACBCAACAPYRANHoAQLABgIgEAFAAMA+AiAaPUAA\n2EAABCIACADYRwBEowcIABsIgEAEAAEA+wiAaPQAAWADARCIACAAYB8BEI0eIABsIAACEQAEAOwj\nAKLRAwSADQRAIAKAAIB9BEA0eoAAsIEACEQAEACwjwCIRg8QADYQAIEIAAIA9hEA0egBAsAGAiAQ\nAUAAwD4CIBo9QADYQAAEIgAIANhHAESjBwgAGwiAQAQAAQD7CIBo9AABYAMBEIgAIABgHwEQjR4g\nAGwgAAIRAAQA7CMAotEDBIANBEAgAoAAgH0EQDR6gACwgQAIRAAQALCPAIhGDxAANhAAgQgAAgD2\nEQDR6AECwAYCIBABQADAPgIgGj1AANhAAAQiAAgA2EcARKMHCAAbCIBABAABAPsIgGj0AAFgAwEQ\niAAgAGAfARCNHiAAbCAAAhEABADsIwCi0QMEgA0EQCACgACAfQRANHqAALCBAAhEABAAsI8AiEYP\nEAA2EACBCAACAPYRANHoAQLABgIgEAFAAMA+AiAaPUAA2EAABCIACADYRwBEowcIABsIgEAEAAEA\n+wiAaPQAAWADARCIACAAYB8BEI0eIABsIAACEQAEAOwjAKLRAwSADQRAIAKAAIB9BEA0eoAAsIEA\nCEQAEACwjwCIRg8QADYQAIEIAAIA9hEA0egBAsAGAiAQAUAAwD4CIBo9QADYQAAEIgAIANhHAESj\nBwgAGwiAQAQAAQD7CIBo9AABYAMBEIgAIABgHwEQjR4gAGwgAAIRAAQA7CMAotEDBIANBEAgAoAA\ngH0EQDR6gACwgQAIRAAQALCPAIhGDxAANhAAgQgAAgD2EQDR6AECwAYCIBABQADAPgIgGj1AANhA\nAAQiAAgA2EcARKMHCAAbCIBABAABAPsIgGj0AAFgAwEQiAAgAGAfARCNHiAAbCAAAhEABADsIwCi\n0QMEgA0EQCACgACAfQRANHqAALCBAAhEABAAsI8AiEYPEAA2EACBCAACAPYRANHoAQLABgIgEAFA\nAMA+AiAaPUAA2EAABCIACADYRwBEowcIABsIgEAEAAEA+wiAaPQAAWADARCIACAAYB8BEI0eIABs\nIAACEQAEAOwjAKLRAwSADQRAIAKAAIB9BEA0eoAAsIEACEQAEACwjwCIRg8QADYQAIEIAAIA9hEA\n0egBAsAGAiAQAUAAwD4CIBo9QADYQAAEIgAIANhHAESjBwgAGwiAQAQAAQD7CIBo9AABYAMBEIgA\nIABgHwEQjR4gAGwgAAIRAAQA7CMAotEDBIANBEAgAoAAgH0EQDR6gACwgQAIRAAQALCPAIhGDxAA\nNhAAgQgAAgD2EQDR6AECwAYCIBABQADAPgIgGj1AANhAAAQiAAgA2EcARKMHCAAbCIBABAABAPsI\ngGj0AAFgAwEQiAAgAGAfARCNHiAAbCAAAhEABADsIwCi0QMEgA0EQCACgACAfQRANHqAALCBAAhE\nABAAsI8AiEYPEAA2EACBCAACAPYRANHoAQLABgIgEAFAAMA+AiAaPUAA2EAABCIACADYRwBEowcI\nABsIgEAEAAEA+wiAaPQAAWADARCIACAAYB8BEI0eIABsIAACEQAEAOwjAKLRAwSADQRAIAKAAIB9\nBEA0eoAAsIEACEQAEACwjwCIRg8QADYQAIEIAAIA9hEA0egBAsAGAiAQAUAAwD4CIBo9QADYQAAE\nIgAIANhHAESjBwgAGwiAQAQAAQD7CIBo9AABYAMBEIgAIABgHwEQjR4gAGwgAAIRAAQA7CMAotED\nBIANBEAgAoAAgH0EQDR6gACwgQAIRAAQALCPAIhGDxAANhAAgQgAAgD2EQDR6AECwAYCIBABQADA\nPgIgGj1AANhAAAQiAAgA2EcARKMHCAAbCIBABAABAPsIgGj0AAFgAwEQiAAgAGAfARCNHiAAbCAA\nAhEABADsIwCi0QMEgA0EQCACgACAfQRANHqAALCBAAhEABAAsI8AiEYPEAA2EACBCAACAPYRANHo\nAQLABgIgEAFAAMA+AiAaPUAA2EAABCIACADYRwBEowcIABsIgEAEAAEA+wiAaPQAAWADARCIACAA\nYB8BEI0eIABsIAACEQAEAOwjAKLRAwSADQRAIAKAAIB9BEA0eoAAsIEACEQAEACwjwCIRg8QADYQ\nAIEIAAIA9hEA0egBAsAGAiAQAUAAwD4CIBo9QADYQAAEIgAIANhHAESjBwgAGwiAQAQAAQD7CIBo\n9AABYAMBEIgAIABgHwEQjR4gAGwgAAIRAAQA7CMAotEDBIANBEAgAoAAgH0EQDR6gACwgQAIRAAQ\nALCPAIhGDxAANhAAgQgAAgD2EQDR6AECwAYCIBABQADAPgIgGj1AANhAAAQiAAgA2EcARKMHCAAb\nCIBABAABAPsIgGj0AAFgAwEQiAAgAGAfARCNHiAAbCAAAhEABADsIwCi0QMEgA0EQCACgACAfQRA\nNHqAALCBAAhEABAAsI8AiEYPEAA2EACBCAACAPYRANHoAQLABgIgEAFAAMA+AiAaPUAA2EAABCIA\nCADYRwBEowcIABsIgEAEAAEA+wiAaPQAAWADARCIAKg6AOrXr08AIPFatmxJAKRGDxAANhAAgQiA\nqgOgadOmT0sEeCDJOnbs6C+44IJ5qTfr2CEAkDQEQCACoOoAuPzyy0/auHHjlksvvRRIrGuvvXbL\n888/PyT1Zh07BACShgAIRABUHQAMky1DACBpCIBABAABwDA6BACShgAIRAAQAAyjQwAgaQiAQAQA\nAcAwOgQAkoYACEQAEAAMo0MAIGkIgEDZHgDXP+Gq/NYohsmWIQCQNARAoGwPgLtecHNTN5VhsnoI\nACQNARAomwNg6U3eX3yPe3vzw+6nmx4CjHrA/fSm59xPH/iZK0r9bx07BACShgAIlK0BoDQCFksE\nLNkG2FVys/dn3+/91Y+4Y1P/W8cOAYCkIQACZXMAANlAQ/fMu7y/9lHHzwKQ0QMEgA0EQCACALCN\nACg/eoAAsIEACEQAALYRAOVHDxAANhAAgQgAwDYCoPzoAQLABgIgEAEA2EYAlB89QADYQAAEIgAA\n2wiA8qMHCAAbCIBABABgGwFQfvQAAWADARCIAABsIwDKjx4gAGwgAAIRAIBtBED50QMEgA0EQCAC\nALCNACg/eoAAsIEACEQAALYRAOVHDxAANhAAgQgAwDYCoPzoAQLABgIgEAEA2EYAlB89QADYQAAE\nIgAA2wiA8qMHCAAbCIBABABgGwFQfvQAAWADARCIAABsIwDKjx4gAGwgAAIRAIBtBED50QMEgA0E\nQCACALCNACg/eoAAsIEACEQAALYRAOVHDxAANhAAgQgAwDYCoPzoAQLABgIgEAEA2EYAlB89QADY\nQAAEIgAA2wiA8qMHCAAbCIBABABgGwFQfvQAAWADARCIAABsIwDKjx4gAGwgAAIRAIBtBED50QME\ngA0EQCACALCNACg/eoAAsIEACEQAALYRAOVHDxAANhAAgQgAwDYCoPzoAQLABgIgEAEA2EYAlB89\nQADYQAAEIgAA2wiA8qMHCAAbCIBABABgGwFQfvQAAWADARCIAABsIwDKjx4gAGwgAAIRAIBtBED5\n0QMEgA0EQCACALCNACg/eoAAsIEACEQAALYRAOVHDxAANhAAgQgAwDYCoPzoAQLABgIgEAEA2EYA\nlB89QADYQAAEIgAA2wiA8qMHCAAbCIBABABgGwFQfvQAAWADARCIAABsIwDKjx4gAGwgAAIRAIBt\nBED50QMEgA0EQCACALCNACg/eoAAsIEACEQAALYRAOVHDxAANhAAgQgAwDYCoPzoAQLABgIgEAEA\n2EYAlB89QADYQAAEIgAA2wiA8qMHCAAbCIBAexAAfTY9Ku9Etnl/0q0AkmbpLd6f86AEwGPu2NT/\n1rHjXMMX4hdq0tSVAOhVkLpZFUYOEABGEACB9iAAOjz0int82zPu8VufBpA0t4j7X3WPP/G6L0z9\nbx07kgsbnFvyuHMLEm6xWNM5dbMqDAFgBwEQaHcBwDAMY2kIADsIgEAEAMMw2TQEgB0EQCACgGGY\nbBoCwA4CIBABwDBMNg0BYAcBEIgAYBgmm4YAsIMACEQAMAyTTUMA2EEABOrSpYt/8803R8s1wzBM\nVowsjXfll9j3iUgOAiBQkyZN/KJFi55ZtmzZ9iVLlgAw6vTTT9++atWq7StXrtwn9O9esWLF9pNO\nOin2388E+rzJ+7q7u3bt+mnc+0MkCwGwl9SsWRMAskLc+0Akz38C4Nprr/X9+/cvfQKvYAAA7NI9\n/58AuO2223xBQYHv27cvAQAAgGG65/v167crAG699dZ/aADoZwFq164d+wcAAEDy6Z7XfT9kyBBf\n4/jjjz91xIgRfsCAAb5evXqxfwAAACSf7nnd97r3azz55JOnTJw4sfQJjRs3jv0DAAAg+XTP674/\n/PDDfY1//vOfYwsLCz/XTwfk5eXF/gEAAJB8uud130+YMOEf8t81asyYMeOfgwYN8u3bt4/9AwAA\nIPl0z+u+nzZt2tv68I41FyxY8NvBgwf7Hj16xP4BAACQfLrndd/PmzfvJfnvGjVWrlx54/Dhw0sf\nEIjvBAAAwB7d77rndd/L3r9enlajxg033HBcUVFRaRXoQ9yWHQYAADboftdP/xcXF3vd+/K0GjXe\nf//97jNmzPhMf6Njx46xfxAAACSX7nfd80ceeeRnuvflabtmyZIlT+s9A/VBgWrVqhX7hwEAQPLo\nXtf9rnt+6dKlT8vTotm6deuyCRMmlP5mbm5u7F8AAACSR/e6fplfv9y/bdu2ZfK0aJxzHebOnfv3\ngQMH+vz8/Ni/AAAAJI/udd3vuud138vTys+KFSsuHzlyZOlnARo2bBj7lwAAgOTQfa57Xff7mWee\nebk8reK88cYbQ2bPnl36MIHdunWL/YsAAEBy6D7XvT5nzhyve16eFj/r16+/f+jQoaW1wM8GAAAg\nuXSP6z4fNmyYv+SSS+6Xp1U+L730UocZM2Z8rHcW6NOnT+nPDpYnAwCABNH9rXs89a1/H7/22msV\nv/b/9Vm3bt2aUaNG+YMPPti3adMm9i8GAACZS/e37nHd5xdddNEaedrux3tfu6Sk5C39LIBq1KhR\n7F8OAAAyj+7tsh2+dOnSt3Svy9P3bJ577rnCyZMnf66fOtAHD+BnBAAAkPl0X+ve1v09ZcqUz198\n8cVCeXp6c8UVV6weO3ZsaUHoTxDi/gAAAGQu3dNlP/GvsLDQX3XVVavl6d9szj///IdGjx5dei/C\nLl26xP6DAACg+nXt2rV0X+veXrt27UPytG8+zrkWy5cvf1G/hUDvTNCpU6fYfxQAAFQf3c+6p3Vf\nn3HGGS/q/panh433vtkJJ5zwQlkE6IMK8OUAAACqn+5j3ctly3/hwoUv6N6W39s789FHHzVbtGhR\naQTopxd69uzp69WrF/vMAACAfU/3sO7jsgf7OfHEE/fu8i8b+UtzzzrrrBf1jgX6QwUOOuggfnIg\nAADVQPev7mHdx7qXV69e/aLuafm9fTP6l59//vnXH3bYYaWPLazV0bFjR1+nTp3YZxAAAOw9um/1\n6/26fzUADj/8cK97eZ8u/6/OVVddtWDmzJmfDh8+vPSZ6N+/v2/RokXsMwsAAMLpntV9W/Ypf93D\n11xzzQL5vf07+lOFTjnllPvHjx//n0cc0scd1mewVq1asc88AADYc7pPda/qfi3btRMmTPC6f996\n663Kf7rf/pgbb7xx/tFHH/3muHHjSr8soPdE7Nevn2/Xrp1v0KBB7A0CAACV0/2pe1T3qe5V3a+6\nZ3Xf6t6VM5kxzrm87373uxvmz5//5zFjxpQ+BGGZXr16ld6IJk2acF8BAABi6H7UPan7UvfmV/eo\n7lXdr9u2bdug+1bOZ97otx9s2rRpwfLly381ZcoUf8ghh5Q+8/opC/1Vv3ahN0wfVVBvZF5eXuk9\nGfVnFiv9AQYAAFhUtut07+n+0z2o+1D3ou7Hr+5L3Z+6R3Wf6l7V/ZpatZk98ozWfvXVV0dtkFmy\nZInGwOdFRUVe7zQ4YsSI0m9b0BtZ9mkNAACyie4/3YO6D3Uv6n7UPTl16tTPly5d+ivdn7pHdZ+m\nVmvyRp/5P/7xjz2uu+66uRdeeOGNM2fOvGPu3Lm/nTZt2ltjxox5T371RxxxROm3MgAAYJnuO917\nqf33lu5D3Yu6H3VP6r7c90u/Ro3/D/dmyHRzJ890AAAAAElFTkSuQmCC\n'
@@ -90,31 +95,71 @@ def random_color():
     return color
 
 
-# To avoid the 'nagging' at all costs...
-look_and_feel_values = sg.theme_list()
-accepted_themes = []
-for theme in look_and_feel_values:
-    if 'Dark' in theme:
-        accepted_themes.append(theme)
-        accepted_themes.sort()
-random_theme = str(rc(accepted_themes))
-# 'Cause I figured the master of colors should have all the colors.
-sg.ChangeLookAndFeel(random_theme)
+# Theme-ing for the theme master.
+# Custom LookyFeely LookAndFeel Theme.
+# Generated using LookyFeely. (duh)
+LightTheme = {'BACKGROUND': '#ccdeff',
+   'TEXT': '#333',
+   'INPUT': '#05142e',
+   'TEXT_INPUT': '#ffff02',
+   'SCROLL': '#667',
+   'BUTTON': ('#fdfdce', '#055ffa'),
+   'PROGRESS': ('#b2b2b2', '#05142e'),
+   'BORDER': 1,
+   'SLIDER_DEPTH': 1,
+   'PROGRESS_DEPTH': 0}
+
+sg.theme_add_new('LookyFeely_Light', LightTheme)
+
+## Custom LookyFeely - Dark LookAndFeel Theme.
+## Generated using LookyFeely. (duh)
+#import PySimpleGUI as sg  # Please change 'sg' to your liking.
+DarkTheme = {'BACKGROUND': '#05142e',
+    'TEXT': '#ccdeff',
+    'INPUT': '#333',
+    'TEXT_INPUT': '#fdfdce',
+    'SCROLL': '#990',
+    'BUTTON': ('#fdfdce', '#333'),
+    'PROGRESS': ('#667', '#333'),
+    'BORDER': 1,
+    'SLIDER_DEPTH': 1,
+    'PROGRESS_DEPTH': 0}
+
+sg.theme_add_new('LookyFeely_Dark', DarkTheme)
+
+if theme_switch == 'LookyFeely Dark Mode':
+    sg.theme('LookyFeely_Dark')
+    
+if theme_switch == 'LookyFeely Light Mode':
+    sg.theme('LookyFeely_Light')
+    
+elif theme_switch not in ['LookyFeely Light Mode', 'LookyFeely Dark Mode']:
+    sg.theme(theme_switch)
+
+looky_feely_theme = sg.theme()
+
+theme_switch_line = 0
+# For theme changing, changes take effect after every restart.
+def internal_theme_change(theme):
+    with open(prefs_path, 'r') as file:
+        lines = file.readlines()
+        for line in lines:
+            if line.startswith(('theme_switch = ')):
+                theme_switch_line = lines.index(line)
+        file.close()
+    try:
+        with open(prefs_path, 'w') as file:
+            lines[theme_switch_line] = f'theme_switch = \'{theme}\'\n'
+            file.writelines(lines)
+            file.close()
+    except OSError:
+        pass
 
 # I like to make a custom debug mode when I make apps.
 # So, here's a shameless boolean debug switch and aliases.
 on = True
 off = False
-
 DebugMode = off
-
-if DebugMode == on:
-    # Just for fun.
-    Print('@'+str(user())+', do you read me?')
-    Print('LookyFeely is live.')
-    Print('I repeat, LookyFeely is live.\n')
-    Print(f'Accepted themes: {accepted_themes}\n')
-
 
 raw_list = colour.RGB_TO_COLOR_NAMES
 color_names_list = []
@@ -149,14 +194,16 @@ tab_layout = [
                  sg.Button(target='txt_in_c', button_text='Choose Color', key='txt_in_c_choose')],
                 [sg.Text('Scroll Color: ', size=(16, 1)), sg.InputText('...color value', key='scr_c', size=(16, 1)),
                  sg.Button(target='scr_c', button_text='Choose Color', key='scr_c_choose')],
-                [sg.Text('Button Text Color: ', size=(16, 1)), sg.InputText('...color value', key='bt_txt_c', size=(16, 1)),
+                [sg.Text('Button Text Color: ', size=(16, 1)),
+                 sg.InputText('...color value', key='bt_txt_c', size=(16, 1)),
                  sg.Button(target='bt_txt_c', button_text='Choose Color', key='bt_txt_c_choose')],
                 [sg.Text('Button Color: ', size=(16, 1)), sg.InputText('...color value', key='bt_c', size=(16, 1)),
                  sg.Button(target='bt_c', button_text='Choose Color', key='bt_c_choose')],
-                [sg.Text('Progress Bar Color: ', size=(16, 1)), sg.InputText('...color value', key='pb_c', size=(16, 1)),
+                [sg.Text('Progress Bar Color: ', size=(16, 1)),
+                 sg.InputText('...color value', key='pb_c', size=(16, 1)),
                  sg.Button(target='pb_c', button_text='Choose Color', key='pb_c_choose')],
                 [sg.Text('Border Width: ', size=(10, 1)),
-                 sg.Spin(initial_value='1',values=[x for x in range(0, 10000)], key='bor_w', size=(3, 1)),
+                 sg.Spin(initial_value='1', values=[x for x in range(0, 10000)], key='bor_w', size=(3, 1)),
                  sg.Text(' || '), sg.Text('Slider Depth: ', size=(10, 1)),
                  sg.Spin(initial_value=1,
                          values=[x for x in range(0, 10000)], key='sl_bor_w', size=(3, 1))],
@@ -165,79 +212,112 @@ tab_layout = [
             element_justification='canter')],
     [sg.Tab(title='Other Options',
             layout=[[sg.Column(layout=[
-                    [sg.Text(text='Have a feature proposal to add to these options?\nGot a complaint?\nOpen up an '
-                                  'issue on the LookyFeely GitHub repository.', text_color=sg.LOOK_AND_FEEL_TABLE[
-                        str(random_theme)]['TEXT_INPUT'], background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)][
-                        'INPUT'])],
-                    [sg.Frame(title='Dark/Light/Gray Modes',
-                              layout=[[sg.Text('Automatically make a...')],
-                                      [sg.Checkbox('Dark Mode Theme', key='dark')],
-                                      [sg.Checkbox('Light Mode Theme', key='light')],
-                                      [sg.Checkbox('Gray Mode Theme', key='grayout')],
-                                      [sg.Text('...along with the theme currently being made.')]],
-                              tooltip='May not always work as expected. Majorly dependent on your color choices.')],
-                    [sg.Frame(title='Color Options', layout=[[sg.Button('View valid color names.', key='col_name_view')]])],
-                    [sg.Frame(title='\'Unspecified Color\' Actions', layout=[
-                        [sg.Checkbox('Complementary Mono', key='Inverse')],
-                        [sg.Checkbox('Haphazard Random', key='H_Random')]
-                    ])],
-                    [sg.Frame(title='PySimpleGUI Options', layout=[[sg.Text('Probably unrelated, but useful.')], [sg.Button('Preview all PySimpleGUI themes', key='preview', tooltip=(
+                [sg.Text(text='Have a feature proposal to add to these options?\nGot a complaint?\nOpen up an '
+                              'issue on the LookyFeely GitHub repository.', text_color=sg.theme_input_text_color(),
+                         background_color=sg.theme_input_background_color())],
+                [sg.Frame(title='Dark/Light/Gray Modes',
+                          layout=[[sg.Text('Automatically make a...')],
+                                  [sg.Checkbox('Dark Mode Theme', key='dark')],
+                                  [sg.Checkbox('Light Mode Theme', key='light')],
+                                  [sg.Checkbox('Gray Mode Theme', key='grayout')],
+                                  [sg.Text('...along with the theme currently being made.')]],
+                          tooltip='May not always work as expected. Majorly dependent on your color choices.')],
+                [sg.Frame(title='Color Options', layout=[[sg.Button('View valid color names.', key='col_name_view')]])],
+                [sg.Frame(title='\'Unspecified Color\' Actions', layout=[
+                    [sg.Checkbox('Complementary Mono', key='Inverse')],
+                    [sg.Checkbox('Haphazard Random', key='H_Random')]
+                ])],
+                [sg.Frame(title='PySimpleGUI Options', layout=[[sg.Text('Probably unrelated, but useful.')], [
+                    sg.Button('Preview all PySimpleGUI themes', key='preview', tooltip=(
                         'This may take a while to initialize.\nAfter all, there are {0} built-in themes.'.format(
                             str(len(sg.ListOfLookAndFeelValues())))))],  # That list sure grows fast.
-                                                                   [sg.Button('Update / Install PySimpleGUI', key='update',
-                                                tooltip='Requires Python and pip.')]],
-                              element_justification='center')],
-                    [sg.Frame(title='External Links', layout=[[sg.Button('Check out definite_d\'s GitHub page', key='checkout_me', tooltip='Come on, don\'t be shy!')], [sg.Button('Check out the LookyFeely GitHub page', key='checkout_lookyfeely', tooltip='Whoo! GitHub!')], [sg.Button('Check out the PySimpleGUI GitHub page', key='checkout_psg', tooltip='Whoo! GitHub! Again!')]], element_justification='center')]
-                    ], element_justification='center', scrollable=True, vertical_scroll_only=True, size=(330, 300),
-                background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['SCROLL'])]],
+                                                               [sg.Button('Update / Install PySimpleGUI', key='update',
+                                                                          tooltip='Requires Python and pip.')]],
+                          element_justification='center')],
+                [sg.Frame(title='External Links', layout=[[sg.Button('Check out definite_d\'s GitHub page',
+                                                                     key='checkout_me',
+                                                                     tooltip='Come on, don\'t be shy!')], [
+                                                              sg.Button('Check out the LookyFeely GitHub page',
+                                                                        key='checkout_lookyfeely',
+                                                                        tooltip='Whoo! GitHub!')], [
+                                                              sg.Button('Check out the PySimpleGUI GitHub page',
+                                                                        key='checkout_psg',
+                                                                        tooltip='Whoo! GitHub! Again!')]],
+                          element_justification='center')]
+            ], element_justification='center', scrollable=True, vertical_scroll_only=True, size=(330, 300),
+                background_color=sg.theme_slider_color())]],
             element_justification='center')]
 ]
 window_1_layout = [
     [sg.Column([
-        [sg.Button('', key='logo', image_data=looky_feely_img, border_width=0, image_subsample=5, button_color=('#000000', sg.theme_background_color()))]
+        [sg.Button('', key='logo', image_data=looky_feely_img, border_width=0, image_subsample=5,
+                   button_color=('#000000', sg.theme_background_color()))]
     ], pad=(0, 0)),
-     sg.Column([
-        [sg.Text('LookyFeely!', font=('Helvetica', 18))],
-        [sg.Text('PySimpleGUI Look And Feel Code Generator.')],
-        [sg.Text('Developed by definite_d')],
-        [sg.Text('Click this text for help.', tooltip='I\'m here to help.', key='Help', enable_events=True)]],
-         pad=(0, 0), element_justification='center')
-     ],
+        sg.Column([
+            [sg.Text('LookyFeely!', font=('Helvetica', 18))],
+            [sg.Text('PySimpleGUI Look And Feel Code Generator.')],
+            [sg.Text('Developed by definite_d')],
+            [sg.Text('Click this text for help.', tooltip='I\'m here to help.', key='Help', enable_events=True)]],
+            pad=(0, 0), element_justification='center')
+    ],
     [sg.TabGroup(layout=tab_layout)],
     [sg.Button(button_text=' Generate LookAndFeel Code ', key='gen', bind_return_key=True)],
-    [sg.Text(('\"'*100))],
-    [sg.Text('Current Theme: '+str(random_theme))]
+    [sg.Text('Current Theme Mode:', tooltip='Changes take effect after a restart.'), sg.DropDown((['LookyFeely Light Mode', 'LookyFeely Dark Mode']+sg.theme_list()), readonly=True, tooltip='Changes take effect after a restart.', default_value=theme_switch, key='theme_mode')]
 ]
-window_1 = sg.Window((f'LookyFeely - {version}'), layout=window_1_layout, element_justification='center',
+window_1 = sg.Window((f'LookyFeely - {version}'),
+                     layout=window_1_layout,
+                     element_justification='center',
                      grab_anywhere=False, resizable=False)
 
+selected_theme = theme_switch
+
+# Beginning the GUI process.
 while True:
-    window_1_events, window_1_values = window_1.Read()
+    window_1_events, window_1_values = window_1.Read(timeout=0)
+    try:selected_theme = window_1_values['theme_mode']
+    except TypeError: pass
+    
+    # Using the Loc8or module.
+    loc8or = Locator(window_1)
+    popup_height = 120  # Y-Offset value for popup windows.
+    subwindow_height = 100  # Y-Offset value for sub windows.
+    immediate_window_height = 20  # Y-Offset value for windows that appear immediately below the titlebar of the main window.
+    
     try:
         window_1_c = window_1.CurrentLocation()
+        window_1_s = window_1.Size
     except:
         break
         pass
 
     if 'choose' in window_1_events:
-        window_1[window_1_events.replace('_choose', '')].Update(colorpiq.colorpiqr(preview_box_height=2, slider_width=50, slider_height=15, location=(window_1.CurrentLocation()[0]+4, window_1.CurrentLocation()[1]+150)))
+        color_picker_layout = colorpiq.Colorpiqr(preview_box_height=2, slider_width=50, slider_height=15).colorpiqr_layout
+        color_picker = colorpiq.Colorpiqr(title='Colorpiq', icon=b64icon, preview_box_height=2, slider_width=50, slider_height=15,
+                               location=loc8or.get_ideal_location(color_picker_layout, 'UC', 'UC', popup_height))
+        del color_picker_layout
+        window_1[window_1_events.replace('_choose', '')].Update(color_picker.get_color())
 
     if window_1_events == 'gen':
         unsupported_entry = False
         no_name = False
         if window_1_values['name'] == '' or window_1_values['name'].isspace() == True:
             sg.Popup('You didn\'t specify a name for the theme!', title='Warning: No Name!', button_type='Cancel',
-                     location=(window_1_c[0]+90, window_1_c[1]+50))
+                     location=(window_1_c[0] + 80, window_1_c[1] + popup_height))
             no_name = True  # What masterpiece didn't have a name?
 
         for i in window_1_values:
             # I found that 'Navajo White' (unsupported color) isn't the same as 'NavajoWhite' (supported color).
-            if '_c' in str(i) and window_1_values[str(i)] not in ['...color value', 'None'] and str(window_1_values[str(i)]).lower() not in lowercase_color_names_list and window_1_values[str(i)].startswith('#') == False and window_1_values[str(i)].isspace() == False and window_1_values[str(i)] != '':
+            if '_c' in str(i) and window_1_values[str(i)] not in ['...color value', 'None'] and str(
+                    window_1_values[str(i)]).lower() not in lowercase_color_names_list and window_1_values[
+                str(i)].startswith('#') == False and window_1_values[str(i)].isspace() == False and window_1_values[
+                str(i)] != '':
                 given_value = str(window_1_values[str(i)])
                 window_1_values[str(i)] = (str(window_1_values[str(i)])).replace(' ', '')
-                sg.Popup(('The color name \''+given_value+'\' is not supported.\nYou should use the hex value of the '
-                'intended color instead.'), title='Warning: Unsupported Color!', button_type='Cancel',
-                         location=(window_1_c[0] + 40, window_1_c[1] + 50))
+                sg.Popup(
+                    ('The color name \'' + given_value + '\' is not supported.\nYou should use the hex value of the '
+                                                         'intended color instead.'),
+                    title='Warning: Unsupported Color!', button_type='Cancel',
+                    location=(window_1_c[0] + 15, window_1_c[1] + popup_height))
                 unsupported_entry = True  # To avoid unforeseen error-stances.
 
         name = str(window_1_values['name'])
@@ -305,7 +385,7 @@ while True:
             if unspecified == True:
                 unspec_no = len(color_values) - len(selected)
                 if unspec_no != 1:
-                    unspec_title = str(unspec_no)+' color values were not specified!'
+                    unspec_title = str(unspec_no) + ' color values were not specified!'
                 else:
                     unspec_title = 'A color value was not specified!'
                 if unspec_no == 8:
@@ -320,21 +400,21 @@ while True:
                     [sg.Text(text=message)],  # I'm so fancy...
                     [sg.Text(text='What should be done about that?')],
                     [sg.Frame('Your Options', [
-                        [sg.Radio('Fill in random colors.', key='Randomize', tooltip='Make it crazy random!', group_id='unspec_opts_choices')],
-                        [sg.Radio('Base other colors off those given.', key='Mono', tooltip='Good for mono-color themes.', group_id='unspec_opts_choices')],
-                        [sg.Radio('Get colors from an image.', key='Image', tooltip='Introducing... ImagePalette!', group_id='unspec_opts_choices')]
+                        [sg.Radio('Fill in random colors.', key='Randomize', tooltip='Make it crazy random!',
+                                  group_id='unspec_opts_choices')],
+                        [sg.Radio('Base other colors off those given.', key='Mono',
+                                  tooltip='Good for mono-color themes.', group_id='unspec_opts_choices')],
+                        [sg.Radio('Get colors from an image.', key='Image', tooltip='Introducing... ImagePalette!',
+                                  group_id='unspec_opts_choices', default=True)]
                     ])],
-                    [sg.Button('Cancel', key='Cancel', tooltip='Have it your way.'), sg.Button('Confirm', key='Confirm', tooltip='Let\'s begin.')]
+                    [sg.Button('Confirm', key='Confirm', bind_return_key=True, tooltip='Let\'s begin.'),
+                     sg.Button('Cancel', key='Cancel', tooltip='Have it your way.')]
                 ]
-                try:
-                    unspec_opts = sg.Window(title=unspec_title, layout=unspec_opts_layout,
-                                            location=(window_1_c[0]+80, window_1_c[1]+50),
-                                            element_justification='center')
-                except:
-                    break
-                    pass
+                unspec_opts = sg.Window(title=unspec_title, layout=unspec_opts_layout,
+                                        # location=(window_1_c[0] + 80, window_1_c[1] + 50),
+                                        location = loc8or.get_ideal_location(unspec_opts_layout, 'UC', 'UC', popup_height),
+                                        element_justification='center')
                 done = False
-
                 while True:
                     def originalize_color_values():
                         selections = zip(selected, sel_colors)
@@ -350,9 +430,10 @@ while True:
                                         if window_1_values['H_Random']:
                                             color_values[color_values.index(c)] = random_color()
                                         else:
-                                            random_number = rn(1, 9)
+                                            random_number = rc([n for n in range(1, 9)])
                                             the_color = random_color()
-                                            the_color.set_luminance(value=((color_values.index(c) + random_number) / (random_number+8)))
+                                            the_color.set_luminance(
+                                                value=((color_values.index(c) + random_number) / (random_number + 8)))
                                             color_values[color_values.index(c)] = the_color
                                 if not window_1_values['H_Random']:
                                     # Sort things out...
@@ -375,7 +456,7 @@ while True:
                                 try:
                                     if len(sel_colors) == 0:
                                         sel_colors.append(random_color())
-
+    
                                     # Just in case anybody dropped in some Tkinter colors.
                                     for tk in sel_colors:
                                         sel_colors[sel_colors.index(tk)] = colour.Color(tk).get_web()
@@ -385,7 +466,7 @@ while True:
                                         transition = []
                                         try:
                                             for n in sel_colors:
-                                                next_color = sel_colors[((sel_colors.index(n))+1)]
+                                                next_color = sel_colors[((sel_colors.index(n)) + 1)]
                                                 n = colour.Color(n)
                                                 next_color = colour.Color(next_color)
                                                 shadegradient = list(n.range_to(next_color, 8))
@@ -412,7 +493,8 @@ while True:
                                                     other_shade = colour.Color('white')
                                                     signal = 'white'
                                             if window_1_values['Inverse'] == True:
-                                                other_shade = colour.Color(sg.GetComplimentaryHex(colour.Color(i).hex_l))
+                                                other_shade = colour.Color(
+                                                    sg.GetComplimentaryHex(colour.Color(i).hex_l))
                                                 other_shade.set_luminance(colour.Color(i).luminance)
                                                 signal = 'depends'
                                             i = colour.Color(i)
@@ -424,7 +506,7 @@ while True:
                                                 transition = list(other_shade.range_to(i, number))
                                             else:  # Darker to Whiter/Lighter.
                                                 transition = list(i.range_to(other_shade, number))
-
+    
                                     luminance_list = []
                                     for i in transition:
                                         i_c = colour.Color(i)
@@ -434,11 +516,12 @@ while True:
                                     sorter_list = sorted(sorter_list, key=lambda color: color[0])
                                     sorted_list = [i[1] for i in sorter_list]
                                     transition = sorted_list
-                                    transition = [transition[3], transition[7], transition[1], transition[6], transition[2],
+                                    transition = [transition[3], transition[7], transition[1], transition[6],
+                                                  transition[2],
                                                   transition[0], transition[5], transition[4]]
                                     color_values = transition
                                     originalize_color_values()
-
+    
                                     done = True
                                     unspec_opts.Close()
                                     break
@@ -458,8 +541,10 @@ while True:
                                                                        [sg.Text('Image Filepath:'),
                                                                         sg.InputText(default_text='', key='im_subject',
                                                                                      size=(25, 1)),
-                                                                        sg.FileBrowse(file_types=(('Image Files', (filetypes)),))],
-                                                                       [sg.Checkbox('Don\'t sort the image\'s colors.', key='im_sort')]
+                                                                        sg.FileBrowse(file_types=(
+                                                                            ('Image Files', (filetypes)),))],
+                                                                       [sg.Checkbox('Don\'t sort the image\'s colors.',
+                                                                                    key='im_sort')]
                                                                    ], element_justification='center')],
                                                                    [sg.Text('\"' * 86, pad=(0, 1))],
                                                                    [sg.Button(button_text=' Obtain Colors ',
@@ -468,441 +553,519 @@ while True:
                                                                ], element_justification='center')],
                                                      [sg.Button('Cancel')]]
                                 im_palette = sg.Window(title='ImagePalette', layout=im_palette_layout,
-                                                       location=(window_1_c[0]-8, window_1_c[1]+50))
-
+                                                       location=loc8or.get_ideal_location(im_palette_layout, 'UC', 'UC', subwindow_height))
+                                
                                 while True:
                                     im_events, im_values = im_palette.Read()
-
-                                    if im_events in (None, 'Cancel'):
-                                        im_palette.Close()
-                                        break
-
-                                    im_subject = im_values['im_subject']
-                                    if isfile(str(im_subject)) and im_events == 'im_color':
-                                        image_factor = int(filesize(im_subject) / 400) + 1
-                                        if not im_values['im_sort']:
-                                            image_factor = image_factor * 1.5
-                                        image_factor = int(image_factor)
-
-                                        im_colors_true = []
-                                        image = img.open(im_subject)
-                                        image = image.resize((32, 32))
-                                        im_colors = image.getcolors(maxcolors=(image.size[0] * image.size[1]))
-                                        for i in im_colors:
-                                            r = float(i[1][0] / 255)
-                                            g = float(i[1][1] / 255)
-                                            b = float(i[1][2] / 255)
-                                            im_colors_true.append(colour.Color(colour.rgb2hex((r, g, b))))
-                                        im_colors = []
-                                        for i in range(8):
-                                            im_colors.append(im_colors_true[(int((len(im_colors_true) * i) / 8))])
-
-                                        # Sort things out...
-                                        if not im_values['im_sort']:
-                                            luminance_list = []
+                                    if im_events == 'im_color':
+                                        im_subject = im_values['im_subject']
+                                        if isfile(str(im_subject)) and im_events == 'im_color':
+                                            image_factor = int(filesize(im_subject) / 400) + 1
+                                            if not im_values['im_sort']:
+                                                image_factor = image_factor * 1.5
+                                            image_factor = int(image_factor)
+    
+                                            im_colors_true = []
+                                            image = img.open(im_subject)
+                                            image = image.resize((32, 32))
+                                            im_colors = image.getcolors(maxcolors=(image.size[0] * image.size[1]))
                                             for i in im_colors:
-                                                i_c = colour.Color(i)
-                                                i_c_l = i_c.get_luminance()
-                                                luminance_list.append(i_c_l)
-                                            sorter_list = list(zip(luminance_list, im_colors))
-                                            sorter_list = sorted(sorter_list, key=lambda color: color[0])
-                                            sorted_list = [i[1] for i in sorter_list]
-                                            im_colors = sorted_list
-                                            im_colors = [im_colors[3], im_colors[7], im_colors[1], im_colors[6], im_colors[2], im_colors[0], im_colors[5], im_colors[4]]
-
-                                        for color in im_colors:
-                                            im_colors[im_colors.index(color)] = color.get_web()
-                                        color_values = im_colors
-                                        originalize_color_values()
-
-                                        # Progress bar code.
-                                        prog_c_l = [[sg.Text('Please wait...')],
-                                                    [sg.ProgressBar(image_factor, orientation='h', size=(35, 20),
-                                                                    key='progbar')]]
-                                        prog_c = sg.Window('Obtaining Colors from Image...', prog_c_l,
-                                                           location=window_1_c, disable_close=True)
-                                        for i in range(image_factor):
-                                            prog_c_e, prog_c_v = prog_c.Read(timeout=0)
-                                            prog_c['progbar'].UpdateBar(i + 1)
-
-                                        prog_c.Close()
+                                                r = float(i[1][0] / 255)
+                                                g = float(i[1][1] / 255)
+                                                b = float(i[1][2] / 255)
+                                                im_colors_true.append(colour.Color(colour.rgb2hex((r, g, b))))
+                                            im_colors = []
+                                            for i in range(8):
+                                                im_colors.append(im_colors_true[(int((len(im_colors_true) * i) / 8))])
+    
+                                            # Sort things out...
+                                            if not im_values['im_sort']:
+                                                luminance_list = []
+                                                for i in im_colors:
+                                                    i_c = colour.Color(i)
+                                                    i_c_l = i_c.get_luminance()
+                                                    luminance_list.append(i_c_l)
+                                                sorter_list = list(zip(luminance_list, im_colors))
+                                                sorter_list = sorted(sorter_list, key=lambda color: color[0])
+                                                sorted_list = [i[1] for i in sorter_list]
+                                                im_colors = sorted_list
+                                                im_colors = [im_colors[3], im_colors[7], im_colors[1], im_colors[6],
+                                                             im_colors[2], im_colors[0], im_colors[5], im_colors[4]]
+    
+                                            for color in im_colors:
+                                                im_colors[im_colors.index(color)] = color.get_web()
+                                            color_values = im_colors
+                                            originalize_color_values()
+    
+                                            # Progress bar code.
+                                            prog_c_l = [[sg.Text('Please wait...')],
+                                                        [sg.ProgressBar(image_factor, orientation='h', size=(35, 20),
+                                                                        key='progbar')]]
+                                            prog_c = sg.Window('Obtaining Colors from Image...', prog_c_l,
+                                                               location=loc8or.get_ideal_location(prog_c_l, 'UC', 'UC', popup_height), disable_close=True)
+                                            for i in range(image_factor):
+                                                prog_c_e, prog_c_v = prog_c.Read(timeout=0)
+                                                prog_c['progbar'].UpdateBar(i + 1)
+    
+                                            prog_c.Close()
+                                            im_palette.Close()
+                                            no_image = False
+                                            done = True
+                                            unspec_opts.Close()
+                                            break
+    
+                                    if im_events in (None, 'Cancel'):
+                                        no_image = True
+                                        done = False
                                         im_palette.Close()
-                                        no_image = False
-                                        done = True
-                                        unspec_opts.Close()
                                         break
-
-                        if unspec_opts_events in (None, 'Cancel'):
+    
+                        if unspec_opts_events in [None, 'Cancel']:
                             done = False
                             unspec_opts.Close()
                             break
-                    except:
+
+                    except Exception:
                         break
                         pass
-                    break
+
+
             # This is where the real code generation happens.
             def finisher(color_values):
-                if done:  # Yep. Real shameless signal system.
-                    # Set the names of colors just right...
-                    for i in color_values:
-                        if not str(i).startswith('#'):
-                            color_values[(color_values.index(i))] = str(i).lower()  # Lowercase doesn't discriminate.
-                    bg_c = str(color_values[0])
-                    txt_c = str(color_values[1])
-                    txt_in_c = str(color_values[2])
-                    in_c = str(color_values[3])
-                    scr_c = str(color_values[4])
-                    bt_txt_c = str(color_values[5])
-                    bt_c = str(color_values[6])
-                    pb_c = str(color_values[7])
-                    theme = str(f'# Custom {name} LookAndFeel Theme.\n'
-                                f'# Generated using LookyFeely.\n'
-                                f'import PySimpleGUI as sg  # Please change \'sg\' to your liking.\n'
-                                f'sg.LOOK_AND_FEEL_TABLE[\'{name_safe}\'] = {{\'BACKGROUND\': \'{bg_c}\',\n    \''
-                                f'TEXT\': \'{txt_c}\',\n    \'INPUT\': \'{in_c}\',\n    \''
-                                f'TEXT_INPUT\': \'{txt_in_c}\',\n    \'SCROLL\': \'{scr_c}\',\n    \''
-                                f'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n    \''
-                                f'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n    \'BORDER\': {str(bor_w)},\n    \''
-                                f'SLIDER_DEPTH\': {str(sl_bor_w)},\n    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
-                                f'sg.ChangeLookAndFeel(\''+name_safe+'\')\n\n')
-
-                    # Dark and Light modes (and most recently Gray mode) ... I nearly got confused about where to put their code.
-                    # Sort things out...
-                    luminance_list = []
-                    for i in color_values:
-                        i_c = colour.Color(i)
-                        i_c_l = i_c.get_luminance()
-                        luminance_list.append(i_c_l)
-                    sorter_list = list(zip(luminance_list, color_values))
-                    sorter_list = sorted(sorter_list, key=lambda color: color[0])
-                    sorted_list = [i[1] for i in sorter_list]
-                    # Dark and Light modes implementation.
-                    if window_1_values['dark'] == True:
-                        dark_list = [sorted_list[0], sorted_list[6], sorted_list[7],
-                                     sorted_list[1], sorted_list[2], sorted_list[7],
-                                     sorted_list[1], sorted_list[3]]
-                        bg_c = str(dark_list[0])
-                        txt_c = str(dark_list[1])
-                        txt_in_c = str(dark_list[2])
-                        in_c = str(dark_list[3])
-                        scr_c = str(dark_list[4])
-                        bt_txt_c = str(dark_list[5])
-                        bt_c = str(dark_list[6])
-                        pb_c = str(dark_list[7])
-                        theme = theme + str(f'## Custom {name} - Dark LookAndFeel Theme.\n'
-                                            f'## Generated using LookyFeely.\n'
-                                            f'#import PySimpleGUI as sg  '
-                                            f'# Please change \'sg\' to your liking.\n'
-                                            f'#sg.LOOK_AND_FEEL_TABLE[\'{name_safe}Dark\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
-                                            f'#    \'TEXT\': \'{txt_c}\',\n'
-                                            f'#    \'INPUT\': \'{in_c}\',\n'
-                                            f'#    \'TEXT_INPUT\': \'{txt_in_c}\',\n'
-                                            f'#    \'SCROLL\': \'{scr_c}\',\n'
-                                            f'#    \'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n'
-                                            f'#    \'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n'
-                                            f'#    \'BORDER\': {str(bor_w)},\n'
-                                            f'#    \'SLIDER_DEPTH\': {str(sl_bor_w)},\n'
-                                            f'#    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
-                                            f'#sg.ChangeLookAndFeel(\'{name_safe}Dark\')\n\n')
-                    if window_1_values['light'] == True:
-                        light_list = [sorted_list[7], sorted_list[1], sorted_list[0],
-                                      sorted_list[6], sorted_list[5], sorted_list[0],
-                                      sorted_list[6], sorted_list[4]]
-                        bg_c = str(light_list[0])
-                        txt_c = str(light_list[1])
-                        txt_in_c = str(light_list[2])
-                        in_c = str(light_list[3])
-                        scr_c = str(light_list[4])
-                        bt_txt_c = str(light_list[5])
-                        bt_c = str(light_list[6])
-                        pb_c = str(light_list[7])
-                        theme = theme + str(f'## Custom {name} - Light LookAndFeel Theme.\n'
-                                            f'## Generated using LookyFeely.\n'
-                                            f'#import PySimpleGUI as sg  '
-                                            f'# Please change \'sg\' to your liking.\n'
-                                            f'#sg.LOOK_AND_FEEL_TABLE[\'{name_safe}Light\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
-                                            f'#    \'TEXT\': \'{txt_c}\',\n'
-                                            f'#    \'INPUT\': \'{in_c}\',\n'
-                                            f'#    \'TEXT_INPUT\': \'{txt_in_c}\',\n'
-                                            f'#    \'SCROLL\': \'{scr_c}\',\n'
-                                            f'#    \'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n'
-                                            f'#    \'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n'
-                                            f'#    \'BORDER\': {str(bor_w)},\n'
-                                            f'#    \'SLIDER_DEPTH\': {str(sl_bor_w)},\n'
-                                            f'#    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
-                                            f'#sg.ChangeLookAndFeel(\'{name_safe}Light\')\n\n')
-                    if window_1_values['grayout'] == True:
-                        # This is the Gray-Out feature. It gives a black-and-white effect to themes.
-                        gray_list = []
-                        for i in sorted_list:
-                            i = colour.Color(i)
-                            i.saturation = 0
-                            gray_list.append(i.get_web())
-                        bg_c = str(gray_list[0])
-                        txt_c = str(gray_list[1])
-                        txt_in_c = str(gray_list[2])
-                        in_c = str(gray_list[3])
-                        scr_c = str(gray_list[4])
-                        bt_txt_c = str(gray_list[5])
-                        bt_c = str(gray_list[6])
-                        pb_c = str(gray_list[7])
-                        theme = theme + str(f'## Custom {name} - Gray LookAndFeel Theme.\n'
-                                            f'## Generated using LookyFeely.\n'
-                                            f'#import PySimpleGUI as sg  '
-                                            f'# Please change \'sg\' to your liking.\n'
-                                            f'#sg.LOOK_AND_FEEL_TABLE[\'{name_safe}Gray\'] = {{\'BACKGROUND\': \'{bg_c}\',\n'
-                                            f'#    \'TEXT\': \'{txt_c}\',\n'
-                                            f'#    \'INPUT\': \'{in_c}\',\n'
-                                            f'#    \'TEXT_INPUT\': \'{txt_in_c}\',\n'
-                                            f'#    \'SCROLL\': \'{scr_c}\',\n'
-                                            f'#    \'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n'
-                                            f'#    \'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n'
-                                            f'#    \'BORDER\': {str(bor_w)},\n'
-                                            f'#    \'SLIDER_DEPTH\': {str(sl_bor_w)},\n'
-                                            f'#    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
-                                            f'#sg.ChangeLookAndFeel(\'{name_safe}Gray\')\n\n')
-                    # I decided to add a progress meter for the code generation because... why not?
-                    prog_l = [[sg.Text('Please wait...')],
-                              [sg.ProgressBar(1000, orientation='h', size=(20, 20), key='progbar')]]
-                    prog = sg.Window('Generating Theme...', prog_l, location=window_1_c, disable_close=True)
-                    for i in range(1000):
-                        prog_e, prog_v = prog.Read(timeout=0)
-                        try:
-                            prog_location = prog.CurrentLocation()
-                        except _tkinter.TclError:
-                            break
-                            pass
-                        if prog_e is None:
-                            prog.Close()
-                            break
-                        prog['progbar'].UpdateBar(i + 1)
-                    sg.PopupOK('All done!', 'Your theme code is ready.', location=prog.CurrentLocation(), auto_close=True,
-                               auto_close_duration=5)
-                    prog.Close()
-                    # Dole out the code for the user's harvest.
-                    output_window_layout = [
-                        [sg.Text('Code for '+str(name)+' Look and Feel theme.')],
-                        [sg.Text('Please copy and paste the code below into your source code.')],
-                        [sg.Text('This output is directly modifiable.')],
-                        [sg.Multiline(default_text=theme, key='output', size=(70, 8))],
-                        [sg.Button(' Exit ', key='Exit'), sg.Button(' Preview Theme ', key='preview'), sg.Button('Copy Theme Code to Clipboard', key='copy'), sg.Button('Shuffle Theme Colors', key='shuffle')],
-                        [sg.Frame('Theme Shuffler', layout=[
-                            [sg.Column(layout=[
-                                 [sg.Text('Shuffled Theme:')],
-                                 [sg.Multiline(default_text='', key='shuffled_theme', size=(65, 8))],
-                                 [sg.Button(' Preview Shuffled Theme ', key='shf_preview'), sg.Button('Copy Theme Code to Clipboard', key='shf_copy'), sg.Button('Adjust Readability', key='adjust'), sg.Button('Revert Adjustments', key='revert', visible=False)]
-                             ])]
-                        ], visible=False, key='shuffle_frame')]
-                    ]
-
-                    try:  # I've found that these 'weirdly positioned' try and except blocks stop all error breaks.
-                        output_window = sg.Window(title=('Look and Feel Theme - '+str(name)), layout=output_window_layout,
-                                                  grab_anywhere=False, element_justification='center',
-                                                  location=(window_1_c[0]-50, window_1_c[1]+50))
-                    except _tkinter.TclError:
-                        # break
-                        pass
-
-                    # Shuffle Preliminaries and Functions
-                    shuffle_counter = 0
-                    def generate_shuffled_theme(colors):
-                        s_bg_c = str(colors[0])
-                        s_txt_c = str(colors[1])
-                        s_txt_in_c = str(colors[2])
-                        s_in_c = str(colors[3])
-                        s_scr_c = str(colors[4])
-                        s_bt_txt_c = str(colors[5])
-                        s_bt_c = str(colors[6])
-                        s_pb_c = str(colors[7])
-
-                        s_theme = str(f'# Custom {name} LookAndFeel Theme.\n'
-                                      f'# Generated using LookyFeely.\n'
-                                      f'import PySimpleGUI as sg  # Please change \'sg\' to your liking.\n'
-                                      f'sg.LOOK_AND_FEEL_TABLE[\'{name_safe}_shuffled{str(shuffle_counter)}\'] = {{\'BACKGROUND\': \'{s_bg_c}\',\n    \''
-                                      f'TEXT\': \'{s_txt_c}\',\n    \'INPUT\': \'{s_in_c}\',\n    \''
-                                      f'TEXT_INPUT\': \'{s_txt_in_c}\',\n    \'SCROLL\': \'{s_scr_c}\',\n    \''
-                                      f'BUTTON\': (\'{s_bt_txt_c}\', \'{s_bt_c}\'),\n    \''
-                                      f'PROGRESS\': (\'{s_pb_c}\', \'{s_in_c}\'),\n    \'BORDER\': {str(bor_w)},\n    \''
-                                      f'SLIDER_DEPTH\': {str(sl_bor_w)},\n    \'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n'
-                                      f'sg.ChangeLookAndFeel(\'{name_safe}_shuffled{str(shuffle_counter)}\')\n\n')
-                        return s_theme
-
-                    def shuffler(colors=color_values):
-                        rs(colors)
-                        s_theme = generate_shuffled_theme(colors=colors)
-                        scrambled_values = colors
-                        return [s_theme, scrambled_values]
-
-                    def adjust_readability(colors):
-                        for i in colors:
-                            colors[colors.index(i)] = colour.Color(colors[colors.index(i)])
-                        if colors[0].luminance < 0.5:
-                            predisposition = 'dark'
-                            lum = [round(colors[0].luminance, 1), 1, 0.3, 0.8, 0.4, 0.2, 0.9, 0.7]
-                            for y in range(8):
-                                lum[y] = lum[y] * colors[y].luminance
-                                colors[y].luminance = lum[y]
-                        else:
-                            predisposition = 'light'
-                            lum = [round(colors[0].luminance, 1), 0.2, 0.3, 0.1, 0.4, 0.9, 0.5, 0.7]
-                            for y in range(8):
-                                lum[y] = lum[y] * colors[y].luminance
-                                colors[y].luminance = lum[y]
-                        return colors
-
-                    while True:
-                        output_window_events, output_window_values = output_window.Read()
-
-
-                        if output_window_events in (None, 'Exit'):
-                            output_window.Close()
-                            window_1.BringToFront()
-                            break
-                        if output_window_events == 'shuffle':
-                            shuffle_counter = shuffle_counter + 1
-                            global s
-                            global s_theme
-                            global s_colors
-                            s = shuffler()
-                            s_theme = s[0]
-                            s_colors = s[1]
-                            output_window['shuffle_frame'](visible=True)
-                            output_window['shuffled_theme'](s_theme)
-
-                        if output_window_events == 'adjust':
-                            output_window['adjust'](visible=False)
-                            output_window['revert'](visible=True)
-                            adjusted = adjust_readability(colors=s_colors)
-                            adjusted_theme = generate_shuffled_theme(adjusted)
-                            output_window['shuffled_theme'](adjusted_theme)
-
-                        if output_window_events == 'revert':
-                            output_window['revert'](visible=False)
-                            output_window['adjust'](visible=True)
-                            output_window['shuffled_theme'](s_theme)
-
-                        if output_window_events == 'copy':
-                            copy((output_window_values['output']))
-                            sg.Popup("Your theme code has been copied!", title='Copied!', auto_close=True, auto_close_duration=4, location=(output_window.CurrentLocation()[0], output_window.CurrentLocation()[1]))
-                        if output_window_events == 'shf_copy':
-                            copy((output_window_values['shuffled_theme']))
-                            sg.Popup("Your shuffled theme code has been copied!", title='Copied!', auto_close=True, auto_close_duration=4, location=(output_window.CurrentLocation()[0], output_window.CurrentLocation()[1]))
-                        if 'preview' in output_window_events:
-                            try:
-                                if output_window_events == 'preview':
-                                    user_output = output_window_values['output']
-                                    if user_output == theme:    # This guy here and his alternate allow for
-                                        exec(theme)             # on-the-fly editing of the theme code even from the
-                                    if user_output != theme:    # output panel.
-                                        theme = user_output     # Tried and tested :).
-                                        exec(theme)             # Nifty as ever for adjusting the background color in a pinch.
-                                if output_window_events == 'shf_preview':
-                                    s_theme = shuffler()[0]
-                                    user_output = output_window_values['shuffled_theme']
-                                    if user_output == s_theme:
-                                        exec(s_theme)
-                                    if user_output != s_theme:
-                                        s_theme = user_output
-                                        exec(s_theme)
-
-                                # Let's give 'em a feel of their custom theme.
-                                preview_layout = [[sg.Text(' '*40), sg.Text('Theme Preview')],
-                                                  [sg.Text(' '*19),
-                                                   sg.Text('This is how your theme will look when used.')],
-                                                  [sg.Text(' '*5),
-                                                   sg.Text('This window serves no other purpose than being a mannequin.')],
-                                                  [sg.Text('Only the exit button works.')],
-                                                  [sg.InputText('...just a textbox', size=(60, 8))],
-                                                  [sg.Multiline('This is just a Multiline element. Play with it as you '
-                                                                'deem fit.\n\nHave some Latin too.\nLorem ipsum '
-                                                                'dolor sit amet, consectetur adipisici elit, '
-                                                                'sed eiusmod\n tempor incidunt ut labore et dolore magna '
-                                                                'aliqua. Ut enim ad minim\n veniam, quis nostrud '
-                                                                'exercitation ullamco laboris nisi ut aliquid\n ex ea '
-                                                                'commodi consequat. Quis aute iure reprehenderit in '
-                                                                'voluptate\n velit esse cillum dolore eu fugiat nulla '
-                                                                'pariatur. Excepteur sint\n obcaecat cupiditat non '
-                                                                'proident, sunt in culpa qui officia deserunt\n mollit '
-                                                                'anim id est laborum.', size=(58, 5))],
-                                                  # Yeah, that's Latin. Copied obviously.
-                                                  [sg.Frame(title='Progress Bar Preview', layout=[
-                                                      [sg.Text('Click to preview this theme\'s progress bar.')],
-                                                      [sg.Button('Show progress bar.', key='p_bar_show')]
-                                                  ])],
-                                                  [sg.Frame(title='Slider Preview', layout=[
-                                                      [sg.Text('This is a useless slider.')],
-
-                                                      [sg.Slider(range=(0, 1000), size=(35, 10), default_value=rc([0, 500, 1000]), orientation='h')]
-                                                  ])],
-                                                  [sg.Frame(title='Useless Buttons!', layout=[[sg.Button(' Button A ', key='btn_a'),
-                                                                                               sg.Button(' Button B ', key='btn_b'),
-                                                                                               sg.Button(' Button C ', key='btn_c'),
-                                                                                               sg.Button(' Another useless button. ', key='btn_d')]])],
-                                                  [sg.Exit(' Exit ', key='Exit')]]
-                                preview = sg.Window(title=(name+' Preview Popup'), layout=preview_layout, resizable=False,
-                                                    location=(output_window.CurrentLocation()[0]+45, output_window.CurrentLocation()[1]+10))
-
-                                while True:
-                                    preview_events, preview_values = preview.Read()
-
-                                    if preview_events == 'p_bar_show':
-                                        p_bar_preview_l = [[sg.ProgressBar(max_value=1000, orientation='h', size=(35, 20), key='p_bar')]]
-                                        p_bar_preview = sg.Window('Progress Bar Preview', p_bar_preview_l)
-                                        for i in range(1000):
-                                            p_bar_preview_e, p_bar_preview_v = p_bar_preview.Read(timeout=10)
-                                            p_bar_preview['p_bar'].UpdateBar(i + 1)
-                                            if p_bar_preview_e in (None, 'Exit'):
-                                                p_bar_preview.Close()
-                                                break
-                                        p_bar_preview.Close()
-
-                                    if preview_events in (None, 'Exit'):
-                                        preview.Close()
-                                        window_1.BringToFront()
-                                        output_window.BringToFront()
-                                        # Change back to the previous LookyFeely theme.
-                                        sg.ChangeLookAndFeel(random_theme)
-                                        break
-                            except:
-                                sg.ChangeLookAndFeel(random_theme)
-                                sg.Popup('An error occured! Please check your entries! You may have typed in an '
-                                         'unsupported character or put in a wrong color value format.', title='Error!')
-                                if DebugMode is on:
-                                    Print('Error!')
-            finisher(color_values=color_values)
-    
-    if window_1_events == 'preview':
-        meta_layout = [[sg.Text(('This is a window of all {0} themes that are built into PySimpleGUI'.format(
-            str(len(sg.ListOfLookAndFeelValues())))), text_color=sg.LOOK_AND_FEEL_TABLE[random_theme]['TEXT_INPUT'],
-        background_color=sg.LOOK_AND_FEEL_TABLE[random_theme]['INPUT'])]]
+                try:
+                    def generate_theme_code(color_values=color_values, purpose=None, commented=False):
+                        bg_c = str(color_values[0])
+                        txt_c = str(color_values[1])
+                        txt_in_c = str(color_values[2])
+                        in_c = str(color_values[3])
+                        scr_c = str(color_values[4])
+                        bt_txt_c = str(color_values[5])
+                        bt_c = str(color_values[6])
+                        pb_c = str(color_values[7])
         
+                        first_line = f'## Generated using LookyFeely.\n'
+                        if purpose == None:
+                            first_line = f'# Custom {name} PySimpleGUI Theme.\n'
+                            themedict_variable = f'{name_safe}_themedict'
+                            theme_variable = f'\'{name_safe}\''
+                        if purpose == 'Light':
+                            first_line = f'# Custom {name} - Light PySimpleGUI Theme.\n'
+                            themedict_variable = f'{name_safe}_Light_themedict'
+                            theme_variable = f'\'{name_safe}_Light\''
+                        if purpose == 'Dark':
+                            first_line = f'# Custom {name} - Dark PySimpleGUI Theme.\n'
+                            themedict_variable = f'{name_safe}_Dark_themedict'
+                            theme_variable = f'\'{name_safe}_Dark\''
+                        if purpose == 'Gray':
+                            first_line = f'# Custom {name} - Gray PySimpleGUI Theme.\n'
+                            themedict_variable = f'{name_safe}_Gray_themedict'
+                            theme_variable = f'\'{name_safe}_Gray\''
+                        if purpose == 'Shuffle':
+                            first_line = f'# Shuffled custom {name} (Shuffle {shuffle_counter}) PySimpleGUI Theme.\n'
+                            themedict_variable = f'{name_safe}_Shuffled{str(shuffle_counter)}_themedict'
+                            theme_variable = f'\'{name_safe}_Shuffled{str(shuffle_counter)}\''
+                            
+                        code = [first_line,
+                                f'# Generated using LookyFeely {version}.\n',
+                                f'import PySimpleGUI as sg  # Please change \'sg\' to your liking.\n',
+                                f'{themedict_variable} = {{\'BACKGROUND\': \'{bg_c}\',\n    ',
+                                f'\'TEXT\': \'{txt_c}\',\n    ',
+                                f'\'INPUT\': \'{in_c}\',\n    ',
+                                f'\'TEXT_INPUT\': \'{txt_in_c}\',\n    ',
+                                f'\'SCROLL\': \'{scr_c}\',\n    ',
+                                f'\'BUTTON\': (\'{bt_txt_c}\', \'{bt_c}\'),\n    ',
+                                f'\'PROGRESS\': (\'{pb_c}\', \'{in_c}\'),\n    ',
+                                f'\'BORDER\': {str(bor_w)},\n    ',
+                                f'\'SLIDER_DEPTH\': {str(sl_bor_w)},\n    ',
+                                f'\'PROGRESS_DEPTH\': {str(pb_w)}}}\n\n',
+                                f'sg.theme_add_new({theme_variable}, {themedict_variable})\n',
+                                f'sg.theme({theme_variable})\n\n',
+                                ]
+                        if commented:
+                            for code_line in code:
+                                index = code.index(code_line)
+                                code[index] = '# '+code_line
+                                
+                        theme_code = ''
+                        for code_line in code:
+                            theme_code += code_line
+                        
+                        return theme_code
+                        
+                    if done:  # Yep. Real shameless signal system.
+                        # Set the names of colors just right...
+                        for i in color_values:
+                            if not str(i).startswith('#'):
+                                color_values[(color_values.index(i))] = str(i).lower()  # Lowercase doesn't discriminate.
+                        global theme
+                        theme = generate_theme_code()
+    
+                        # Dark and Light modes (and most recently Gray mode) ... I nearly got confused about where to put their code.
+                        # Sort things out...
+                        luminance_list = []
+                        for i in color_values:
+                            i_c = colour.Color(i)
+                            i_c_l = i_c.get_luminance()
+                            luminance_list.append(i_c_l)
+                        sorter_list = list(zip(luminance_list, color_values))
+                        sorter_list = sorted(sorter_list, key=lambda color: color[0])
+                        sorted_list = [i[1] for i in sorter_list]
+                        # Dark and Light modes implementation.
+                        if window_1_values['dark'] == True:
+                            dark_list = [sorted_list[0], sorted_list[6], sorted_list[7],
+                                         sorted_list[1], sorted_list[2], sorted_list[7],
+                                         sorted_list[1], sorted_list[3]]
+                            theme += generate_theme_code(dark_list, 'Dark', True)
+                        if window_1_values['light'] == True:
+                            light_list = [sorted_list[7], sorted_list[1], sorted_list[0],
+                                          sorted_list[6], sorted_list[5], sorted_list[0],
+                                          sorted_list[6], sorted_list[4]]
+                            theme += generate_theme_code(light_list, 'Light', True)
+                        if window_1_values['grayout'] == True:
+                            # This is the Gray-Out feature. It gives a black-and-white effect to themes.
+                            gray_list = []
+                            for i in sorted_list:
+                                i = colour.Color(i)
+                                i.saturation = 0
+                                gray_list.append(i.get_web())
+                            theme += generate_theme_code(gray_list, 'Gray', True)
+                        # I decided to add a progress meter for the code generation because... why not?
+                        prog_l = [[sg.Text('Please wait...')],
+                                  [sg.ProgressBar(1000, orientation='h', size=(20, 20), key='progbar')]]
+                        prog = sg.Window('Generating Theme...', prog_l, location=loc8or.get_ideal_location(prog_l, 'UC', 'UC', 20), disable_close=True)
+                        for i in range(1000):
+                            prog_e, prog_v = prog.Read(timeout=0)
+                            try:
+                                prog_location = prog.CurrentLocation()
+                            except _tkinter.TclError:
+                                break
+                                pass
+                            if prog_e is None:
+                                prog.Close()
+                                break
+                            prog['progbar'].UpdateBar(i + 1)
+                        sg.PopupOK('All done!', 'Your theme code is ready.', location=prog.CurrentLocation(),
+                                   auto_close=True,
+                                   auto_close_duration=5)
+                        prog.Close()
+                        # Dole out the code for the user's harvest.
+                        # output_house_size = (618, 180)
+                        output_window_layout = [
+                            [sg.Text('Theme Output', font=('Helvetica', 19)), sg.Text((' ' * 124)),
+                             sg.Button(' Exit ', key='Exit')],
+                            [sg.Text(f'Code for {str(name)} Look and Feel theme.')],
+                            [sg.Text('Please copy and paste the code below into your source code.')],
+                            [sg.Text('This output is directly modifiable.')],
+                            [sg.Column([
+                                [sg.Column([
+                                    [sg.Checkbox('Don\'t Preview automatically upon readibility adjustment.', key='preview_x_adj')],
+                                    [sg.Multiline(default_text=theme, key='output', size=(55, 10))]
+                                ], pad=(0, 0)),
+                                sg.Column([
+                                    [sg.Button(' Preview Theme ', key='preview')],
+                                    [sg.Button('Shuffle Theme Colors', key='shuffle')],
+                                    [sg.Button('Copy Theme Code to Clipboard', key='copy')],
+                                    [sg.Button('Reuse as LookyFeely Input', key='reuse')],
+                                    [sg.Button('Adjust Readability', key='adjust'),
+                                     sg.Button('Revert Adjustments', key='revert', visible=False)]
+                                ], pad=(0, 0))
+                                ],
+                            [sg.Frame('Theme Shuffler', layout=[
+                                [sg.Column(layout=[
+                                    [sg.Checkbox('Don\'t Preview automatically when Shuffle is clicked.',
+                                                 key='preview_x_shuffle'), sg.Text((' ' * 39)),
+                                     ],
+                                    [sg.Checkbox('Don\'t Preview automatically upon readibility adjustment.',
+                                                 key='preview_x_adj_shf')],
+                                    [sg.Text('Shuffled Theme:')],
+                                    [sg.Column([[sg.Multiline(default_text='', key='shuffled_theme', size=(50, 10))]],
+                                               pad=(0, 0)),
+                                     sg.Column([
+                                         [sg.Button(' Preview Shuffled Theme ', key='shf_preview')],
+                                         [sg.Button('Copy Theme Code to Clipboard', key='shf_copy')],
+                                         [sg.Button('Reuse as LookyFeely Input', key='reuse_shf')],
+                                         [sg.Button('Adjust Readability', key='adjust_shf'),
+                                          sg.Button('Revert Adjustments', key='revert_shf', visible=False)]
+                                     ], pad=(0, 0))],
+                                ])]
+                            ], visible=False, key='shuffle_frame')]
+                                ], key='output_house')]
+                        ]
+                        output_window = sg.Window(title=('Look and Feel Theme - ' + str(name)),
+                                                  layout=output_window_layout,
+                                                  grab_anywhere=False, element_justification='center',
+                                                  # location=(window_1_c[0] - 50, window_1_c[1] + 50)
+                                                  location = loc8or.get_ideal_location(output_window_layout, 'UC', 'UC', immediate_window_height)
+                                                  )
+                        # Shuffle Preliminaries and Functions
+                        shuffle_counter = 0
+    
+                        def generate_shuffled_theme(colors):
+                            shuffled_theme = generate_theme_code(colors, 'Shuffle')
+                            return shuffled_theme
+    
+                        def shuffler(colors=color_values):
+                            rs(colors)
+                            sh_theme = generate_shuffled_theme(colors=colors)
+                            scrambled_values = colors
+                            return [sh_theme, scrambled_values]
+    
+                        def adjust_readability(colors):
+                            for i in colors:
+                                colors[colors.index(i)] = colour.Color(colors[colors.index(i)])
+                            if colors[0].luminance < 0.5:
+                                predisposition = 'dark'
+                                lum = [round(colors[0].luminance, 1), 1, 0.3, 0.8, 0.4, 0.2, 0.9, 0.7]
+                            else:
+                                predisposition = 'light'
+                                lum = [round(colors[0].luminance, 1), 0.2, 0.3, 0.1, 0.4, 0.9, 0.5, 0.7]
+                            for y in range(8):
+                                colors[y].luminance = lum[y]
+                            return colors
+                        
+                        def reuse_process(theme, purpose=None):
+                            output_window_values = output_window.Read(timeout=10)[1]
+                            if purpose == None:
+                                user_output = output_window_values['output']
+                            if purpose == 'Shuffle':
+                                user_output = output_window_values['shuffled_theme']
+                            if user_output == theme:
+                                exec(theme)
+                            if user_output != theme:
+                                theme = user_output
+                                exec(theme)
+                            r_bg_c = sg.theme_background_color()
+                            r_txt_c = sg.theme_text_color()
+                            r_in_txt_c = sg.theme_input_text_color()
+                            r_in_c = sg.theme_input_background_color()
+                            r_scr_c = sg.theme_slider_color()
+                            r_bt_txt_c = sg.theme_button_color()[0]
+                            r_bt_c = sg.theme_button_color()[1]
+                            r_prog_c = sg.theme_progress_bar_color()[0]
+                            r_bor_w = sg.theme_border_width()
+                            r_sl_w = sg.theme_slider_border_width()
+                            r_prog_w = sg.theme_progress_bar_border_width()
+        
+                            sg.theme(looky_feely_theme)
+        
+                            window_1['bg_c'](r_bg_c)
+                            window_1['txt_c'](r_txt_c)
+                            window_1['txt_in_c'](r_in_txt_c)
+                            window_1['in_c'](r_in_c)
+                            window_1['scr_c'](r_scr_c)
+                            window_1['bt_txt_c'](r_bt_txt_c)
+                            window_1['bt_c'](r_bt_c)
+                            window_1['pb_c'](r_prog_c)
+                            window_1['bor_w'](r_bor_w)
+                            window_1['sl_bor_w'](r_sl_w)
+                            window_1['pb_w'](r_prog_w)
+        
+                            window_1.Refresh()
+                            
+                        def preview_process(theme):
+                            output_window_values = output_window.Read(timeout=10)[1]
+                            user_output = output_window_values['output']
+                            if user_output == theme:  # This guy here and his alternate allow for
+                                exec(theme)  # on-the-fly editing of the theme code even from the
+                            if user_output != theme:  # output panel.
+                                theme = user_output  # Tried and tested :).
+                                exec(theme)  # Nifty as ever for adjusting the background color in a pinch.
+                            init_preview(theme_code=theme, theme_name=name)
+                            
+                        def sh_preview_process(shuffled_theme):
+                            output_window_values = output_window.Read(timeout=10)[1]
+                            user_output = output_window_values['shuffled_theme']
+                            if user_output == shuffled_theme:
+                                exec(shuffled_theme)
+                            if user_output != shuffled_theme:
+                                shuffled_theme = user_output
+                                exec(shuffled_theme)
+                            init_preview(theme_code=shuffled_theme, theme_name=name)
+                            
+                        def init_preview(theme_code, theme_name):
+                            # Let's give 'em a feel of their custom theme.
+                            preview_layout = [[sg.Text(' ' * 40), sg.Text('Theme Preview')],
+                                              [sg.Text(' ' * 19),
+                                               sg.Text('This is how your theme will look when used.')],
+                                              [sg.Text(' ' * 5),
+                                               sg.Text('This window serves no other purpose than being a mannequin.')],
+                                              [sg.Text('Only the exit button works.')],
+                                              [sg.InputText('...just a textbox', size=(60, 8))],
+                                              [sg.Multiline((f'# This is the code responsible for this window\'s theme.\n\n{theme_code}'),
+                                                  size=(58, 5))],
+                                              [sg.Frame(title='Progress Bar Preview', layout=[
+                                                  [sg.Text('This bar is static though.')],
+                                                  [sg.ProgressBar(max_value=1000, orientation='h', size=(35, 20),
+                                                                  key='p_bar')]
+                                              ])],
+                                              [sg.Frame(title='Slider Preview', layout=[
+                                                  [sg.Text('This is a useless slider.')],
+    
+                                                  [sg.Slider(range=(0, 1000), size=(35, 10),
+                                                             default_value=rc([0, 500, 1000]), orientation='h')]
+                                              ])],
+                                              [sg.Frame(title='Useless Buttons!',
+                                                        layout=[[sg.Button(' Button A ', key='btn_a'),
+                                                                 sg.Button(' Button B ', key='btn_b'),
+                                                                 sg.Button(' Button C ', key='btn_c'),
+                                                                 sg.Button(' Another useless button. ',
+                                                                           key='btn_d')]])],
+                                              [sg.DummyButton(' Exit ', key='Exit')]]
+                            preview = sg.Window(title=(theme_name + ' Preview Popup'), layout=preview_layout,
+                                                location=loc8or.get_ideal_location(preview_layout, 'UC', 'UC', 20))
+    
+                            preview.read(timeout=0)
+                            preview['p_bar'].UpdateBar((rc([number for number in range(500, 1001)])))
+                            # Change back to the previous LookyFeely theme.
+                            sg.theme(looky_feely_theme)
+                            bar_value = 1
+                            while False:
+                                preview_events, preview_values = preview.Read()
+                                if preview_events in (None, 'Exit') or not output_window_open:
+                                    preview.Close()
+                                    window_1.BringToFront()
+                                    output_window.BringToFront()
+                                    break
+    
+                        while True:
+                            output_window_open = True
+                            output_window_events, output_window_values = output_window.Read()
+    
+                            if output_window_events in (None, 'Exit'):
+                                output_window_open = False
+                                output_window.Close()
+                                sg.theme(looky_feely_theme)
+                                window_1.BringToFront()
+                                break
+                            if output_window_events == 'shuffle':
+                                shuffle_counter += 1
+                                global s
+                                global s_theme
+                                global s_colors
+                                s = shuffler()
+                                s_theme = s[0]
+                                s_colors = s[1]
+                                output_window['shuffle_frame'](visible=True)
+                                output_window['shuffled_theme'](s_theme)
+                                if not output_window_values['preview_x_shuffle']:
+                                    sh_preview_process(s_theme)
+    
+                            if output_window_events == 'adjust':
+                                output_window['adjust'](visible=False)
+                                output_window['revert'](visible=True)
+                                adjusted = adjust_readability(colors=color_values)
+                                adjusted_theme = generate_theme_code(adjusted)
+                                ad_luminance_list = []
+                                for a_i in adjusted:
+                                    a_i_c = colour.Color(a_i)
+                                    a_i_c_l = a_i_c.get_luminance()
+                                    ad_luminance_list.append(a_i_c_l)
+                                ad_sorter_list = list(zip(luminance_list, adjusted))
+                                ad_sorter_list = sorted(ad_sorter_list, key=lambda color: color[0])
+                                ad_sorted_list = [i[1] for i in ad_sorter_list]
+                                if window_1_values['dark'] == True:
+                                    ad_dark_list = [ad_sorted_list[0], ad_sorted_list[6], ad_sorted_list[7],
+                                                 ad_sorted_list[1], ad_sorted_list[2], ad_sorted_list[7],
+                                                 ad_sorted_list[1], ad_sorted_list[3]]
+                                    adjusted_theme += generate_theme_code(ad_dark_list, 'Dark', True)
+                                if window_1_values['light'] == True:
+                                    ad_light_list = [ad_sorted_list[7], ad_sorted_list[1], ad_sorted_list[0],
+                                                  ad_sorted_list[6], ad_sorted_list[5], ad_sorted_list[0],
+                                                  ad_sorted_list[6], ad_sorted_list[4]]
+                                    adjusted_theme += generate_theme_code(ad_light_list, 'Light', True)
+                                if window_1_values['grayout'] == True:
+                                    # This is the Gray-Out feature. It gives a black-and-white effect to themes.
+                                    ad_gray_list = []
+                                    for a_i in ad_sorted_list:
+                                        a_i = colour.Color(a_i)
+                                        a_i.saturation = 0
+                                        ad_gray_list.append(a_i.get_web())
+                                    adjusted_theme += generate_theme_code(ad_gray_list, 'Gray', True)
+                                output_window['output'](adjusted_theme)
+                                if not output_window_values['preview_x_adj']:
+                                    preview_process(adjusted_theme)
+                            
+                            if output_window_events == 'adjust_shf':
+                                output_window['adjust_shf'](visible=False)
+                                output_window['revert_shf'](visible=True)
+                                shf_adjusted = adjust_readability(colors=s_colors)
+                                shf_adjusted_theme = generate_shuffled_theme(shf_adjusted)
+                                output_window['shuffled_theme'](shf_adjusted_theme)
+                                if not output_window_values['preview_x_adj_shf']:
+                                    sh_preview_process(shf_adjusted_theme)
+    
+                            if output_window_events == 'revert':
+                                output_window['revert'](visible=False)
+                                output_window['adjust'](visible=True)
+                                output_window['output'](theme)
+                            
+                            if output_window_events == 'revert_shf':
+                                output_window['revert_shf'](visible=False)
+                                output_window['adjust_shf'](visible=True)
+                                output_window['shuffled_theme'](s_theme)
+    
+                            if output_window_events == 'reuse':
+                                reuse_process(theme)
+                            
+                            if output_window_events == 'reuse_shf':
+                                reuse_process(theme, 'Shuffle')
+                                
+                            if output_window_events == 'copy':
+                                copy((output_window_values['output']))
+                                sg.Popup("Your theme code has been copied!", title='Copied!', auto_close=True,
+                                         auto_close_duration=4,
+                                         location=(output_window.CurrentLocation()[0], output_window.CurrentLocation()[1]))
+                            if output_window_events == 'shf_copy':
+                                copy((output_window_values['shuffled_theme']))
+                                sg.Popup("Your shuffled theme code has been copied!", title='Copied!', auto_close=True,
+                                         auto_close_duration=4,
+                                         location=(output_window.CurrentLocation()[0], output_window.CurrentLocation()[1]))
+                            if 'preview' in output_window_events:
+                                if output_window_events == 'preview':
+                                    preview_process(theme)
+                                if output_window_events == 'shf_preview':
+                                    sh_preview_process(s_theme)
+                except:
+                    sg.theme(looky_feely_theme)
+                    sg.Popup('An error occured! Please check your entries! You may have typed in an '
+                             'unsupported character for your theme name or put in a wrong color value.', title='Error!')
+                    if DebugMode is on:
+                        Print('Error!')
+
+            finisher(color_values=color_values)
+
+    if window_1_events == 'preview':
+        meta_layout = [[sg.Text(('This is a window of all {0} themes that are built into PySimpleGUI'.format(str(len(sg.ListOfLookAndFeelValues())))), text_color=sg.theme_input_text_color(), background_color=sg.theme_input_background_color())]]
+
         row = []
         for count, theme in enumerate(sg.theme_list()):
             sg.theme(theme)
             if not count % 10:
                 meta_layout += [row]
                 row = []
-            row += [sg.Frame(theme, layout=[[sg.Text('This is a text element.')], [sg.InputText('This is a place to input text.')],
-                    [sg.Button('OK'), sg.Button('Cancel')]], border_width=4)]
+            row += [sg.Frame(theme, layout=[[sg.Text('This is a text element.')],
+                                            [sg.InputText('This is a place to input text.')],
+                                            [sg.Button('OK'), sg.Button('Cancel')]], border_width=4)]
         if row:
             meta_layout += [row]
-        sg.theme(random_theme)
+        sg.theme(looky_feely_theme)
         layout = [[sg.Text('Built-In Themes', font=('Helvetica', 18))],
-                  [sg.Column(background_color=sg.LOOK_AND_FEEL_TABLE[random_theme]['INPUT'],
+                  [sg.Column(background_color=sg.theme_input_background_color(),
                              layout=meta_layout, size=(600, 300), scrollable=True)],
                   [sg.Button('Close')]]
-        theme_preview = sg.Window('Preview All Built-In Themes', layout)
+        theme_preview = sg.Window('Preview All Built-In Themes', layout, location=loc8or.get_ideal_location(layout, 'UC', 'UC', immediate_window_height))
         while True:
             th_e = theme_preview.Read()[0]
             if th_e in (None, 'Close'):
                 theme_preview.Close()
                 break
-    if window_1_events == 'update':  # This one was longer than expected. Phew.
-        confirmation = sg.Window('Are you sure?', layout=[
+    if window_1_events == 'update':
+        confirmation_layout = [
             [sg.Text('You chose to update PySimpleGUI.')],
-            [sg.Text('Are you sure about this?')],
+            [sg.Text('Are you sure about this?\nLookyFeely will be unresponsive while this happens.')],
             [sg.Button('I\'m Sure.', key='Sure'), sg.Button('Cancel', key='Cancel')]
-        ], element_justification='center', location=(window_1_c[0]+90, window_1_c[1]+90))
+        ]
+        confirmation = sg.Window('Are you sure?', layout=confirmation_layout, element_justification='center', location=loc8or.get_ideal_location(confirmation_layout, 'UC', 'UC', popup_height))
         while True:
             conf_e = confirmation.Read()[0]
             confirmation.NonBlocking = True
@@ -918,29 +1081,32 @@ while True:
         for j in color_names_list:
             color_names.append(([sg.Text(text=(str(j)),
                                          size=(20, 1),
-                                         text_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['TEXT_INPUT'],
-                                         background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['INPUT']),
+                                         text_color=sg.theme_input_text_color(),
+                                         background_color=sg.theme_input_background_color()),
                                  sg.DummyButton('', button_color=('#000000', str(colour.Color(str(j)).get_hex_l())),
                                                 size=(10, 1))]))
-        
+
         viewer_layout = [
             [sg.Text('Valid Color Names', font=('Helvetica', 18))],
-            [sg.Text(text=('These are the names of '+str(len(color_names))+' valid color names.'))],
+            [sg.Text(text=('These are the names of ' + str(len(color_names)) + ' valid color names.'))],
             [sg.Text('Just for reference.')],
             [sg.Text('Ranked from darkest to lightest.')],
-            [sg.Column(layout=color_names, size=(250, 200), scrollable=True, vertical_scroll_only=True, background_color=sg.LOOK_AND_FEEL_TABLE[str(random_theme)]['INPUT'])],
+            [sg.Column(layout=color_names, size=(250, 200), scrollable=True, vertical_scroll_only=True,
+                       background_color=sg.theme_input_background_color())],
             [sg.Button('Exit')]
         ]
-        viewer = sg.Window('Valid Color Name List', layout=viewer_layout, location=(window_1.CurrentLocation()[0]+60, window_1.CurrentLocation()[1]+100))
+        viewer = sg.Window('Valid Color Name List', layout=viewer_layout,
+                           location=loc8or.get_ideal_location(viewer_layout, 'UC', 'UC', subwindow_height))
         while True:
             viewer_e = viewer.Read()[0]
             viewer.NonBlocking = True
             if viewer_e in (None, 'Exit'):
                 viewer.Close()
-                breaki
+                break
     if 'checkout' in window_1_events:
         # I don't want to go importing this big dog if I'm not going to use him.
         from webbrowser import open_new_tab as hyp_lnk
+
         if window_1_events == 'checkout_me':
             hyp_lnk('https://www.github.com/definite-d/')
         if window_1_events == 'checkout_lookyfeely':
@@ -976,10 +1142,11 @@ while True:
                     'Don\'t forget to check out the other options in the Other Options tab.\n' \
                     'And yes, the logo is clickable.'.format(__version__, user())
         help_layout = [
-            [sg.Text('Help', font=('Helvetica', 18)), sg.Text(' '*104), sg.Button('Close', key='exit')],
+            [sg.Text('Help', font=('Helvetica', 18)), sg.Text(' ' * 104), sg.Button('Close', key='exit')],
             [sg.Multiline(default_text=help_text, disabled=True, size=(60, 10))]
         ]
-        help_window = sg.Window('Help', help_layout, location=(window_1.CurrentLocation()[0]-17, window_1.CurrentLocation()[1]+100))
+        help_window = sg.Window('Help', help_layout,
+                                location=loc8or.get_ideal_location(help_layout, 'UC', 'UC', subwindow_height))
         while True:
             help_events = help_window.Read()[0]
             if help_events in (None, 'exit'):
@@ -1000,6 +1167,8 @@ while True:
     if DebugMode is on:
         Print(window_1_events)
         Print(window_1_values)
+    
+    internal_theme_change(selected_theme)
 
 '''
 
