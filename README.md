@@ -8,6 +8,8 @@ Welcome...
 https://www.github.com/definite-d/PSG-LookyFeely/
 
 https://www.github.com/PySimpleGUI/PySimpleGUI/
+
+## Latest Version: v2.6
 ___________________________________________________________________________________
 
 ## What's LookyFeely?
