@@ -14,6 +14,8 @@ ________________________________________________________________________________
 
 ## What's LookyFeely?
 
+![04](https://user-images.githubusercontent.com/38317208/96386301-cb14cc00-1191-11eb-8391-13c2453b835a.PNG)
+
 LookyFeely is a utility created by definite_d (me) to make the creation of
 custom PySimpleGUI Look and Feel theme code a breeze while allowing for express 
 customization.
@@ -26,7 +28,9 @@ PySimpleGUI's GitHub repo is up there in the header section.
 Now don't have to potentially flunk multiline dicts, study color theory, memorise color codes (like #FFFFFF), mess around
 with manually typing color codes or set up a vicious cycle from IDE to color picker
 (although a professional colour picker has its advantages).
- 
+
+![02](https://user-images.githubusercontent.com/38317208/96386306-cf40e980-1191-11eb-891f-86ffa291b256.PNG)
+
 You can choose to meticulously pick your colours, or get a usable theme with fewer 
 clicks than the fingers on one hand instead **(if you don't specify a color though, 
 you'll have the options to randomly fill in those colors, fill in with shades of the 
@@ -40,6 +44,8 @@ process with your custom theme as a base, you can do that too.
 
 That's not all of its features though. I suggest you check it out yourself :wink:. Hint: there's 
 options to generate Light, Dark and Gray-Out versions of your theme all at once too.
+
+![05](https://user-images.githubusercontent.com/38317208/96386305-cea85300-1191-11eb-9f79-4ab81421fcdc.PNG)
 
 Don't forget to check out the Sample Themes generated with it as well! You might find the theme
 you need in there.
@@ -58,3 +64,9 @@ PySimpleGUI themes. Changes take effect after a restart.
 
 Development began on 29/11/2019, bare minimum (v1.2) got completed on 1/12/2019.
 
+______________________________________________________________________________________
+
+## More screenshots:
+
+![03](https://user-images.githubusercontent.com/38317208/96386303-cd772600-1191-11eb-9368-6634efda1c5a.PNG)
+![01](https://user-images.githubusercontent.com/38317208/96386304-ce0fbc80-1191-11eb-8369-f81ee08ac020.PNG)
