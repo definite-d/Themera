@@ -1,12 +1,12 @@
-#Coming Soon to LookyFeely: 
+# Coming Soon to LookyFeely: 
 
-##Theme modifier: 
+## Theme modifier: 
 
 Paste pre-existing theme code from anywhere, click a button and use 
 it as new input for LookyFeely. Expected to feature Python's exec function, so mind 
 the code you paste.
 
-##Handle more than just themes: 
+## Handle more than just themes: 
 
 LookyFeely will get the ability to take care of most 
 styling-related parameters by generating the `SetOptions()` function of PySimpleGUI. 
@@ -15,7 +15,7 @@ your .png/.ico/.icns file and not only have your theme possibly fashioned after 
 but also have it set as your program icon automatically and even converted to a 
 bytestring?
 
-##GitHub filesystem changes: 
+## GitHub filesystem changes: 
 
 Rather than having everything about the LookyFeely 
 project exposed on the first page, a compiled executable will be made available 
