@@ -10,6 +10,11 @@ https://www.github.com/definite-d/PSG-LookyFeely/
 https://www.github.com/PySimpleGUI/PySimpleGUI/
 
 ## Latest Version: v2.6
+
+Read the roadmap/features to expect here:
+
+https://github.com/definite-d/PSG-LookyFeely/master/ROADMAP.md
+
 ___________________________________________________________________________________
 
 ## What's LookyFeely?
