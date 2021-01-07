@@ -10,11 +10,11 @@ https://www.github.com/definite-d/Themera/
 https://www.github.com/PySimpleGUI/PySimpleGUI/
 
 ## Latest Version: v1.0
-![Download the installer (Windows Only)](https://github.com/definite-d/Themera/raw/master/bin/Themera%20v1.0%20Windows%20Installer.exe)
+![Download the installer (Windows Only)](https://github.com/definite-d/Themera/raw/main/bin/Themera%20v1.0%20Windows%20Installer.exe)
 
-![Download standalone executable](https://github.com/definite-d/Themera/raw/master/bin/Themera%20v1.0.exe)
+![Download standalone executable](https://github.com/definite-d/Themera/raw/main/bin/Themera%20v1.0.exe)
 
-![Download as zipped folder](https://github.com/definite-d/Themera/raw/master/bin/Themera%20v1.0.zip)
+![Download as zipped folder](https://github.com/definite-d/Themera/raw/main/bin/Themera%20v1.0.zip)
 
 Read the roadmap/features to expect here:
 
@@ -24,13 +24,13 @@ ________________________________________________________________________________
 
 ## What's Themera?
 
-![banner](https://github.com/definite-d/Themera/blob/master/branding/logo_banner.png)
+![banner](https://github.com/definite-d/Themera/blob/main/branding/logo_banner.png)
 
 Themera is a utility created by definite_d (me) to make the creation of custom PySimpleGUI Look and Feel theme code a breeze while allowing for express customization.
  
 Now don't have to potentially flunk multiline dicts, study color theory, memorise color codes (like #FFFFFF), mess around with manually typing color codes or set up a vicious cycle from IDE to color picker (although a professional colour picker has its advantages).
 
-![01](https://github.com/definite-d/Themera/blob/master/screenshots/themera/v1/01.png)
+![01](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/01.png)
 
 You can choose to meticulously pick your colours, or get a usable theme with fewer clicks than the fingers on one hand instead **(if you don't specify a color though, you'll have the options to randomly fill in those colors, fill in with shades of the colors actually specified, or get colors from an image)** then generate your code and have the options of previewing the generated stuff instantly, or copy and paste the generated code for use. That's not all; your theme's readability can be adjusted or the entire theme can be shuffled around (and then adjusted), all at the click of a button.
 
@@ -38,9 +38,9 @@ If you love the generated theme, and you want to jump in and get meticulous, or 
 
 That's not all of its features though. I suggest you check it out yourself. Hint: there's options to generate Light, Dark and Gray-Out versions of your theme all at once too.
 
-![06](https://github.com/definite-d/Themera/blob/master/screenshots/themera/v1/06.png)
+![06](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/06.png)
 
-![07](https://github.com/definite-d/Themera/blob/master/screenshots/themera/v1/07.png)
+![07](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/07.png)
 
 Don't forget to check out the Sample Themes generated with it as well! You might find the theme you need in there.
 
@@ -67,12 +67,12 @@ ________________________________________________________________________________
 
 ## Screenshot Showcase:
 
-![02](https://github.com/definite-d/Themera/blob/master/screenshots/themera/v1/02.png)
+![02](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/02.png)
 
-![03](https://github.com/definite-d/Themera/blob/master/screenshots/themera/v1/03.png)
+![03](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/03.png)
 
-![04](https://github.com/definite-d/Themera/blob/master/screenshots/themera/v1/04.png)
+![04](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/04.PNG)
 
-![05](https://github.com/definite-d/Themera/blob/master/screenshots/themera/v1/05.png)
+![05](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/05.png)
 
-![08](https://github.com/definite-d/Themera/blob/master/screenshots/themera/v1/08.png)
+![08](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/08.png)
