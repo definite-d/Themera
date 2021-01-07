@@ -1,4 +1,4 @@
-﻿# PSG-Themera
+﻿# Themera
 
 Welcome...
 
