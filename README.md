@@ -18,7 +18,7 @@ https://www.github.com/PySimpleGUI/PySimpleGUI/
 
 Read the roadmap/features to expect here:
 
-https://github.com/definite-d/Themera/blob/master/ROADMAP.md
+https://github.com/definite-d/Themera/blob/main/ROADMAP.md
 
 ___________________________________________________________________________________
 
