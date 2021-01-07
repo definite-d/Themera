@@ -24,13 +24,13 @@ ________________________________________________________________________________
 
 ## What's Themera?
 
-![banner](https://github.com/definite-d/Themera/blob/main/branding/logo_banner.png)
+![banner](https://github.com/definite-d/Themera/blob/main/branding/logo_banner.PNG)
 
 Themera is a utility created by definite_d (me) to make the creation of custom PySimpleGUI Look and Feel theme code a breeze while allowing for express customization.
  
 Now don't have to potentially flunk multiline dicts, study color theory, memorise color codes (like #FFFFFF), mess around with manually typing color codes or set up a vicious cycle from IDE to color picker (although a professional colour picker has its advantages).
 
-![scr_01](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/01.png)
+![scr_01](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/01.PNG)
 
 You can choose to meticulously pick your colours, or get a usable theme with fewer clicks than the fingers on one hand instead **(if you don't specify a color though, you'll have the options to randomly fill in those colors, fill in with shades of the colors actually specified, or get colors from an image)** then generate your code and have the options of previewing the generated stuff instantly, or copy and paste the generated code for use. That's not all; your theme's readability can be adjusted or the entire theme can be shuffled around (and then adjusted), all at the click of a button.
 
@@ -38,9 +38,9 @@ If you love the generated theme, and you want to jump in and get meticulous, or 
 
 That's not all of its features though. I suggest you check it out yourself. Hint: there's options to generate Light, Dark and Gray-Out versions of your theme all at once too.
 
-![scr_06](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/06.png)
+![scr_06](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/06.PNG)
 
-![scr_07](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/07.png)
+![scr_07](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/07.PNG)
 
 Don't forget to check out the Sample Themes generated with it as well! You might find the theme you need in there.
 
@@ -67,12 +67,12 @@ ________________________________________________________________________________
 
 ## Screenshot Showcase:
 
-![scr_02](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/02.png)
+![scr_02](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/02.PNG)
 
-![scr_03](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/03.png)
+![scr_03](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/03.PNG)
 
 ![scr_04](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/04.PNG)
 
-![scr_05](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/05.png)
+![scr_05](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/05.PNG)
 
-![scr_08](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/08.png)
+![scr_08](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/08.PNG)
