@@ -75,4 +75,4 @@ ________________________________________________________________________________
 
 ![scr_05](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/05.PNG)
 
-![scr_08](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/08.PNG)
+![scr_08](https://github.com/definite-d/Themera/blob/main/screenshots/themera/v1/08.png)
