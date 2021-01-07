@@ -24,7 +24,7 @@ ________________________________________________________________________________
 
 ## What's Themera?
 
-![banner](https://github.com/definite-d/Themera/blob/main/branding/logo_banner.PNG)
+![banner](https://github.com/definite-d/Themera/blob/main/branding/logo_banner.png)
 
 Themera is a utility created by definite_d (me) to make the creation of custom PySimpleGUI Look and Feel theme code a breeze while allowing for express customization.
  
