@@ -1,0 +1,14 @@
+.idea/
+*.tmp
+build/
+*.themerasettings
+accesstoken.txt
+help.docx
+~$help.docx
+~$help.rtf
+LICENSE.txt
+PyInstaller Automated Build Script - Themera.bat
+themera.iss
+themera.spec
+update_hashes.py
+zip_up.py

@@ -1,0 +1,19 @@
+"""
+d888888P dP
+   88    88
+   88    88d888b. .d8888b. 88d8b.d8b. .d8888b. 88d888b. .d8888b.
+   88    88'  `88 88ooood8 88'`88'`88 88ooood8 88'  `88 88'  `88
+   88    88    88 88.  ... 88  88  88 88.  ... 88       88.  .88
+   dP    dP    dP `88888P' dP  dP  dP `88888P' dP       `88888P8
+
+Themera Version and Copyright File
+PySimpleGUI Theme Code Generator
+Copyright 2023 Divine Afam-Ifediogor
+"""
+
+# IMPORTS ______________________________________________________________________________________________________________
+from datetime import date
+
+# VERSION AND COPYRIGHT ________________________________________________________________________________________________
+__version__ = '2.0.0'
+COPYRIGHT = f'Copyright {date.today().year} - Divine Afam-Ifediogor'
