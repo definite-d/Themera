@@ -34,3 +34,7 @@ ________________________________________________________________________________
 
 
 ## Screenshot Showcase:
+![launcher_light](https://github.com/definite-d/Themera/blob/v2/screenshots/themera-v2.0.0-win-x86/launcher_light.png)
+![launcher_dark](https://github.com/definite-d/Themera/blob/v2/screenshots/themera-v2.0.0-win-x86/launcher_dark.png)
+![editor_light](https://github.com/definite-d/Themera/blob/v2/screenshots/themera-v2.0.0-win-x86/editor_light.png)
+![editor_dark](https://github.com/definite-d/Themera/blob/v2/screenshots/themera-v2.0.0-win-x86/editor_dark.png)
