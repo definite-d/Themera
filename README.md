@@ -1,10 +1,10 @@
-﻿# Themera
+# Themera
 
 ## Latest Version: v2.0.0
 
 Themera is currently available in compiled form as an installer for Windows only.
 
-![![Download the installer](https://github.com/definite-d/Themera/blob/main/res/download.png)](https://github.com/definite-d/Themera/raw/main/bin/Themera%20v1.0.1%20Windows%20Installer.exe)
+![![Download the installer](https://github.com/definite-d/Themera/blob/v2.0.0/res/download.png)](https://github.com/definite-d/Themera/releases/latest)
 
 ___________________________________________________________________________________
 
