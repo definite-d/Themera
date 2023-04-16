@@ -4,8 +4,7 @@
 
 Themera is currently available in compiled form as an installer for Windows only.
 
-![![Download the installer](https://github.com/definite-d/Themera/blob/v2.0.0/res/download.png)](https://github.com/definite-d/Themera/releases/latest)
-
+[<img src=https://github.com/definite-d/Themera/blob/v2.0.0/res/download.png width=35%>](https://github.com/definite-d/Themera/releases/latest)
 ___________________________________________________________________________________
 
 ## What's Themera?
