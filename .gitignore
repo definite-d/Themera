@@ -1,4 +1,6 @@
 .idea/
+.vscode/
+__pycache__/
 *.tmp
 build/
 *.themerasettings
