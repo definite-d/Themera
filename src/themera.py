@@ -12,13 +12,12 @@ Copyright 2023 Divine Afam-Ifediogor
 """
 
 # Greetings to whoever can see the console.
-from version_and_copyright import __version__
+from .version_and_copyright import __version__
 
 print(f"Themera v{__version__} started successfully.")
 
 
 # (OTHER) IMPORTS ______________________________________________________________________________________________________
-import ctypes
 from os.path import abspath, isfile
 from random import shuffle
 from tkinter import colorchooser
@@ -30,9 +29,9 @@ import PySimpleGUI as sg
 from _tkinter import TclError
 from pyperclip import copy
 
-from bytecode import THEMERA_IMG
-from color_shorthands import COLOR_SHORTHANDS
-from constants import (
+from .bytecode import THEMERA_LOGO
+from .color_shorthands import COLOR_SHORTHANDS
+from .constants import (
     ALT,
     APP_ID,
     BATCH_ACTIONS,
@@ -52,11 +51,11 @@ from constants import (
     PENCIL_ICON,
     WARNING_ICON,
 )
-from crash import handle_crash
-from custom_preview import custom_preview
-from filters import FILTER_MAPPING, FILTERS
-from fonts import FONTS
-from functions import (
+from .crash import handle_crash
+from .custom_preview import custom_preview
+from .filters import FILTER_MAPPING, FILTERS
+from .fonts import FONTS
+from .functions import (
     alter_luminance,
     check_if_color,
     flatten_themedict,
@@ -68,15 +67,17 @@ from functions import (
     rint,
     unflatten_themedict,
 )
-from launcher import Launcher
-from settings import SETTINGS
-from themes import DarkTheme, LightTheme
-from window import Window
+from .launcher import Launcher
+from .settings import SETTINGS
+from .themes import DarkTheme, LightTheme
+from .window import Window
 
 # SETTINGS.save_settings()
 
 # FUNCTIONS AND UI _____________________________________________________________________________________________________
+sg.set_options(dpi_awareness=True)
 if sg.running_windows():
+    import ctypes
     try:
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
             APP_ID
@@ -87,7 +88,7 @@ if sg.running_windows():
 sg.theme_add_new("Themera Light", LightTheme)
 sg.theme_add_new("Themera Dark", DarkTheme)
 sg.theme(SETTINGS["theme"])
-sg.set_options(font=FONTS["regular"], icon=THEMERA_IMG, border_width=0)
+sg.set_options(font=FONTS["regular"], icon=THEMERA_LOGO, border_width=0)
 
 
 # This variable is used to tell Themera whether to run again after being exited. It is used for returning to the

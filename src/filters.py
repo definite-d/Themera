@@ -16,14 +16,14 @@ from typing import Callable, Dict, List, Optional, Tuple, Union
 
 import colour
 
-from functions import (
+from .functions import (
     check_if_color,
     flatten_themedict,
     invert,
     rint,
     unflatten_themedict,
 )
-from settings import SETTINGS
+from .settings import SETTINGS
 
 
 # FILTERS ______________________________________________________________________________________________________________

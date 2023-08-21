@@ -21,8 +21,8 @@ from typing import Dict, List, Tuple, Union
 import PySimpleGUI as sg
 from PIL import Image, UnidentifiedImageError
 
-from bytecode import BANNER, GRID, SIDEBAR
-from constants import (
+from .bytecode import BANNER, GRID, SIDEBAR
+from .constants import (
     BACK_BUTTON_PADDING,
     CREATE_BUTTON_PADDING,
     DEFAULT_COLOR_THEME_FIELDS,
@@ -32,16 +32,16 @@ from constants import (
     IMAGE_PREVIEW_SIZE,
     THEMES,
 )
-from filters import index_filter
-from fonts import FONTS
-from functions import (
+from .filters import index_filter
+from .fonts import FONTS
+from .functions import (
     get_colors_from_image,
     mini_preview_window_layout,
     reskin_mini_preview_window,
     unflatten_themedict,
 )
-from version_and_copyright import COPYRIGHT, __version__
-from window import Window
+from .version_and_copyright import COPYRIGHT, __version__
+from .window import Window
 
 
 # FUNCTIONS ____________________________________________________________________________________________________________
@@ -133,29 +133,36 @@ def Launcher(set_to: str = "main"):
         [
             sg.Column(
                 [
-                    [sg.Image(data=BANNER, subsample=2, pad=(0, 0))],
+                    [sg.Image(data=BANNER, subsample=2, pad=(0, 0), expand_x=True)],
                     [
+                        sg.Push(),
                         sg.Text(
                             "The PySimpleGUI Theme Editor",
                             font=FONTS["tagline"],
-                            pad=(5, (10, 1)),
-                        )
+                        ),
+                        sg.Push(),
                     ],
                     [
                         sg.Button(
-                            "New Theme", font=FONTS["medium"], k="new_route", pad=(5, 5)
+                            "New Theme",
+                            font=FONTS["medium"],
+                            k="new_route",
+                            pad=((10, 0), 5),
+                            expand_x=True,
                         ),
                         sg.Button(
                             "Edit Existing Theme",
                             font=FONTS["medium"],
                             k="existing_route",
                             pad=(5, 5),
+                            expand_x=True,
                         ),
                         sg.Button(
                             "Theme from Image",
                             font=FONTS["medium"],
                             k="image_route",
-                            pad=(5, 5),
+                            pad=((0, 10), 5),
+                            expand_x=True,
                         ),
                     ],
                     [sg.Text(COPYRIGHT, pad=(0, (5, 10)))],
@@ -163,6 +170,8 @@ def Launcher(set_to: str = "main"):
                 k="main_panel",
                 visible=set_to == "main",
                 element_justification="center",
+                expand_x=True,
+                expand_y=True,
                 pad=(0, 0),
             ),
             sg.Column(
@@ -173,7 +182,7 @@ def Launcher(set_to: str = "main"):
                                 [
                                     sg.Image(
                                         data=SIDEBAR,
-                                        subsample=1,
+                                        subsample=3,
                                         pad=(0, 0),
                                         expand_y=True,
                                     )
@@ -235,7 +244,7 @@ def Launcher(set_to: str = "main"):
                                 [
                                     sg.Image(
                                         data=SIDEBAR,
-                                        subsample=1,
+                                        subsample=3,
                                         pad=(0, 0),
                                         expand_y=True,
                                     )
@@ -281,7 +290,7 @@ def Launcher(set_to: str = "main"):
                                 [
                                     sg.Image(
                                         data=SIDEBAR,
-                                        subsample=1,
+                                        subsample=3,
                                         pad=(0, 0),
                                         expand_y=True,
                                     )
@@ -336,7 +345,7 @@ def Launcher(set_to: str = "main"):
                     ],
                 ],
                 k="image_panel",
-                visible=False,
+                visible=set_to == "image",
                 expand_y=True,
                 expand_x=True,
                 pad=(0, 0),
@@ -349,7 +358,7 @@ def Launcher(set_to: str = "main"):
                                 [
                                     sg.Image(
                                         data=SIDEBAR,
-                                        subsample=1,
+                                        subsample=3,
                                         pad=(0, 0),
                                         expand_y=True,
                                     )
@@ -378,7 +387,7 @@ def Launcher(set_to: str = "main"):
                     ]
                 ],
                 k="loading_panel",
-                visible=False,
+                visible=set_to == "loading",
                 expand_x=True,
                 expand_y=True,
                 pad=(0, 0),
@@ -390,7 +399,7 @@ def Launcher(set_to: str = "main"):
         layout,
         element_justification="center",
         margins=(0, 0),
-        size=(476, 255),
+        size=(500, 367),
         modal=False,
     ).finalize()
     name_variable = StringVar(
@@ -407,6 +416,8 @@ def Launcher(set_to: str = "main"):
         if e in (None, "Exit"):
             launcher.close()
             break
+
+        print(launcher.size)
 
         if e == "new_theme":
             reskin_mini_preview_window(

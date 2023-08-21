@@ -1,21 +1,20 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Creator: CorelDRAW -->
-
-<svg
-   xml:space="preserve"
-   width="5.3333335in"
-   height="4.6130347in"
-   style="clip-rule:evenodd;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
-   viewBox="0 0 1.5280926 1.3217122"
-   version="1.1"
-   id="svg36"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
- <defs
-   id="defs10"><style
-     type="text/css"
-     id="style2">
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="646.23" height="588.25" version="1.1" viewBox="0 0 646.23 588.25" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"><title>Themera Logo - Uninstaller</title><defs><clipPath id="clipPath190"><rect transform="rotate(7.1714)" x="36.765" y="-528.63" width="562.26" height="562.26" rx="109.82" ry="109.82" fill="#377dc4" style="paint-order:stroke fill markers"/></clipPath><filter id="filter170" x="-.042487" y="-.041728" width="1.085" height="1.1126" color-interpolation-filters="sRGB"><feFlood flood-color="rgb(0,0,0)" flood-opacity=".30196" in="SourceGraphic" result="flood"/><feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10.000000"/><feOffset dx="0.000000" dy="16.769230" in="blur" result="offset"/><feComposite in="flood" in2="offset" operator="in" result="comp1"/><feComposite in="SourceGraphic" in2="comp1" result="comp2"/></filter><clipPath id="clipPath191"><rect transform="matrix(-.99249 -.12233 -.12233 .99249 0 0)" x="-713.25" y="-663.29" width="755.57" height="755.57" rx="147.57" ry="147.57" fill="#377dc4" style="paint-order:stroke fill markers"/></clipPath><filter id="filter186" x="-.03399" y="-.033383" width="1.068" height="1.0959" color-interpolation-filters="sRGB"><feFlood flood-color="rgb(0,0,0)" flood-opacity=".10196" in="SourceGraphic" result="flood"/><feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="8.000000"/><feOffset dx="0.000000" dy="16.769230" in="blur" result="offset"/><feComposite in="flood" in2="offset" operator="in" result="comp1"/><feComposite in="SourceGraphic" in2="comp1" result="comp2"/></filter><filter id="filter117" x="-.2371" y="-.10511" width="1.4742" height="1.254" color-interpolation-filters="sRGB"><feFlood flood-color="rgb(0,0,0)" flood-opacity=".2" in="SourceGraphic" result="flood"/><feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="0.500000"/><feOffset dx="0.000000" dy="0.500000" in="blur" result="offset"/><feComposite in="flood" in2="offset" operator="in" result="comp1"/><feComposite in="SourceGraphic" in2="comp1" result="comp2"/></filter><style type="text/css">
+   <![CDATA[
+    .str0 {stroke:#062340;stroke-width:0.0289528;stroke-linecap:round;stroke-linejoin:round}
+    .fil6 {fill:none}
+    .fil0 {fill:#377DC4}
+    .fil8 {fill:#3D8CDB}
+    .fil1 {fill:#1863AE}
+    .fil5 {fill:#1F66AD}
+    .fil3 {fill:#2375C7}
+    .fil9 {fill:#245698}
+    .fil10 {fill:#2D5A95}
+    .fil4 {fill:#509BE6}
+    .fil2 {fill:#5FA1E3}
+    .fil7 {fill:#FFF200;fill-rule:nonzero}
+   ]]>
+  </style><style type="text/css">
    <![CDATA[
     .str0 {stroke:#062340;stroke-width:0.00875682;stroke-linecap:round;stroke-linejoin:round}
     .fil6 {fill:none}
@@ -28,85 +27,4 @@
     .fil2 {fill:#5FA1E3}
     .fil7 {fill:#FFF200;fill-rule:nonzero}
    ]]>
-  </style><clipPath
-     id="id0">
-      <path
-   d="M 0.546341,0 H 0.228727 C 0.1816683,0 0.1431532,0.0385151 0.1431532,0.0855738 v 0.317842 c 0,0.0470587 0.0385083,0.0855738 0.0855738,0.0855738 h 0.317614 c 0.0470655,0 0.0855738,-0.0385083 0.0855738,-0.0855738 V 0.0855738 C 0.6319148,0.0385083 0.5933997,0 0.546341,0 Z"
-   id="path4" />
-     </clipPath><clipPath
-     id="id1">
-       <path
-   d="m 0.286491,0.0494749 h 0.204592 v 0.401067 H 0.286491 Z"
-   id="path7" />
-      </clipPath></defs>
- <g
-   id="Layer_x0020_1">
-  <metadata
-   id="CorelCorpID_0Corel-Layer" />
-  <g
-   id="_177183280"
-   transform="matrix(2.4181881,0,0,2.4181881,2.139663e-6,0)">
-   <g
-   id="g31">
-    <path
-   id="_177183592"
-   class="fil0"
-   d="M 0.546341,0 H 0.228727 C 0.1816683,0 0.1431532,0.0385151 0.1431532,0.0855738 v 0.317842 c 0,0.0470587 0.0385083,0.0855738 0.0855738,0.0855738 h 0.317614 c 0.0470655,0 0.0855738,-0.0385083 0.0855738,-0.0855738 V 0.0855738 C 0.6319148,0.0385083 0.5933997,0 0.546341,0 Z" />
-    <g
-   clip-path="url(#id0)"
-   id="g21">
-     <g
-   id="g19">
-      <polygon
-   id="_1759834321"
-   class="fil1"
-   points="0.439445,0.229931 0.443536,0.385229 0.297102,0.43711 0.150667,0.48899 0.0560761,0.365755 -0.0385151,0.242521 0.049458,0.114476 0.137431,-0.0135678 0.286393,0.0305321 0.435356,0.0746332 " />
-      <polygon
-   id="_175983360"
-   class="fil2"
-   points="0.656307,0.361319 0.592774,0.457037 0.482108,0.426192 0.371441,0.395347 0.36658,0.280566 0.361718,0.165785 0.469379,0.125691 0.57704,0.0855975 0.64844,0.175599 0.71984,0.265602 " />
-      <polygon
-   id="_175968560"
-   class="fil3"
-   points="1.1554,0.277056 1.02302,0.372698 0.891151,0.276351 0.759284,0.180005 0.810166,0.0248198 0.861047,-0.130364 1.02436,-0.129929 1.18767,-0.129492 1.23773,0.0259625 1.28778,0.181418 " />
-      <polygon
-   id="_175968488"
-   class="fil4"
-   points="1.63413,0.488323 1.46382,0.468429 1.43011,0.300304 1.39641,0.132179 1.54589,0.0481687 1.69536,-0.0358428 1.82146,0.080359 1.94755,0.196562 1.876,0.35239 1.80445,0.508219 " />
-      <polygon
-   id="_175968416"
-   class="fil5"
-   points="1.21636,0.519696 1.0999,0.483039 1.09878,0.360954 1.09765,0.238867 1.21342,0.200072 1.32918,0.161276 1.40185,0.259385 1.47452,0.357494 1.40367,0.456924 1.33282,0.556354 " />
-     </g>
-    </g>
-    <path
-   class="fil6"
-   d="M 0.546341,0 H 0.228727 C 0.1816683,0 0.1431532,0.0385151 0.1431532,0.0855738 v 0.317842 c 0,0.0470587 0.0385083,0.0855738 0.0855738,0.0855738 h 0.317614 c 0.0470655,0 0.0855738,-0.0385083 0.0855738,-0.0855738 V 0.0855738 C 0.6319148,0.0385083 0.5933997,0 0.546341,0 Z"
-   id="path23" />
-    <g
-   id="g28">
-     <g
-   clip-path="url(#id1)"
-   id="g26">
-      <image
-   id="_175952840"
-   transform="translate(-0.816261,1.04874)"
-   x="1.1027499"
-   y="-0.999264"
-   width="0.204592"
-   height="0.40106699"
-   xlink:href="data:image/png;base64,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" />
-     </g>
-    </g>
-    <path
-   id="_177183400"
-   class="fil7"
-   d="m 0.477741,0.414684 c -0.0107049,0.005872 -0.0249146,0.00881 -0.0424406,0.00881 -0.0498291,0 -0.074649,-0.0277572 -0.074649,-0.0831757 V 0.1720743 H 0.3117698 V 0.13323303 H 0.3606514 V 0.06388913 L 0.406123,0.04911093 v 0.0841221 h 0.071618 v 0.0388411 H 0.406123 v 0.160192 c 0,0.019041 0.003221,0.0325874 0.009757,0.040735 0.006442,0.008147 0.017147,0.0122198 0.0321147,0.0122198 0.0115566,0 0.0214087,-0.003126 0.0297459,-0.009378 z" />
-   </g>
-   <polygon
-   id="_177183304"
-   class="fil8 str0"
-   points="0.212544,0.264639 0.281932,0.334027 0.212543,0.403417 0.281932,0.472806 0.212544,0.542194 0.143154,0.472805 0.0737646,0.542194 0.00437672,0.472806 0.0737657,0.403417 0.00437672,0.334027 0.0737646,0.264639 0.143154,0.334028 " />
-  </g>
- </g>
-</svg>
+  </style><filter id="filter59" x="-.08988" y="-.08988" width="1.1798" height="1.2229" color-interpolation-filters="sRGB"><feFlood flood-color="rgb(0,0,0)" flood-opacity=".2" in="SourceGraphic" result="flood"/><feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="6.000000"/><feOffset dx="-0.000000" dy="9.692307" in="blur" result="offset"/><feComposite in="flood" in2="offset" operator="in" result="comp1"/><feComposite in="SourceGraphic" in2="comp1" result="comp2"/></filter></defs><g clip-rule="evenodd" fill-rule="evenodd" shape-rendering="geometricPrecision"><rect id="bg" x="134.23" y=".003519" width="512" height="512" rx="100" ry="100" fill="#377dc4" image-rendering="optimizeQuality" style="paint-order:stroke fill markers"/><path transform="matrix(.90348 -.11368 .11368 .90348 100.75 481.37)" d="m420.31-389.06-35.753 355.46-349.11 75.84-180.01-308.59 237.86-266.56z" clip-path="url(#clipPath190)" fill="#1863ae" filter="url(#filter170)" image-rendering="optimizeQuality" style="paint-order:stroke fill markers"/><path transform="matrix(-.67255 -.082895 -.082895 .67255 617.55 449.47)" d="m420.31-389.06-35.753 355.46-349.11 75.84-180.01-308.59 237.86-266.56z" clip-path="url(#clipPath191)" fill="#5fa1e3" filter="url(#filter186)" image-rendering="optimizeQuality" style="paint-order:stroke fill markers"/><text transform="matrix(34.331 0 0 34.331 290.86 437.01)" fill="#fff200" filter="url(#filter117)" font-family="Gadugi" font-size="17.333px" image-rendering="optimizeQuality" stroke-width="10" text-rendering="geometricPrecision" style="paint-order:stroke fill markers;shape-inside:url(#rect68);white-space:pre" xml:space="preserve"><tspan x="0" y="0">t</tspan></text></g><metadata><rdf:RDF><cc:Work rdf:about=""><dc:title>Themera Logo - Uninstaller</dc:title></cc:Work></rdf:RDF></metadata><path d="m188.88 333.46-56.222 56.222-56.222-56.222-56.221 56.221 56.222 56.222-56.222 56.222 56.221 56.221 56.222-56.222 56.222 56.222 56.221-56.221-56.222-56.222 56.222-56.222z" clip-rule="evenodd" fill="#3d8cdb" fill-rule="evenodd" filter="url(#filter59)" image-rendering="optimizeQuality" shape-rendering="geometricPrecision" stroke="#062340" stroke-linecap="round" stroke-linejoin="round" stroke-width="11.626" style="paint-order:stroke fill markers"/></svg>

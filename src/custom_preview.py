@@ -28,8 +28,8 @@ from PySimpleGUI import (
     theme_add_new,
 )
 
-from constants import DEFAULT_LAYOUT
-from fonts import FONTS
+from .constants import DEFAULT_LAYOUT
+from .fonts import FONTS
 
 ELEMENTS = {element.__name__: element for element in Element.__subclasses__()}
 GLOBALS = {"EMOJI_BASE64_HAPPY_BIG_SMILE": EMOJI_BASE64_HAPPY_BIG_SMILE}

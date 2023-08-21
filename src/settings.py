@@ -19,9 +19,9 @@ from typing import Dict, Optional, Union
 
 from psg_reskinner import reskin
 
-from constants import DEFAULT_SETTINGS_DICT, DEFAULT_SETTINGS_PATH, THEMES
-from functions import invert
-from window import Window
+from .constants import DEFAULT_SETTINGS_DICT, DEFAULT_SETTINGS_PATH, THEMES
+from .functions import invert
+from .window import Window
 
 
 # SETTINGS _____________________________________________________________________________________________________________

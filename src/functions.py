@@ -22,7 +22,7 @@ from _tkinter import TclError
 from PIL import Image
 from psg_reskinner import reskin
 
-from constants import (
+from .constants import (
     DISPLAY_TO_THEMEDICT,
     EXPANSION_FORMAT,
     INDEX_MARKERS,

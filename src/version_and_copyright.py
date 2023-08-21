@@ -12,8 +12,9 @@ Copyright 2023 Divine Afam-Ifediogor
 """
 
 # IMPORTS ______________________________________________________________________________________________________________
-from datetime import date
+from datetime import datetime
 
 # VERSION AND COPYRIGHT ________________________________________________________________________________________________
 __version__ = "2.0.1"
-COPYRIGHT = f"Copyright {date.today().year} - Divine Afam-Ifediogor"
+YEAR = datetime.now().year
+COPYRIGHT = f"Copyright {YEAR} Divine Afam-Ifediogor"

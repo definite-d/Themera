@@ -13,10 +13,10 @@ Copyright 2023 Divine Afam-Ifediogor
 from datetime import datetime
 from traceback import format_exception
 
-from constants import CRASH_REPORT_TITLE_PREFIX, LINK_NEW_GITHUB_ISSUE, WARNING_ICON
-from fonts import FONTS
-from version_and_copyright import __version__
-from window import Window
+from .constants import CRASH_REPORT_TITLE_PREFIX, LINK_NEW_GITHUB_ISSUE, WARNING_ICON
+from .fonts import FONTS
+from .version_and_copyright import __version__
+from .window import Window
 
 
 def run_crash_window(error_message, sg):

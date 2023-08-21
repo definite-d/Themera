@@ -15,7 +15,7 @@ Copyright 2023 Divine Afam-Ifediogor
 from darkdetect import isLight
 from PySimpleGUI import LOOK_AND_FEEL_TABLE, running_mac, running_windows
 
-from version_and_copyright import __version__
+from .version_and_copyright import __version__
 
 # CONSTANTS ____________________________________________________________________________________________________________
 APP_ID = (
@@ -76,7 +76,7 @@ THEMEDICT_TO_DISPLAY = {value: key for key, value in DISPLAY_TO_THEMEDICT.items(
 CTRL = "Cmd" if running_mac() else "Ctrl"
 CTRL_EVENT = "Command" if running_mac() else "Control"
 ALT = "Option" if running_mac() else "Alt"
-IMAGE_PREVIEW_SIZE = (320, 130)
+IMAGE_PREVIEW_SIZE = (320, 150)
 CREATE_BUTTON_PADDING = ((3, 2), 3)
 BACK_BUTTON_PADDING = ((2, 5), 3)
 IMAGE_FILETYPES = [
