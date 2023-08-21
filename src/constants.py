@@ -119,3 +119,25 @@ LINK_PYSIMPLEGUI_REPO = 'https://github.com/pysimplegui/pysimplegui/'
 LINK_DOCS_DL = f'{LINK_GITHUB_REPO}/blob/main/src/help/help.rtf'
 
 HELP_PATH = 'help/help.rtf'
+
+DEFAULT_LAYOUT = '''# Sample Layout Code
+[
+    [Column([
+           [Column([
+               [Column([
+                    [Column([
+                        [
+                            Image(data=EMOJI_BASE64_HAPPY_BIG_SMILE, k=f'tb_icon'),
+                            # Icon and Title
+                            Text('Quick Preview', k=f'tb_title'),
+                        ]
+                    ], pad=(0, 0), k=f'tb_title_and_icon')],
+                    [Column([
+                        [Text('Sample Text; Lorem ipsum dolor sit amet...', k=f'element_text', expand_x=True)],
+                        [Input('Hello world', k=f'element_input', expand_x=True)],
+                        [Button('Button', k=f'element_button')]
+                    ], k=f'element_bg', pad=(0, 0), expand_x=True)]
+                ], expand_x=True, k=f'tb_container', pad=(2, (0, 2)))],
+            ], k=f'tb_maincolumn', element_justification='c', pad=(1, 1), expand_x=True)]
+    ], k=f'visibility_wrap', expand_x=True)]
+]'''

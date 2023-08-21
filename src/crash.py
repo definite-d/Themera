@@ -13,12 +13,17 @@ Copyright 2023 Divine Afam-Ifediogor
 from datetime import datetime
 from traceback import format_exception
 
-from constants import CRASH_REPORT_TITLE_PREFIX, WARNING_ICON, LINK_NEW_GITHUB_ISSUE
+from constants import (CRASH_REPORT_TITLE_PREFIX, LINK_NEW_GITHUB_ISSUE,
+                       WARNING_ICON)
 from fonts import FONTS
+from version_and_copyright import __version__
 from window import Window
 
 
 def run_crash_window(error_message, sg):
+    '''
+    Runs the window that shows the "crashed" error message to the user.
+    '''
     main_layout = [
         [sg.Text(f'{WARNING_ICON} Fatal Error!', font=FONTS['icon'])],
         [sg.Text('Oh no!')],
@@ -66,7 +71,9 @@ def run_crash_window(error_message, sg):
 
 
 def handle_crash(exception, sg):
-
+    '''
+    Handles the occurrence of a crash given the Exception and the PySimpleGUI Module instance.
+    '''
     # First close all windows.
     for window in Window.open_windows:
         window.close()
@@ -78,11 +85,12 @@ def handle_crash(exception, sg):
     issue_info = run_crash_window(error, sg)
 
     if issue_info:
-        from urllib import parse
-        from sys import version as sys_version
         from platform import platform, processor
-        from psg_reskinner import __version__ as r_version
+        from sys import version as sys_version
+        from urllib import parse
         from webbrowser import open_new_tab as open_link
+
+        from psg_reskinner import __version__ as r_version
 
         body = f'### Error message:\n```shell\n{error}```\n' \
                f'### User Report/Messages:\n{issue_info}\n' \

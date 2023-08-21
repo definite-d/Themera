@@ -10,78 +10,36 @@ Themera Custom Layout Preview Functionality Script
 PySimpleGUI Theme Code Generator
 Copyright 2023 Divine Afam-Ifediogor
 """
-from typing import Dict, List, Optional, Any, Union
+from traceback import format_exception
+from typing import Dict, List, Optional, Union
+
+from pyperclip import paste
+from PySimpleGUI import (
+    EMOJI_BASE64_HAPPY_BIG_SMILE,
+    LOOK_AND_FEEL_TABLE,
+    Button,
+    Element,
+    Input,
+    Multiline,
+    Push,
+    Text,
+    Window,
+    theme,
+    theme_add_new,
+)
+
+from constants import DEFAULT_LAYOUT
 from fonts import FONTS
 
-from PySimpleGUI import EMOJI_BASE64_HAPPY_BIG_SMILE, Element, LOOK_AND_FEEL_TABLE, Window, theme, \
-    Text, Input, Push, Button, theme, theme_add_new, PopupError
-
 ELEMENTS = {element.__name__: element for element in Element.__subclasses__()}
-GLOBALS = {'EMOJI_BASE64_HAPPY_BIG_SMILE': EMOJI_BASE64_HAPPY_BIG_SMILE}
+GLOBALS = {"EMOJI_BASE64_HAPPY_BIG_SMILE": EMOJI_BASE64_HAPPY_BIG_SMILE}
 GLOBALS.update(ELEMENTS)
-
-DEFAULT_LAYOUT = '''
-# Sample Layout Code
-[
-    [Column([
-           [Column([
-               [Column([
-                    [Column([
-                        [
-                            Image(data=EMOJI_BASE64_HAPPY_BIG_SMILE, k=f'tb_icon'),
-                            # Icon and Title
-                            Text('Quick Preview', k=f'tb_title'),
-                        ]
-                    ], pad=(0, 0), k=f'tb_title_and_icon')],
-                    [Column([
-                        [Text('Sample Text; Lorem ipsum dolor sit amet...', k=f'element_text', expand_x=True)],
-                        [Input('Hello world', k=f'element_input', expand_x=True)],
-                        [Button('Button', k=f'element_button')]
-                    ], k=f'element_bg', pad=(0, 0), expand_x=True)]
-                ], expand_x=True, k=f'tb_container', pad=(2, (0, 2)))],
-            ], k=f'tb_maincolumn', element_justification='c', pad=(1, 1), expand_x=True)]
-    ], k=f'visibility_wrap', expand_x=True)]
-]
-'''
-
-
-def get_custom_layout_from_user(
-        present_theme: str,
-        present_themedict: Dict[str, Union[int, str, tuple, list]],
-        user_theme_name: str,
-        user_themedict: Dict[str, Union[int, str, tuple, list]],
-):
-    """
-    Gets the custom layout to preview from the user.
-    """
-    theme_add_new(present_theme, present_themedict)
-    theme(present_theme)
-    layout = [
-        [Text('Enter your layout', font=FONTS['theme_name'])],
-        [Text('Please enter the layout code to preview')],
-        [Text('All PySimpleGUI elements are available;\nno need for aliases or imports.')],
-        [Input(DEFAULT_LAYOUT, k='user_layout')],
-        [Push(), Button('Preview'), Button('Cancel')]
-    ]
-    window = Window(
-        'Custom Layout Entry',
-        layout,
-    )
-    while True:
-        e, v = window.read()
-        if e in (None, 'Exit'):
-            window.close()
-            break
-        try:
-            custom_layout_preview(v['custom_layout'], user_theme_name, user_themedict)
-        except Exception as e:
-            PopupError('There was ')
 
 
 def custom_layout_preview(
-        layout: str,
-        theme_name: str,
-        themedict: Optional[Dict] = None,
+    layout: str,
+    theme_name: str,
+    themedict: Optional[Dict] = None,
 ):
     """
     Provide your layout without any alias to PySimpleGUI; use the elements themselves only.
@@ -91,25 +49,103 @@ def custom_layout_preview(
     :param theme_name: The name of the theme that the preview is working with.
     :param themedict: The themedict of the given theme, mainly required if it's not a standard theme.
     """
-    if theme_name not in LOOK_AND_FEEL_TABLE and themedict is None:
-        message = f'The theme {theme_name} was not found within the LOOK_AND_FEEL_TABLE, ' \
-            f'and its themedict wasn\'t supplied either.'
-        raise KeyError(message)
+    if theme_name not in LOOK_AND_FEEL_TABLE:
+        if themedict is None:
+            message = (
+                f"The theme {theme_name} was not found within the LOOK_AND_FEEL_TABLE, "
+                f"and its themedict wasn't supplied either."
+            )
+            raise KeyError(message)
+        if themedict:
+            LOOK_AND_FEEL_TABLE[f"{theme_name}____Themera_temp"] = themedict
 
     existing_theme: str = theme()
+    theme(f"{theme_name}____Themera_temp")
+    try:
+        layout: List[List[Element]] = eval(layout, GLOBALS)
+    except Exception as _exception:
+        theme(existing_theme)
+        raise(_exception)
+    window: Window = Window(f"Custom Layout Preview for '{theme_name}' Theme.", layout)
 
-    theme(theme_name)
+    while True:
+        e, v = window.read()
+        if e in (None, "Exit"):
+            window.close()
+            break
+    if f"{theme_name}____Themera_temp" in LOOK_AND_FEEL_TABLE:
+        del LOOK_AND_FEEL_TABLE[f"{theme_name}____Themera_temp"]
 
-    layout: List[List[Element]] = eval(layout, GLOBALS)
-    window: Window = Window(
-        f'Custom Layout Preview for \'{theme_name}\' Theme.',
-        layout
+
+def get_custom_layout_from_user(
+    present_theme: str,
+    present_themedict: Dict[str, Union[int, str, tuple, list]],
+    user_theme_name: str,
+    user_themedict: Dict[str, Union[int, str, tuple, list]],
+):
+    """
+    Gets the custom layout to preview from the user.
+    """
+    theme_add_new(present_theme, present_themedict)
+    theme(present_theme)
+    layout = [
+        [Text("Enter your layout", font=FONTS["theme_name"])],
+        [Text("Please enter the layout code to preview")],
+        [
+            Text(
+                "All PySimpleGUI elements are available; no need for aliases or imports."
+            )
+        ],
+        [Multiline(DEFAULT_LAYOUT, k="user_layout", size=(50, 5), expand_x=True)],
+        [
+            Push(),
+            Button(
+                "Paste",
+                tooltip="Paste the contents of the clipboard into the layout code entrybox.",
+            ),
+            Button("Preview"),
+            Button("Cancel"),
+        ],
+    ]
+    window = Window(
+        "Custom Layout Entry",
+        layout,
     )
     while True:
         e, v = window.read()
-        if e in (None, 'Exit'):
+
+        if e in (None, "Cancel"):
             window.close()
             break
-    theme(existing_theme)
 
-custom_layout_preview(DEFAULT_LAYOUT, 'Default')
+        elif e == "Paste":
+            window["user_layout"](paste())
+
+        elif e == "Preview":
+            try:
+                custom_layout_preview(v["user_layout"], user_theme_name, user_themedict)
+            except Exception as exception:
+                error = format_exception(exception, exception, exception.__traceback__)[-1]
+                error_window = Window(
+                    "Layout Error",
+                    [
+                        [Text(f"Layout Error", font=FONTS["icon"])],
+                        [
+                            Text(
+                                "There seems to be an issue with the custom layout supplied."
+                            )
+                        ],
+                        [Multiline(error, disabled=True, k="error_box", size=(50, 3))],
+                        [Push(), Button("Close")],
+                    ],
+                )
+                while True:
+                    e = error_window.read()[0]
+                    if e in (None, "Close"):
+                        error_window.close()
+                        break
+
+
+get_custom_layout_from_user(
+    "Default", LOOK_AND_FEEL_TABLE["Default"], "Bloody", LOOK_AND_FEEL_TABLE["Reds"]
+)
