@@ -1,16 +1,16 @@
+*.themerasettings
+*.tmp
 .idea/
 .vscode/
-__pycache__/
-*.tmp
-build/
-*.themerasettings
-accesstoken.txt
-help.docx
-~$help.docx
-~$help.rtf
 LICENSE.txt
 PyInstaller Automated Build Script - Themera.bat
+__pycache__/
+accesstoken.txt
+build/
+help.docx
 themera.iss
 themera.spec
 update_hashes.py
 zip_up.py
+~$help.docx
+~$help.rtf
