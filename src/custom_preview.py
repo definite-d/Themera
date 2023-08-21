@@ -65,8 +65,9 @@ def custom_layout_preview(
         layout: List[List[Element]] = eval(layout, GLOBALS)
     except Exception as _exception:
         theme(existing_theme)
-        raise(_exception)
+        raise (_exception)
     window: Window = Window(f"Custom Layout Preview for '{theme_name}' Theme.", layout)
+    theme(existing_theme)
 
     while True:
         e, v = window.read()
@@ -77,14 +78,14 @@ def custom_layout_preview(
         del LOOK_AND_FEEL_TABLE[f"{theme_name}____Themera_temp"]
 
 
-def get_custom_layout_from_user(
+def custom_preview(
     present_theme: str,
     present_themedict: Dict[str, Union[int, str, tuple, list]],
     user_theme_name: str,
     user_themedict: Dict[str, Union[int, str, tuple, list]],
 ):
     """
-    Gets the custom layout to preview from the user.
+    Gets the custom layout to preview from the user and carries out the preview operation.
     """
     theme_add_new(present_theme, present_themedict)
     theme(present_theme)
@@ -125,7 +126,9 @@ def get_custom_layout_from_user(
             try:
                 custom_layout_preview(v["user_layout"], user_theme_name, user_themedict)
             except Exception as exception:
-                error = format_exception(exception, exception, exception.__traceback__)[-1]
+                error = format_exception(exception, exception, exception.__traceback__)[
+                    -1
+                ]
                 error_window = Window(
                     "Layout Error",
                     [
@@ -144,8 +147,3 @@ def get_custom_layout_from_user(
                     if e in (None, "Close"):
                         error_window.close()
                         break
-
-
-get_custom_layout_from_user(
-    "Default", LOOK_AND_FEEL_TABLE["Default"], "Bloody", LOOK_AND_FEEL_TABLE["Reds"]
-)

@@ -12,11 +12,11 @@ Copyright 2023 Divine Afam-Ifediogor
 """
 
 # FONTS ________________________________________________________________________________________________________________
-DEFAULT_FONT = 'Helvetica'
+DEFAULT_FONT = "Helvetica"
 FONTS = {
-    'theme_name':   (DEFAULT_FONT, 18),
-    'tagline':      (DEFAULT_FONT, 13),
-    'medium':       (DEFAULT_FONT, 11),
-    'icon':         (DEFAULT_FONT, 18),
-    'regular':      (DEFAULT_FONT, 10),
+    "theme_name": (DEFAULT_FONT, 18),
+    "tagline": (DEFAULT_FONT, 13),
+    "medium": (DEFAULT_FONT, 11),
+    "icon": (DEFAULT_FONT, 18),
+    "regular": (DEFAULT_FONT, 10),
 }

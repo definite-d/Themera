@@ -11,17 +11,24 @@ PySimpleGUI Theme Code Generator
 Copyright 2023 Divine Afam-Ifediogor
 """
 
-# IMPORTS ______________________________________________________________________________________________________________
-from _tkinter import TclError
 from random import randint
-from typing import Dict, List, Optional, Union, Tuple
+from typing import Dict, List, Optional, Tuple, Union
 
 import colour
 import PySimpleGUI as sg
+
+# IMPORTS ______________________________________________________________________________________________________________
+from _tkinter import TclError
 from PIL import Image
 from psg_reskinner import reskin
 
-from constants import DISPLAY_TO_THEMEDICT, EXPANSION_FORMAT, INDEX_MARKERS, SAFE_TO_EXPAND, THEMEDICT_TO_DISPLAY
+from constants import (
+    DISPLAY_TO_THEMEDICT,
+    EXPANSION_FORMAT,
+    INDEX_MARKERS,
+    SAFE_TO_EXPAND,
+    THEMEDICT_TO_DISPLAY,
+)
 
 
 # FUNCTIONS ____________________________________________________________________________________________________________
@@ -49,7 +56,7 @@ def flatten_themedict(themedict: Dict, targets=SAFE_TO_EXPAND) -> Dict:
     for key in themedict.copy():
         if key in targets:
             for index, item in enumerate(themedict.copy()[key]):
-                _key = str(key) + EXPANSION_FORMAT.replace('<index>', str(index))
+                _key = str(key) + EXPANSION_FORMAT.replace("<index>", str(index))
                 new[_key] = item
             continue
         new[key] = themedict.copy()[key]
@@ -101,7 +108,9 @@ def get_display_name(themedict_name: str) -> str:
     try:
         return THEMEDICT_TO_DISPLAY[themedict_name]
     except KeyError:
-        return str(' ').join([part.capitalize() for part in (themedict_name).split('_')])
+        return str(" ").join(
+            [part.capitalize() for part in (themedict_name).split("_")]
+        )
 
 
 def get_themedict_name(display_name: str) -> str:
@@ -115,7 +124,7 @@ def get_themedict_name(display_name: str) -> str:
     try:
         return DISPLAY_TO_THEMEDICT[display_name]
     except KeyError:
-        return str('_').join([part.upper() for part in (display_name).split(' ')])
+        return str("_").join([part.upper() for part in (display_name).split(" ")])
 
 
 def check_if_color(value: str) -> bool:
@@ -126,7 +135,7 @@ def check_if_color(value: str) -> bool:
     :return: True if the value is a valid color, else False.
     """
     v = str(value)
-    if (v == '') or (' ' in v):
+    if (v == "") or (" " in v):
         return False
     try:
         colour.Color(v)
@@ -141,9 +150,9 @@ def random_color() -> str:
 
     :return: A hex color string or valid color name.
     """
-    color = '#'
+    color = "#"
     for n in range(3):
-        color += str(format((randint(0, 255)), 'x').zfill(2))
+        color += str(format((randint(0, 255)), "x").zfill(2))
     return colour.hex2web(color)
 
 
@@ -158,7 +167,9 @@ def alter_luminance(color: str, factor: float) -> str:
     """
     color = colour.Color(color)
     val = color.get_luminance() * factor if color.get_luminance() else factor
-    color.set_luminance(val if 0 <= val <= 1 else (0 if color.get_luminance() <= 0.5 else 1))
+    color.set_luminance(
+        val if 0 <= val <= 1 else (0 if color.get_luminance() <= 0.5 else 1)
+    )
     return color.get_web()
 
 
@@ -182,17 +193,19 @@ def get_colors_from_image(image_object: Image.Image, number_of_colors: int) -> L
     :param number_of_colors: The number of colors to extract from the image.
     :return: A list of colors of length `number_of_colors`.
     """
-    image = image_object.copy().resize((64, 64)).convert('RGBA')
-    colors = image.getcolors(maxcolors = image_object.size[0]*image_object.size[1])
+    image = image_object.copy().resize((64, 64)).convert("RGBA")
+    colors = image.getcolors(maxcolors=image_object.size[0] * image_object.size[1])
     result = []
     for n in range(number_of_colors):
         value = colors[(int((len(colors) * n) / number_of_colors))]
-        value = (value[1][0]/255, value[1][1]/255, value[1][2]/255)
+        value = (value[1][0] / 255, value[1][1] / 255, value[1][2] / 255)
         result.append(colour.rgb2web(value))
     return result
 
 
-def reskin_mini_preview_window(window, key: str, themedict: Dict[str, Union[str, Tuple, List]]) -> None:
+def reskin_mini_preview_window(
+    window, key: str, themedict: Dict[str, Union[str, Tuple, List]]
+) -> None:
     """
     UI utility function.
     Made to easily reskin the mini preview window within a given window, along with multiple minor tweaks.
@@ -202,31 +215,40 @@ def reskin_mini_preview_window(window, key: str, themedict: Dict[str, Union[str,
     :param themedict: The current themedict; required to obtain relevant color info.
     :return: None
     """
-    targets = [el.key for el in window.element_list() if f'{key}_element' in str(el.key)]
-    tb_targets = [el.key for el in window.element_list() if f'{key}_tb' in str(el.key)]
-    sg.theme_add_new('___temp_themera_theme_currently_in_use___', themedict)
+    targets = [
+        el.key for el in window.element_list() if f"{key}_element" in str(el.key)
+    ]
+    tb_targets = [el.key for el in window.element_list() if f"{key}_tb" in str(el.key)]
+    sg.theme_add_new("___temp_themera_theme_currently_in_use___", themedict)
     reskin(
         window,
-        '___temp_themera_theme_currently_in_use___',
-        sg.theme, sg.LOOK_AND_FEEL_TABLE,
-        target_element_keys=targets, reskin_background=False
+        "___temp_themera_theme_currently_in_use___",
+        sg.theme,
+        sg.LOOK_AND_FEEL_TABLE,
+        target_element_keys=targets,
+        reskin_background=False,
     )
     for target in tb_targets:
         # Dummy Titlebar elements.
-        if 'maincolumn' in target:
-            window[target].ParentRowFrame.configure(background=invert(themedict['BUTTON'][1]))
+        if "maincolumn" in target:
+            window[target].ParentRowFrame.configure(
+                background=invert(themedict["BUTTON"][1])
+            )
         else:
-            window[target].ParentRowFrame.configure(background=themedict['BUTTON'][1])
+            window[target].ParentRowFrame.configure(background=themedict["BUTTON"][1])
         try:
             window[target].widget.configure(
-                background=themedict['BUTTON'][1])  # Should work for all.
-            window[target].widget.configure(foreground=themedict['BUTTON'][0])
+                background=themedict["BUTTON"][1]
+            )  # Should work for all.
+            window[target].widget.configure(foreground=themedict["BUTTON"][0])
         except TclError:  # Then the widget doesn't have text.
             pass
-    del sg.LOOK_AND_FEEL_TABLE['___temp_themera_theme_currently_in_use___']
+    del sg.LOOK_AND_FEEL_TABLE["___temp_themera_theme_currently_in_use___"]
 
 
-def titlebar_button(themedict: Dict[str, Union[str, Tuple, List]], symbol: str, key: str) -> sg.Text:
+def titlebar_button(
+    themedict: Dict[str, Union[str, Tuple, List]], symbol: str, key: str
+) -> sg.Text:
     """
     UI utility function.
     Returns a custom titlebar "button" element.
@@ -238,14 +260,17 @@ def titlebar_button(themedict: Dict[str, Union[str, Tuple, List]], symbol: str, 
     """
     return sg.Text(
         symbol,
-        text_color=themedict['BUTTON'][0],
-        background_color=themedict['BUTTON'][1],
-        font=sg.CUSTOM_TITLEBAR_FONT, k=f'{key}_tb_{symbol}')
+        text_color=themedict["BUTTON"][0],
+        background_color=themedict["BUTTON"][1],
+        font=sg.CUSTOM_TITLEBAR_FONT,
+        k=f"{key}_tb_{symbol}",
+    )
+
 
 def mini_preview_window_layout(
-        key: str,
-        themedict: Dict[str, Union[str, Tuple, List]],
-        input_message='This is a preview of your theme'
+    key: str,
+    themedict: Dict[str, Union[str, Tuple, List]],
+    input_message="This is a preview of your theme",
 ) -> sg.Column:
     """
     UI utility function.
@@ -256,40 +281,113 @@ def mini_preview_window_layout(
     :param input_message: The message to display within the editable input box.
     :return: A PySimpleGUI column containing the entire mini preview window layout.
     """
-    bc = themedict['BUTTON'][1]
-    return sg.Column([  # Mini preview window
-        [sg.Column([
-            [sg.Column([
-                # Dummy Custom Titlebar lifted from PySimpleGUI's source.
-                [
-                    sg.Column([
+    bc = themedict["BUTTON"][1]
+    return sg.Column(
+        [  # Mini preview window
+            [
+                sg.Column(
+                    [
                         [
-                            sg.Image(data=sg.DEFAULT_BASE64_ICON_16_BY_16,
-                                     background_color=bc, k=f'{key}_tb_icon'),
-                            # Icon and Title
-                            sg.Text('Quick Preview', text_color=themedict['BUTTON'][0],
-                                    background_color=bc, k=f'{key}_tb_title'),
-                        ]
-                    ], pad=(0, 0), background_color=bc, k=f'{key}_tb_title_and_icon'),
-                    sg.Column([
-                        [
-                            titlebar_button(themedict, sg.SYMBOL_TITLEBAR_MINIMIZE, key),
-                            titlebar_button(themedict, sg.SYMBOL_TITLEBAR_MAXIMIZE, key),
-                            titlebar_button(themedict, sg.SYMBOL_TITLEBAR_CLOSE, key),
-                        ]
-                    ], element_justification='r', expand_x=True, pad=(0, 0),
-                        background_color=bc, k=f'{key}_tb_buttons')],
-                [sg.Column([
-                    [sg.Text('Sample Text; Lorem ipsum dolor sit amet...',
-                             k=f'{key}_element_text', expand_x=True)],
-                    [sg.Input(input_message, k=f'{key}_element_input',
-                              expand_x=True)],
-                    [sg.Button('Button', k=f'{key}_element_button')]
-                ], k=f'{key}_element_bg', pad=(0, 0), expand_x=True)]
-            ],
-                expand_x=True, background_color=bc, k=f'{key}_tb_container', pad=(2, (0, 2)))],
-        ], k=f'{key}_tb_maincolumn', element_justification='c',
-            background_color=bc, pad=(1, 1), expand_x=True)]
-    ], k=f'{key}_visibility_wrap', expand_x=True,
-        background_color=invert(bc))
-
+                            sg.Column(
+                                [
+                                    # Dummy Custom Titlebar lifted from PySimpleGUI's source.
+                                    [
+                                        sg.Column(
+                                            [
+                                                [
+                                                    sg.Image(
+                                                        data=sg.DEFAULT_BASE64_ICON_16_BY_16,
+                                                        background_color=bc,
+                                                        k=f"{key}_tb_icon",
+                                                    ),
+                                                    # Icon and Title
+                                                    sg.Text(
+                                                        "Quick Preview",
+                                                        text_color=themedict["BUTTON"][
+                                                            0
+                                                        ],
+                                                        background_color=bc,
+                                                        k=f"{key}_tb_title",
+                                                    ),
+                                                ]
+                                            ],
+                                            pad=(0, 0),
+                                            background_color=bc,
+                                            k=f"{key}_tb_title_and_icon",
+                                        ),
+                                        sg.Column(
+                                            [
+                                                [
+                                                    titlebar_button(
+                                                        themedict,
+                                                        sg.SYMBOL_TITLEBAR_MINIMIZE,
+                                                        key,
+                                                    ),
+                                                    titlebar_button(
+                                                        themedict,
+                                                        sg.SYMBOL_TITLEBAR_MAXIMIZE,
+                                                        key,
+                                                    ),
+                                                    titlebar_button(
+                                                        themedict,
+                                                        sg.SYMBOL_TITLEBAR_CLOSE,
+                                                        key,
+                                                    ),
+                                                ]
+                                            ],
+                                            element_justification="r",
+                                            expand_x=True,
+                                            pad=(0, 0),
+                                            background_color=bc,
+                                            k=f"{key}_tb_buttons",
+                                        ),
+                                    ],
+                                    [
+                                        sg.Column(
+                                            [
+                                                [
+                                                    sg.Text(
+                                                        "Sample Text; Lorem ipsum dolor sit amet...",
+                                                        k=f"{key}_element_text",
+                                                        expand_x=True,
+                                                    )
+                                                ],
+                                                [
+                                                    sg.Input(
+                                                        input_message,
+                                                        k=f"{key}_element_input",
+                                                        expand_x=True,
+                                                    )
+                                                ],
+                                                [
+                                                    sg.Button(
+                                                        "Button",
+                                                        k=f"{key}_element_button",
+                                                    )
+                                                ],
+                                            ],
+                                            k=f"{key}_element_bg",
+                                            pad=(0, 0),
+                                            expand_x=True,
+                                        )
+                                    ],
+                                ],
+                                expand_x=True,
+                                background_color=bc,
+                                k=f"{key}_tb_container",
+                                pad=(2, (0, 2)),
+                            )
+                        ],
+                    ],
+                    k=f"{key}_tb_maincolumn",
+                    element_justification="c",
+                    background_color=bc,
+                    pad=(1, 1),
+                    expand_x=True,
+                )
+            ]
+        ],
+        k=f"{key}_visibility_wrap",
+        expand_x=True,
+        background_color=invert(bc),
+    )

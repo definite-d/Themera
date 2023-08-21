@@ -12,12 +12,18 @@ Copyright 2023 Divine Afam-Ifediogor
 """
 
 # IMPORTS ______________________________________________________________________________________________________________
-from typing import Dict, List, Union, Tuple, Callable, Optional
+from typing import Callable, Dict, List, Optional, Tuple, Union
 
 import colour
 
+from functions import (
+    check_if_color,
+    flatten_themedict,
+    invert,
+    rint,
+    unflatten_themedict,
+)
 from settings import SETTINGS
-from functions import unflatten_themedict, flatten_themedict, check_if_color, rint, invert
 
 
 # FILTERS ______________________________________________________________________________________________________________
@@ -38,28 +44,34 @@ def index_filter(themedict: Dict, index: List) -> Dict:
 
     flat = flatten_themedict(themedict)
     colors = {k: v for k, v in flat.items() if check_if_color(v)}
-    sorted_colors = sorted(list(set(colors)), key=lambda x: colour.Color(colors[x]).get_luminance())
+    sorted_colors = sorted(
+        list(set(colors)), key=lambda x: colour.Color(colors[x]).get_luminance()
+    )
     mapped = []
     if len(sorted_colors) <= len(index):
         # If we have a list of colors less than the list of indexes:
-        for _index in index[0:len(sorted_colors)]:
+        for _index in index[0 : len(sorted_colors)]:
             mapped.append(colors[sorted_colors[rint(_index * len(sorted_colors)) - 1]])
     else:
         # Otherwise, we need to 'scale' the index list to the colors list.
         for n in range(len(colors)):
             # Suppose we mentally traverse both the color and index lists simultaneously:
             # This is a fraction representing how far we've traversed the color list at the present n:
-            current_point = n+1 / len(sorted_colors)
+            current_point = n + 1 / len(sorted_colors)
             # We can apply the same fraction to the index list and get the corresponding position in the index list.
             index_position = rint(current_point * len(index))
             # The index list is a list of floating point numbers that indicate which point of the sorted colors should be
             # applied at the current index, like a guide on how to "rearrange" the colors by their indexes.
             # We'll call that point "mapped_point".
-            mapped_point = index[index_position - 1]  # Minus 1 because indexes start at 0.
+            mapped_point = index[
+                index_position - 1
+            ]  # Minus 1 because indexes start at 0.
             # Now we convert the point to a position in the color list.
-            mapped_position = rint(mapped_point*len(sorted_colors))
+            mapped_position = rint(mapped_point * len(sorted_colors))
             # And use that position to get the item that should be at that position.
-            item = sorted_colors[mapped_position - 1]  # Minus 1 because indexes start at 0.
+            item = sorted_colors[
+                mapped_position - 1
+            ]  # Minus 1 because indexes start at 0.
             # Get the color for that item.
             color = colors[item]
             # Finally, add the color to the mapped (result) list.
@@ -81,9 +93,11 @@ def autocontrast_filter(themedict: Dict):
     flat = flatten_themedict(themedict)
     luminance = colour.Color(list(flat.values())[0]).get_luminance()
     if luminance < 0.5:
-        lum = [max(round(luminance, 2) * 0.8, 0)] + SETTINGS['autocontrast_index_dark']
+        lum = [max(round(luminance, 2) * 0.8, 0)] + SETTINGS["autocontrast_index_dark"]
     else:
-        lum = [min(round(luminance, 2) * 1.443, 1)] + SETTINGS['autocontrast_index_light']
+        lum = [min(round(luminance, 2) * 1.443, 1)] + SETTINGS[
+            "autocontrast_index_light"
+        ]
     colors = {k: v for k, v in flat.items() if check_if_color(v)}
     # sorted_colors = sorted(list(set(colors)), key=lambda x: colour.Color(colors[x]).get_luminance())
     contrasted = list()
@@ -104,21 +118,25 @@ def autocontrast_filter(themedict: Dict):
 
 
 def dark_mode_filter(themedict: Dict[str, Union[str, Tuple, List]]):
-    return index_filter(themedict, index=SETTINGS['dark_mode_index'])
+    return index_filter(themedict, index=SETTINGS["dark_mode_index"])
 
 
 def light_mode_filter(themedict: Dict[str, Union[str, Tuple, List]]):
-    return index_filter(themedict, index=SETTINGS['light_mode_index'])
+    return index_filter(themedict, index=SETTINGS["light_mode_index"])
 
 
 def individual_filter(
-        action: Callable,
-        themedict: Dict[str, Union[str, Tuple, List]],
-        additional_args: Optional[Dict[str, Union[str, Tuple, List]]] = None
+    action: Callable,
+    themedict: Dict[str, Union[str, Tuple, List]],
+    additional_args: Optional[Dict[str, Union[str, Tuple, List]]] = None,
 ):
     flat = flatten_themedict(themedict)
     if additional_args:
-        colors = {k: action(v, **additional_args) for k, v in flat.items() if check_if_color(v)}
+        colors = {
+            k: action(v, **additional_args)
+            for k, v in flat.items()
+            if check_if_color(v)
+        }
     else:
         colors = {k: action(v) for k, v in flat.items() if check_if_color(v)}
     result = flat.copy()
@@ -152,92 +170,76 @@ def transform_filter(color: str, transformation_matrix: List[List[float]]):
 
 
 def protanopia_filter(themedict: Dict[str, Union[str, Tuple, List]]):
-    matrix = [
-        [.56667, .43333, 0],
-        [.55833, .44167, 0],
-        [0, .24167, .75833]
-    ]
-    return individual_filter(transform_filter, themedict, {'transformation_matrix': matrix})
+    matrix = [[0.56667, 0.43333, 0], [0.55833, 0.44167, 0], [0, 0.24167, 0.75833]]
+    return individual_filter(
+        transform_filter, themedict, {"transformation_matrix": matrix}
+    )
 
 
 def protanomaly_filter(themedict: Dict[str, Union[str, Tuple, List]]):
-    matrix = [
-        [0.81667, 0.18333, 0],
-        [0.33333, 0.66667, 0],
-        [0, .125, .875]
-    ]
-    return individual_filter(transform_filter, themedict, {'transformation_matrix': matrix})
+    matrix = [[0.81667, 0.18333, 0], [0.33333, 0.66667, 0], [0, 0.125, 0.875]]
+    return individual_filter(
+        transform_filter, themedict, {"transformation_matrix": matrix}
+    )
 
 
 def deuteranopia_filter(themedict: Dict[str, Union[str, Tuple, List]]):
-    matrix = [
-        [.625, .375, 0],
-        [.7, .3, 0],
-        [0, .3, .7]
-    ]
-    return individual_filter(transform_filter, themedict, {'transformation_matrix': matrix})
+    matrix = [[0.625, 0.375, 0], [0.7, 0.3, 0], [0, 0.3, 0.7]]
+    return individual_filter(
+        transform_filter, themedict, {"transformation_matrix": matrix}
+    )
 
 
 def deuteranomaly_filter(themedict: Dict[str, Union[str, Tuple, List]]):
-    matrix = [
-        [.8, .2, 0],
-        [0, .25833, .74167],
-        [0, .14167, .85833]
-    ]
-    return individual_filter(transform_filter, themedict, {'transformation_matrix': matrix})
+    matrix = [[0.8, 0.2, 0], [0, 0.25833, 0.74167], [0, 0.14167, 0.85833]]
+    return individual_filter(
+        transform_filter, themedict, {"transformation_matrix": matrix}
+    )
 
 
 def tritanopia_filter(themedict: Dict[str, Union[str, Tuple, List]]):
-    matrix = [
-        [.95, .05, 0],
-        [0, .43333, .56667],
-        [0, .475, .525]
-    ]
-    return individual_filter(transform_filter, themedict, {'transformation_matrix': matrix})
+    matrix = [[0.95, 0.05, 0], [0, 0.43333, 0.56667], [0, 0.475, 0.525]]
+    return individual_filter(
+        transform_filter, themedict, {"transformation_matrix": matrix}
+    )
 
 
 def tritanomaly_filter(themedict: Dict[str, Union[str, Tuple, List]]):
-    matrix = [
-        [.96667, .03333, 0],
-        [0, .73333, .26667],
-        [0, .18333, .81667]
-    ]
-    return individual_filter(transform_filter, themedict, {'transformation_matrix': matrix})
+    matrix = [[0.96667, 0.03333, 0], [0, 0.73333, 0.26667], [0, 0.18333, 0.81667]]
+    return individual_filter(
+        transform_filter, themedict, {"transformation_matrix": matrix}
+    )
 
 
 def achromatopsia_filter(themedict: Dict[str, Union[str, Tuple, List]]):
-    matrix = [
-        [.299, .587, .114],
-        [.299, .587, .114],
-        [.299, .587, .114]
-    ]
-    return individual_filter(transform_filter, themedict, {'transformation_matrix': matrix})
+    matrix = [[0.299, 0.587, 0.114], [0.299, 0.587, 0.114], [0.299, 0.587, 0.114]]
+    return individual_filter(
+        transform_filter, themedict, {"transformation_matrix": matrix}
+    )
 
 
 def achromatomaly_filter(themedict: Dict[str, Union[str, Tuple, List]]):
-    matrix = [
-        [.618, .32, .062],
-        [.163, .775, .062],
-        [.163, .32, .516]
-    ]
-    return individual_filter(transform_filter, themedict, {'transformation_matrix': matrix})
+    matrix = [[0.618, 0.32, 0.062], [0.163, 0.775, 0.062], [0.163, 0.32, 0.516]]
+    return individual_filter(
+        transform_filter, themedict, {"transformation_matrix": matrix}
+    )
 
 
 FILTER_MAPPING = {
-    '-- No Filters --': None,
-    'Auto Contrast': autocontrast_filter,
-    'Dark Mode': dark_mode_filter,
-    'Light Mode': light_mode_filter,
-    'Gray Out': gray_out_filter,
-    'Inverted': inverted_filter,
-    'Achromatomaly': achromatomaly_filter,
-    'Achromatopsia': achromatopsia_filter,
-    'Deuteranomaly': deuteranomaly_filter,
-    'Deuteranopia': deuteranopia_filter,
-    'Protanomaly': protanomaly_filter,
-    'Protanopia': protanopia_filter,
-    'Tritanomaly': tritanomaly_filter,
-    'Tritanopia': tritanopia_filter,
+    "-- No Filters --": None,
+    "Auto Contrast": autocontrast_filter,
+    "Dark Mode": dark_mode_filter,
+    "Light Mode": light_mode_filter,
+    "Gray Out": gray_out_filter,
+    "Inverted": inverted_filter,
+    "Achromatomaly": achromatomaly_filter,
+    "Achromatopsia": achromatopsia_filter,
+    "Deuteranomaly": deuteranomaly_filter,
+    "Deuteranopia": deuteranopia_filter,
+    "Protanomaly": protanomaly_filter,
+    "Protanopia": protanopia_filter,
+    "Tritanomaly": tritanomaly_filter,
+    "Tritanopia": tritanopia_filter,
 }
 
 FILTERS = list(FILTER_MAPPING.keys())

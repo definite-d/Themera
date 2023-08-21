@@ -14,10 +14,10 @@ Copyright 2023 Divine Afam-Ifediogor
 # IMPORTS ______________________________________________________________________________________________________________
 import PySimpleGUI as sg
 
+
 # LOGIC ________________________________________________________________________________________________________________
 class Window(sg.Window):
-
-    open_windows = []
+    open_windows = list()
 
     def __init__(self, *args, **kwargs):
         self.editor_object = None
@@ -27,4 +27,3 @@ class Window(sg.Window):
     def close(self):
         self.open_windows.remove(self)
         return super().close()
-
