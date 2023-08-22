@@ -14,11 +14,13 @@ Copyright 2023 Divine Afam-Ifediogor
 # IMPORTS ______________________________________________________________________________________________________________
 from base64 import b64decode, b64encode
 from io import BytesIO
+from math import lcm
 from random import getrandbits
 from tkinter import StringVar
 from typing import Dict, List, Tuple, Union
 
 import PySimpleGUI as sg
+from colour import Color
 from PIL import Image, UnidentifiedImageError
 
 from .bytecode import BANNER, GRID, SIDEBAR
@@ -68,7 +70,7 @@ def theme_name_row(key: str) -> List[sg.Element]:
     :param key: The element key.
     :return: A list containing a text element and the input itself.
     """
-    return [sg.Text("Theme Name", size=(10, 1)), sg.Input(k=f"{key}_themename")]
+    return [sg.Text("Theme Name", size=(12, 1)), sg.Input(k=f"{key}_themename")]
 
 
 def image_action(image: Image.Image) -> Dict[str, Union[str, Tuple, List]]:
@@ -121,6 +123,53 @@ def new_action(theme: str) -> Dict[str, Union[str, Tuple, List]]:
     return sg.LOOK_AND_FEEL_TABLE[theme]
 
 
+def clamp(value: Union[int, float]):
+    """
+    Clamps a given numerical value to between 1 and 0.
+    """
+    return min(1, max(0, value))
+
+
+def get_preview_colors():
+    col = Color(sg.theme_background_color())
+    lum = col.get_luminance()
+    if lum <= 0.5:
+        col.set_luminance(clamp(lum * 0.5))
+        preview_bg = col.get_hex()
+        col.set_saturation(0.4)
+        col.set_luminance(clamp(lum * 2.2))
+        preview_fg = col.get_hex()
+    else:
+        col.set_luminance(clamp(lum * 2.2))
+        preview_bg = col.get_hex()
+        col.set_saturation(0.4)
+        col.set_luminance(clamp(lum * 0.5))
+        preview_fg = col.get_hex()
+    del col, lum
+    return preview_bg, preview_fg
+
+
+def sidebar():
+    """
+    Compound element function. Returns the sidebar used in multiple layouts.
+    """
+    return sg.Column(
+        [
+            [
+                sg.Image(
+                    data=SIDEBAR,
+                    subsample=3,
+                    pad=(0, 0),
+                    expand_y=True,
+                )
+            ]
+        ],
+        pad=(0, 0),
+        expand_y=True,
+        expand_x=True,
+    )
+
+
 def Launcher(set_to: str = "main"):
     """
     This function is responsible for initializing a new launcher upon startup and when requested by the user.
@@ -129,6 +178,7 @@ def Launcher(set_to: str = "main"):
     """
     themes, default_theme = sorted(THEMES), "Black"
     image: sg.Optional[Image.Image] = None
+    preview_bg, preview_fg = get_preview_colors()
     layout = [
         [
             sg.Column(
@@ -177,21 +227,7 @@ def Launcher(set_to: str = "main"):
             sg.Column(
                 [
                     [
-                        sg.Column(
-                            [
-                                [
-                                    sg.Image(
-                                        data=SIDEBAR,
-                                        subsample=3,
-                                        pad=(0, 0),
-                                        expand_y=True,
-                                    )
-                                ]
-                            ],
-                            pad=(0, 0),
-                            expand_y=True,
-                            expand_x=True,
-                        ),
+                        sidebar(),
                         sg.Column(
                             [
                                 [
@@ -203,7 +239,7 @@ def Launcher(set_to: str = "main"):
                                 ],
                                 theme_name_row("new"),
                                 [
-                                    sg.Text("Based on", size=(10, 1)),
+                                    sg.Text("Based on", size=(9, 1)),
                                     sg.DropDown(
                                         themes,
                                         default_theme,
@@ -218,7 +254,7 @@ def Launcher(set_to: str = "main"):
                                     mini_preview_window_layout(
                                         "new",
                                         sg.LOOK_AND_FEEL_TABLE[default_theme],
-                                        "This is a mini preview of the selected theme.",
+                                        "Mini preview.",
                                     )
                                 ],
                                 [sg.VPush()],
@@ -239,21 +275,7 @@ def Launcher(set_to: str = "main"):
             sg.Column(
                 [
                     [
-                        sg.Column(
-                            [
-                                [
-                                    sg.Image(
-                                        data=SIDEBAR,
-                                        subsample=3,
-                                        pad=(0, 0),
-                                        expand_y=True,
-                                    )
-                                ]
-                            ],
-                            pad=(0, 0),
-                            expand_y=True,
-                            expand_x=True,
-                        ),
+                        sidebar(),
                         sg.Column(
                             [
                                 # [sg.VPush()],
@@ -261,7 +283,7 @@ def Launcher(set_to: str = "main"):
                                 theme_name_row("existing"),
                                 [
                                     sg.Multiline(
-                                        "-- Paste your theme's value dictionary here. --",
+                                        "~ Your theme's value dict goes here. ~",
                                         k="existing_themecode",
                                         expand_x=True,
                                         expand_y=True,
@@ -285,21 +307,7 @@ def Launcher(set_to: str = "main"):
             sg.Column(
                 [
                     [
-                        sg.Column(
-                            [
-                                [
-                                    sg.Image(
-                                        data=SIDEBAR,
-                                        subsample=3,
-                                        pad=(0, 0),
-                                        expand_y=True,
-                                    )
-                                ]
-                            ],
-                            pad=(0, 0),
-                            expand_y=True,
-                            expand_x=True,
-                        ),
+                        sidebar(),
                         sg.Column(
                             [
                                 # [sg.VPush()],
@@ -313,28 +321,29 @@ def Launcher(set_to: str = "main"):
                                 theme_name_row("image"),
                                 [
                                     sg.Input(
-                                        "-- No image selected. --",
-                                        size=(38, 1),
-                                        pad=((5, 1), 2),
+                                        "~ No image selected. ~",
+                                        expand_x=True,
+                                        pad=(5, 2),
+                                        size=(20, 1),
                                         enable_events=True,
                                         k="image_filepath",
                                     ),
                                     sg.FileBrowse(file_types=IMAGE_FILETYPES),
                                 ],
-                                [sg.VPush()],
+                                # [sg.VPush()],
                                 [
-                                    sg.Push(),
-                                    sg.Image(
-                                        GRID,
-                                        size=IMAGE_PREVIEW_SIZE,
+                                    # sg.Push(),
+                                    sg.Canvas(
+                                        # 'GRID',
                                         expand_x=True,
                                         expand_y=True,
                                         k="image_preview",
-                                        pad=(0, 0),
+                                        pad=(5, (0, 2)),
+                                        background_color=preview_bg,
                                     ),
-                                    sg.Push(),
+                                    # sg.Push(),
                                 ],
-                                [sg.VPush()],
+                                # [sg.VPush()],
                                 action_button_row("image"),
                                 # [sg.VPush()],
                             ],
@@ -353,21 +362,7 @@ def Launcher(set_to: str = "main"):
             sg.Column(
                 [
                     [
-                        sg.Column(
-                            [
-                                [
-                                    sg.Image(
-                                        data=SIDEBAR,
-                                        subsample=3,
-                                        pad=(0, 0),
-                                        expand_y=True,
-                                    )
-                                ]
-                            ],
-                            pad=(0, 0),
-                            expand_y=True,
-                            expand_x=True,
-                        ),
+                        sidebar(),
                         sg.Column(
                             [
                                 [sg.VPush()],
@@ -394,6 +389,7 @@ def Launcher(set_to: str = "main"):
             ),
         ],
     ]
+
     launcher = Window(
         f"Themera v{__version__}",
         layout,
@@ -402,6 +398,16 @@ def Launcher(set_to: str = "main"):
         size=(500, 367),
         modal=False,
     ).finalize()
+
+    center_coords = (c / 2 for c in IMAGE_PREVIEW_SIZE)
+    preview_panel: sg.Canvas = launcher["image_preview"]
+    directive = preview_panel.TKCanvas.create_text(
+        *center_coords,
+        text='Click "Browse" to select an image.',
+        font=FONTS['medium'],
+        fill=preview_fg
+    )
+
     name_variable = StringVar(
         launcher.TKroot, f"NewTheme{getrandbits(16)}", "theme_name"
     )
@@ -417,8 +423,6 @@ def Launcher(set_to: str = "main"):
             launcher.close()
             break
 
-        print(launcher.size)
-
         if e == "new_theme":
             reskin_mini_preview_window(
                 launcher, "new", sg.LOOK_AND_FEEL_TABLE[v["new_theme"]]
@@ -429,7 +433,6 @@ def Launcher(set_to: str = "main"):
                 with Image.open(v["image_filepath"]).convert("RGBA") as _thumbnail:
                     image = _thumbnail
                     thumbnail = BytesIO()
-                    base: Image.Image = Image.open(BytesIO(b64decode(GRID)))
                     _thumbnail.thumbnail(IMAGE_PREVIEW_SIZE)
                     _thumbnail.mode = "RGBA"
                     bbox = (
@@ -442,7 +445,6 @@ def Launcher(set_to: str = "main"):
                         base.paste(_thumbnail, bbox)
                     base.save(thumbnail, "png")
                     thumbnail = b64encode(thumbnail.getvalue())
-                    launcher["image_preview"](source=thumbnail)
             except FileNotFoundError:
                 continue
             except UnidentifiedImageError:

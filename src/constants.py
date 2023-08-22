@@ -76,7 +76,10 @@ THEMEDICT_TO_DISPLAY = {value: key for key, value in DISPLAY_TO_THEMEDICT.items(
 CTRL = "Cmd" if running_mac() else "Ctrl"
 CTRL_EVENT = "Command" if running_mac() else "Control"
 ALT = "Option" if running_mac() else "Alt"
-IMAGE_PREVIEW_SIZE = (320, 150)
+IMAGE_PREVIEW_SIZE = (
+        309,
+        229,
+    )  # Had to hardcode this because Tkinter's methods don't work well with expanded widgets.
 CREATE_BUTTON_PADDING = ((3, 2), 3)
 BACK_BUTTON_PADDING = ((2, 5), 3)
 IMAGE_FILETYPES = [
