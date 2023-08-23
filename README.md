@@ -1,11 +1,11 @@
 # Themera
 
-## Latest Version: v2.0.0
+## Latest Version: v2.1.0
 
 Themera is currently available in compiled form for:  
 
 #### Windows
-[<img src=https://github.com/definite-d/Themera/blob/v2.0.0/res/download.png width=35%>](https://github.com/definite-d/Themera/releases/latest)
+[<img src=https://github.com/definite-d/Themera/blob/v2/res/download.png width=35%>](https://github.com/definite-d/Themera/releases/latest)
 
 #### Linux
 A Linux version (AppImage) is available [here](https://github.com/blabla-labALT/Themera-for-Linux), thanks to [blabla_lab](https://github.com/blabla-labALT).
@@ -38,10 +38,10 @@ ________________________________________________________________________________
 
 
 ## Screenshot Showcase:
-![launcher_light](https://github.com/definite-d/Themera/blob/v2/screenshots/themera-v2.0.0-win-x86/launcher_light.png)
+![Launcher Light Mode Screenshot](https://github.com/definite-d/Themera/blob/v2/screenshots/launcher_light.png)
 
-![launcher_dark](https://github.com/definite-d/Themera/blob/v2/screenshots/themera-v2.0.0-win-x86/launcher_dark.png)
+![Launcher Dark Mode Screenshot](https://github.com/definite-d/Themera/blob/v2/screenshots/launcher_dark.png)
 
-![editor_light](https://github.com/definite-d/Themera/blob/v2/screenshots/themera-v2.0.0-win-x86/editor_light.png)
+![Editor Light Mode Screenshot](https://github.com/definite-d/Themera/blob/v2/screenshots/editor_light.png)
 
-![editor_dark](https://github.com/definite-d/Themera/blob/v2/screenshots/themera-v2.0.0-win-x86/editor_dark.png)
+![Editor Dark Mode Screenshot](https://github.com/definite-d/Themera/blob/v2/screenshots/editor_dark.png)

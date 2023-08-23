@@ -1,17 +1,12 @@
-__pycache__/
-.idea/
-.vscode/
+__pycache__
+.~lock.help.odt#
+.history
+.idea
+.uuid
+.vscode
 *.build
 *.themerasettings
 *.tmp
-~$help.docx
-~$help.rtf
-accesstoken.txt
-build/
-help.docx
-LICENSE.txt
-PyInstaller Automated Build Script - Themera.bat
-themera.iss
-themera.spec
-update_hashes.py
-zip_up.py
+bin
+build
+temp.iss
