@@ -36,8 +36,6 @@ from .constants import (
     APP_ID,
     BATCH_ACTIONS,
     BORDER_UPPER_LIMIT,
-    CONTRAST_THRESHOLD,
-    CONTRAST_THRESHOLD_MULTIPLIER,
     CTRL,
     CTRL_EVENT,
     EXTERNAL_LINK_ICON,
@@ -58,6 +56,7 @@ from .fonts import FONTS
 from .functions import (
     alter_luminance,
     check_if_color,
+    colorbox_text_color,
     flatten_themedict,
     get_display_name,
     invert,
@@ -68,16 +67,19 @@ from .functions import (
     unflatten_themedict,
 )
 from .launcher import Launcher
+from .palette_preview import palette_preview
 from .settings import SETTINGS
 from .themes import DarkTheme, LightTheme
 from .window import Window
 
+sg.Window = Window
 # SETTINGS.save_settings()
 
 # FUNCTIONS AND UI _____________________________________________________________________________________________________
 sg.set_options(dpi_awareness=True)
 if sg.running_windows():
     import ctypes
+
     try:
         ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(
             APP_ID
@@ -107,34 +109,10 @@ def menudef_to_shortcut_router_dict(menudef):
     }
 
 
-def get_proper_colorbox_textcolor(color):
-    bg_color = colour.Color(color)
-    text_color = colour.Color(invert(color))
-    if abs(bg_color.get_luminance() - text_color.get_luminance()) <= CONTRAST_THRESHOLD:
-        if text_color.get_luminance() > bg_color.get_luminance():
-            sign = 1
-        else:
-            sign = -1
-        text_color.set_luminance(
-            min(
-                1,
-                text_color.get_luminance()
-                + (CONTRAST_THRESHOLD * CONTRAST_THRESHOLD_MULTIPLIER * sign),
-            )
-            if sign == 1
-            else max(
-                0,
-                text_color.get_luminance()
-                + (CONTRAST_THRESHOLD * CONTRAST_THRESHOLD_MULTIPLIER * sign),
-            )
-        )
-    return text_color.get_web()
-
-
 def themedict_entry(name, value, name_size=16, value_size=10):
     if check_if_color(value):
         text = (
-            get_proper_colorbox_textcolor(value)
+            colorbox_text_color(value)
             if SETTINGS["colorboxes"]
             else sg.theme_input_text_color()
         )
@@ -503,7 +481,7 @@ class Editor:
     def _update_color_value(self, key, new_value):
         self.window[key](new_value)
         if SETTINGS["colorboxes"]:
-            text_color = get_proper_colorbox_textcolor(new_value)
+            text_color = colorbox_text_color(new_value)
             self.window[key].widget["insertbackground"] = text_color
             self.window[key].widget["background"] = new_value
             self.window[key].widget["foreground"] = text_color
@@ -787,9 +765,11 @@ class Editor:
                         self.theme_name,
                         self.themedict,
                     )
+                elif SETTINGS["full_preview_mode"] == "palette":
+                    palette_preview(self.theme_name, self.themedict)
 
             if event.startswith("Settings"):
-                SETTINGS.edit(sg, self)
+                SETTINGS.edit(self)
 
             if event == "View valid color names":
                 color_names = []

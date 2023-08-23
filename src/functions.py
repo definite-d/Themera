@@ -10,14 +10,12 @@ Themera Independent Functions File
 PySimpleGUI Theme Code Generator
 Copyright 2023 Divine Afam-Ifediogor
 """
-
+# IMPORTS ______________________________________________________________________________________________________________
 from random import randint
 from typing import Dict, List, Optional, Tuple, Union
 
 import colour
 import PySimpleGUI as sg
-
-# IMPORTS ______________________________________________________________________________________________________________
 from _tkinter import TclError
 from PIL import Image
 from psg_reskinner import reskin
@@ -127,6 +125,13 @@ def get_themedict_name(display_name: str) -> str:
         return str("_").join([part.upper() for part in (display_name).split(" ")])
 
 
+def clamp(value: Union[int, float]):
+    """
+    Clamps a given numerical value to between 1 and 0.
+    """
+    return min(1, max(0, value))
+
+
 def check_if_color(value: str) -> bool:
     """
     Checks if the given value is a valid hex-format color or a valid color name.
@@ -171,6 +176,15 @@ def alter_luminance(color: str, factor: float) -> str:
         val if 0 <= val <= 1 else (0 if color.get_luminance() <= 0.5 else 1)
     )
     return color.get_web()
+
+
+def colorbox_text_color(color):
+    _color = Color(invert(color))
+    if _color.get_luminance() >= 0.5:
+        _color.set_luminance(clamp(_color.get_luminance() * 1.5))
+    else:
+        _color.set_luminance(clamp(_color.get_luminance() * 0.5))
+    return _color.get_hex_l()
 
 
 def invert(color: str) -> str:

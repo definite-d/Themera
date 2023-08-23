@@ -54,9 +54,7 @@ def run_crash_window(error_message, sg):
             sg.Column(additional_info_layout, k="additional_info_panel", visible=False),
         ],
     ]
-    window = Window(
-        "Fatal Error!", layout, element_justification="center", size=(400, 250)
-    )
+    window = Window("Fatal Error!", layout, element_justification="center")
     result = None
     while True:
         e, v = window()

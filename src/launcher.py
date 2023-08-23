@@ -21,9 +21,9 @@ from typing import Dict, List, Tuple, Union
 
 import PySimpleGUI as sg
 from colour import Color
-from PIL import Image, UnidentifiedImageError
+from PIL import Image, ImageTk, UnidentifiedImageError
 
-from .bytecode import BANNER, GRID, SIDEBAR
+from .bytecode import BANNER, SIDEBAR, SINGLE_TRANSPARENT_PIXEL
 from .constants import (
     BACK_BUTTON_PADDING,
     CREATE_BUTTON_PADDING,
@@ -37,11 +37,13 @@ from .constants import (
 from .filters import index_filter
 from .fonts import FONTS
 from .functions import (
+    clamp,
     get_colors_from_image,
     mini_preview_window_layout,
     reskin_mini_preview_window,
     unflatten_themedict,
 )
+from .preview_panel import PreviewPanel
 from .version_and_copyright import COPYRIGHT, __version__
 from .window import Window
 
@@ -121,13 +123,6 @@ def new_action(theme: str) -> Dict[str, Union[str, Tuple, List]]:
     :return: The themedict for the given theme.
     """
     return sg.LOOK_AND_FEEL_TABLE[theme]
-
-
-def clamp(value: Union[int, float]):
-    """
-    Clamps a given numerical value to between 1 and 0.
-    """
-    return min(1, max(0, value))
 
 
 def get_preview_colors():
@@ -334,7 +329,6 @@ def Launcher(set_to: str = "main"):
                                 [
                                     # sg.Push(),
                                     sg.Canvas(
-                                        # 'GRID',
                                         expand_x=True,
                                         expand_y=True,
                                         k="image_preview",
@@ -399,14 +393,8 @@ def Launcher(set_to: str = "main"):
         modal=False,
     ).finalize()
 
-    center_coords = (c / 2 for c in IMAGE_PREVIEW_SIZE)
-    preview_panel: sg.Canvas = launcher["image_preview"]
-    directive = preview_panel.TKCanvas.create_text(
-        *center_coords,
-        text='Click "Browse" to select an image.',
-        font=FONTS['medium'],
-        fill=preview_fg
-    )
+    center_coords = tuple(c / 2 for c in IMAGE_PREVIEW_SIZE)
+    preview_panel: PreviewPanel = PreviewPanel(launcher["image_preview"], preview_fg)
 
     name_variable = StringVar(
         launcher.TKroot, f"NewTheme{getrandbits(16)}", "theme_name"
@@ -427,41 +415,11 @@ def Launcher(set_to: str = "main"):
             reskin_mini_preview_window(
                 launcher, "new", sg.LOOK_AND_FEEL_TABLE[v["new_theme"]]
             )
+            continue
 
         if e == "image_filepath":
-            try:
-                with Image.open(v["image_filepath"]).convert("RGBA") as _thumbnail:
-                    image = _thumbnail
-                    thumbnail = BytesIO()
-                    _thumbnail.thumbnail(IMAGE_PREVIEW_SIZE)
-                    _thumbnail.mode = "RGBA"
-                    bbox = (
-                        int((IMAGE_PREVIEW_SIZE[0] - _thumbnail.size[0]) / 2),
-                        int((IMAGE_PREVIEW_SIZE[1] - _thumbnail.size[1]) / 2),
-                    )
-                    try:
-                        base.paste(_thumbnail, bbox, _thumbnail)
-                    except ValueError:
-                        base.paste(_thumbnail, bbox)
-                    base.save(thumbnail, "png")
-                    thumbnail = b64encode(thumbnail.getvalue())
-            except FileNotFoundError:
-                continue
-            except UnidentifiedImageError:
-                sg.PopupError("No valid image selected.", title="Invalid image!")
-                continue
-            except OverflowError:
-                sg.PopupError(
-                    "There was a problem loading that image.",
-                    title="Problem with image!",
-                )
-                continue
-            except (ValueError, TypeError):
-                sg.PopupError(
-                    "An error occurred while trying to process",
-                    "the image. Please try a different one.",
-                    title="Error processing image.",
-                )
+            image = preview_panel.preview(v["image_filepath"])
+            continue
 
         if e.endswith("route"):
             e = e.split("_", 1)[0]
@@ -497,4 +455,5 @@ def Launcher(set_to: str = "main"):
             launcher["loading_panel"](visible=True)
             launcher[f"{e}_panel"](visible=False)
             break
+
     return name_variable.get(), themedict, launcher

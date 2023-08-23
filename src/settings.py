@@ -21,6 +21,7 @@ from psg_reskinner import reskin
 
 from .constants import DEFAULT_SETTINGS_DICT, DEFAULT_SETTINGS_PATH, THEMES
 from .functions import invert
+from .themes import DarkTheme, LightTheme
 from .window import Window
 
 
@@ -67,8 +68,9 @@ class Settings:
         settings_dict = DEFAULT_SETTINGS_DICT.copy()
         return settings_dict
 
-    def edit(self, sg, editor):
-        # import PySimpleGUI as sg
+    def edit(self, editor):
+        import PySimpleGUI as sg
+
         layout = [
             [
                 sg.Frame(
@@ -111,6 +113,14 @@ class Settings:
                                 if self["full_preview_mode"] == "default"
                                 else False,
                                 k="full_preview_mode_default",
+                            ),
+                            sg.Radio(
+                                "Palette",
+                                group_id="full_preview_mode",
+                                default=True
+                                if self["full_preview_mode"] == "palette"
+                                else False,
+                                k="full_preview_mode_palette",
                             ),
                             sg.Radio(
                                 "Custom",
@@ -219,6 +229,14 @@ class Settings:
                 if v["theme_setting"] != self["theme"]:
                     reskin(
                         settings_window,
+                        self["theme"],
+                        sg.theme,
+                        sg.LOOK_AND_FEEL_TABLE,
+                        True,
+                        honor_previous=False,
+                    )
+                    reskin(
+                        settings_window,
                         v["theme_setting"],
                         sg.theme,
                         sg.LOOK_AND_FEEL_TABLE,
@@ -287,9 +305,13 @@ class Settings:
                                 break
                         if not errors:
                             self[_k[:-8]] = v[_k]
-                self["full_preview_mode"] = (
-                    "default" if v["full_preview_mode_default"] else "custom"
-                )
+                self["full_preview_mode"] = {
+                    v["full_preview_mode_default"]: "default",
+                    v["full_preview_mode_palette"]: "palette",
+                    v["full_preview_mode_custom"]: "custom",
+                }[
+                    True
+                ]  # Backwards-compatible (<3.10) hack for emulating switch statements.
                 # print(self.settings_dict)
 
                 if e == "Save" and not errors:

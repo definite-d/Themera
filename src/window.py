@@ -20,6 +20,11 @@ class Window(sg.Window):
     open_windows = list()
 
     def __init__(self, *args, **kwargs):
+        # Make all windows inherit the last known location.
+        if len(self.open_windows) > 1:
+            kwargs.setdefault(
+                "location", self.open_windows[-1].current_location(more_accurate=True)
+            )
         self.editor_object = None
         super().__init__(*args, **kwargs)
         self.open_windows.append(self)

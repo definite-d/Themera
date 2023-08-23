@@ -23,13 +23,7 @@ APP_ID = (
 )
 
 DEFAULT_SETTINGS_PATH = f"./.themerasettings"
-THEMES = ["Themera Light", "Themera Dark"] + sorted(
-    [
-        theme
-        for theme in LOOK_AND_FEEL_TABLE.keys()
-        if "1234567890" not in LOOK_AND_FEEL_TABLE[theme].values()
-    ]
-)
+THEMES = ["Themera Light", "Themera Dark"] + sorted(list(LOOK_AND_FEEL_TABLE.keys()))
 DEFAULT_THEME = (
     (THEMES[0] if isLight() else THEMES[1]) if isLight() is not None else THEMES[0]
 )
@@ -77,9 +71,9 @@ CTRL = "Cmd" if running_mac() else "Ctrl"
 CTRL_EVENT = "Command" if running_mac() else "Control"
 ALT = "Option" if running_mac() else "Alt"
 IMAGE_PREVIEW_SIZE = (
-        309,
-        229,
-    )  # Had to hardcode this because Tkinter's methods don't work well with expanded widgets.
+    309,
+    229,
+)  # Had to hardcode this because Tkinter's methods don't work well with expanded widgets.
 CREATE_BUTTON_PADDING = ((3, 2), 3)
 BACK_BUTTON_PADDING = ((2, 5), 3)
 IMAGE_FILETYPES = [
@@ -123,9 +117,6 @@ DEFAULT_SETTINGS_DICT = {
     "dark_mode_index": DARK_MODE_INDEX,
     "light_mode_index": LIGHT_MODE_INDEX,
 }
-
-CONTRAST_THRESHOLD = 0.5
-CONTRAST_THRESHOLD_MULTIPLIER = 3
 
 CRASH_REPORT_TITLE_PREFIX = "[Crash]"
 
