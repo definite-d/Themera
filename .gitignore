@@ -7,6 +7,5 @@ __pycache__
 *.build
 *.themerasettings
 *.tmp
-bin
 build
 temp.iss
