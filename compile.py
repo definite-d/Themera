@@ -206,9 +206,26 @@ def compile_installer_for_windows():
     print("The Windows Installer for Themera can only be compiled on Windows.")
 
 
+def update_version_in_readme():
+    print('Updating version within README.md...')
+    pattern = r'## Latest Version: v.*'
+    replacement = f'## Latest Version: v{VERSION}'
+    with open("README.md", "r") as readme_file:
+        content = readme_file.read()
+        content = re.sub(pattern, replacement, content)
+    with open("README.md", "w") as readme_file:
+        readme_file.write(content)
+
+def git_commit(message: str = f'New Commit at {datetime.now()}'):
+    print('Staging commit...')
+    run(f'git commit -m "{message}" -a')
+    print('Commit completed successfully.')
+
 # The following lines are the main controls to this script. Comment and uncomment as desired, but do not change the order.
 
-update_and_format_source_files()
-run(f"nuitka {GENERAL_SETTINGS} {OS_SETTINGS} {OTHER_SETTINGS}")
-compile_installer_for_windows()
-zip_output_into_archive()
+# update_version_in_readme()
+# update_and_format_source_files()
+# run(f"nuitka {GENERAL_SETTINGS} {OS_SETTINGS} {OTHER_SETTINGS}")
+# compile_installer_for_windows()
+# zip_output_into_archive()
+git_commit()

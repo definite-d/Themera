@@ -16,18 +16,9 @@ from typing import Dict, List, Optional, Union
 from constants import DEFAULT_LAYOUT
 from fonts import FONTS
 from pyperclip import paste
-from PySimpleGUI import (
-    EMOJI_BASE64_HAPPY_BIG_SMILE,
-    LOOK_AND_FEEL_TABLE,
-    Button,
-    Element,
-    Input,
-    Multiline,
-    Push,
-    Text,
-    theme,
-    theme_add_new,
-)
+from PySimpleGUI import (EMOJI_BASE64_HAPPY_BIG_SMILE, LOOK_AND_FEEL_TABLE,
+                         Button, Element, Input, Multiline, Push, Text, theme,
+                         theme_add_new)
 from window import Window
 
 ELEMENTS = {element.__name__: element for element in Element.__subclasses__()}
