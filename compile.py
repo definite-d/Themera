@@ -97,6 +97,10 @@ OTHER_SETTINGS = (
 )
 
 
+def perform_nuitka_compilation():
+    run(f"nuitka {GENERAL_SETTINGS} {OS_SETTINGS} {OTHER_SETTINGS}")
+
+
 def update_copyright(filepath):
     pattern = re.sub(r"[0-9]{4,4}", "[0-9]{4,4}", COPYRIGHT)
     with open(filepath, "r") as current_source_file:
@@ -120,7 +124,7 @@ def update_and_format_source_files():
 
 
 def write_hashes(filepath: Path):
-    print(f'Hashing {filepath}...')
+    print(f"Hashing {filepath}...")
     hashes_path = filepath.parent
     sha256_hash = sha256()
     md5_hash = md5()
@@ -178,7 +182,7 @@ def prep_innosetup_script():
         + output_path
         + '\\\\installer"',
         r'#define MyAppVersion ".*"': f'#define MyAppVersion "{VERSION}"',
-        r"OutputBaseFilename=.*": f'OutputBaseFilename={APP_NAME}',
+        r"OutputBaseFilename=.*": f"OutputBaseFilename={APP_NAME}",
         r"AppId=\{\{.*\}": "AppId={{" + APP_UUID + "}",
         r"AppCopyright=.*": f"AppCopyright={COPYRIGHT}",
     }
@@ -191,10 +195,9 @@ def prep_innosetup_script():
         script.write(content)
 
 
-
 def compile_installer_for_windows():
     if system() == "Windows":
-        print('Starting compilation of the Windows installer for Themera.')
+        print("Starting compilation of the Windows installer for Themera.")
         prep_innosetup_script()
         run("iscc temp.iss")
         Path("temp.iss").unlink()
@@ -207,25 +210,28 @@ def compile_installer_for_windows():
 
 
 def update_version_in_readme():
-    print('Updating version within README.md...')
-    pattern = r'## Latest Version: v.*'
-    replacement = f'## Latest Version: v{VERSION}'
+    print("Updating version within README.md...")
+    pattern = r"## Latest Version: v.*"
+    replacement = f"## Latest Version: v{VERSION}"
     with open("README.md", "r") as readme_file:
         content = readme_file.read()
         content = re.sub(pattern, replacement, content)
     with open("README.md", "w") as readme_file:
         readme_file.write(content)
 
-def git_commit(message: str = f'New Commit at {datetime.now()}'):
-    print('Staging commit...')
+
+def git_commit(message: str = f"New Commit at {datetime.now()}"):
+    print("Staging commit...")
     run(f'git commit -m "{message}" -a')
-    print('Commit completed successfully.')
+    print("Commit completed successfully.")
+
 
 # The following lines are the main controls to this script. Comment and uncomment as desired, but do not change the order.
 
-# update_version_in_readme()
-# update_and_format_source_files()
-# run(f"nuitka {GENERAL_SETTINGS} {OS_SETTINGS} {OTHER_SETTINGS}")
-# compile_installer_for_windows()
-# zip_output_into_archive()
+update_version_in_readme()
+update_and_format_source_files()
+perform_nuitka_compilation()
+compile_installer_for_windows()
+zip_output_into_archive()
 git_commit()
+print("compile.py has completed execution.")
