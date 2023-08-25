@@ -227,10 +227,10 @@ def git_commit(message: str = f"New Commit at {datetime.now()}"):
 
 # The following lines are the main controls to this script. Comment and uncomment as desired, but do not change the order.
 
-update_version_in_readme()
-update_and_format_source_files()
-perform_nuitka_compilation()
+# update_version_in_readme()
+# update_and_format_source_files()
+# perform_nuitka_compilation()
 compile_installer_for_windows()
-zip_output_into_archive()
-git_commit()
-print("compile.py has completed execution.")
+# zip_output_into_archive()
+# git_commit()
+# print("compile.py has completed execution.")
