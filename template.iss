@@ -8,7 +8,7 @@
 #define MyAppVersion ""
 #define MyAppPublisher "Divine Afam-Ifediogor"
 #define MyAppURL "https://github.com/definite-d/themera/"
-#define MyAppExeName ".exe"
+#define MyAppExeName "themera"
 #define ProgramSourcePath "{#OutputPath}\themera.dist"
 #define InnoSetupOutputPath "{#OutputPath}\installer"
 

@@ -174,7 +174,6 @@ def prep_innosetup_script():
     PATTERNS_TO_REPLACEMENTS = {
         r'#define RootPath ".*"': f'#define RootPath "{root_path}"',
         r'#define OutputPath ".*"': f'#define OutputPath "{output_path}"',
-        r'#define MyAppExeName ".*\.exe"': f'#define MyAppExeName "{APP_NAME}"',
         r'#define ProgramSourcePath ".*"': '#define ProgramSourcePath "'
         + output_path
         + '\\\\themera.dist"',
