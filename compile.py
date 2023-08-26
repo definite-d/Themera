@@ -153,8 +153,8 @@ def zip_output_into_archive(remove_output_dir_after=True):
         with ZipFile(ZIPFILE_PATH, "w") as archive:
             for index, item in enumerate(OUTPUT_FILES):
                 print(
-                    f"{index+1:6d} of {TOTAL_NUMBER_OF_OUTPUT_FILES} added to archive ({(index/TOTAL_NUMBER_OF_OUTPUT_FILES)*100:.0f}%).",
-                    end="\r",
+                    f"\r{index+1:6d} of {TOTAL_NUMBER_OF_OUTPUT_FILES} added to archive ({(index/TOTAL_NUMBER_OF_OUTPUT_FILES)*100:.0f}%).",
+                    end="",
                 )
                 archive.write(item, item.relative_to(NUITKA_OUTPUT_PATH))
             print("\n", end="\r")
