@@ -205,7 +205,7 @@ def zip_output_into_archive(remove_output_dir_after=True):
                     end="",
                 )
                 archive.write(item, item.relative_to(NUITKA_OUTPUT_PATH))
-        print('\n', end='')
+        print("\n", end="")
         write_hashes(ZIPFILE_PATH)
         print("Done with archiving.")
     else:
