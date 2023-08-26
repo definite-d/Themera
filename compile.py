@@ -98,7 +98,7 @@ OTHER_SETTINGS = (
 
 
 def perform_nuitka_compilation():
-    run(f"python nuitka {GENERAL_SETTINGS} {OS_SETTINGS} {OTHER_SETTINGS}")
+    run(f"python -m nuitka {GENERAL_SETTINGS} {OS_SETTINGS} {OTHER_SETTINGS}")
 
 
 def update_copyright(filepath):
@@ -227,8 +227,8 @@ def git_commit(message: str = f"New Commit at {datetime.now()}"):
 
 # The following lines are the main controls to this script. Comment and uncomment as desired, but do not change the order.
 
-update_version_in_readme()
-update_and_format_source_files()
+# update_version_in_readme()
+# update_and_format_source_files()
 perform_nuitka_compilation()
 compile_installer_for_windows()
 zip_output_into_archive()
