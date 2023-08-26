@@ -9,41 +9,68 @@ other platforms (Mac and Linux).
 The configuration functions are at the bottom of the script, 
 if modification is required.
 
+Compilation in general requires the `black` and `isort` libraries, 
+as well as `nuitka` (and a suitable compiler) and a working install 
+of `git`.
+
 Compiling for Windows requires InnoSetup installed and the 
-installation directory added to PATH, and Nuitka with a suitable 
-C compiler.
+installation directory added to PATH.
 
 While this script runs with whatever Python version available to it, 
-you may choose to use a specific version of Python for compiling 
+you may choose to use a specific version of Python just for compiling 
 with Nuitka. If you have multiple Python versions installed, modify 
-the PYTHON_VERSION variable below to suit the one you wish to use for 
-compilation, before running this script. Leave it as None to use the 
-default available.
+the `PYTHON_VERSION` variable below to suit the one you wish to use for 
+compilation, before running this script. Set it to `None` to use the 
+default (or only one) available.
 
 Supporting 32-bit Windows also requires the MSVC compiler, and 
 a 32-bit version of Python available (3.7.9 has been tested by 
-me) to allow cross-compilation for 32 bit Windows as well. 
-Setting PYTHON_VERSION to a 32-bit version of Python will 
-automatically compile for 32-bit compatibility.
+me and is thus set as default) to allow cross-compilation for 
+32 bit Windows as well. Setting PYTHON_VERSION to a 32-bit 
+version of Python will automatically compile for 32-bit 
+compatibility in general. For best compatibility with 32-bit systems, 
+I advise simply compiling on a 32-bit system itself if possible.
 """
 
 PYTHON_VERSION = "3.7"
-
 
 import re
 from datetime import datetime
 from hashlib import md5, sha256
 from os import system as run
 from pathlib import Path
-from platform import architecture, system
+from platform import system
 from shutil import rmtree
+from subprocess import check_output
 from sys import path
 from zipfile import ZipFile
 
 from PySimpleGUI import running_linux, running_mac, running_windows
 
-_IS_32_BITS = True if architecture()[0].startswith("32") else False
+
+print("Starting the Compiler Script...")
+
+# I'd like to do what I call a "pro-gamer move"...
+COMPILER_VERSION_ARCHITECTURE = eval(
+    check_output(
+        f'py -{PYTHON_VERSION} -c "from platform import architecture; print(architecture())"'
+    ).decode("utf-8")
+)
+COMPILER_PYTHON_VERSION_IS_32_BITS = (
+    True if COMPILER_VERSION_ARCHITECTURE[0].startswith("32") else False
+)
+
 SYSTEM = system()
+
+if PYTHON_VERSION:
+    print(
+        f"Your chosen compiler Python version is {PYTHON_VERSION} {COMPILER_VERSION_ARCHITECTURE}"
+    )
+if COMPILER_PYTHON_VERSION_IS_32_BITS:
+    _ = lambda: SYSTEM if SYSTEM != "Darwin" else "MacOS"
+    print(
+        f"Your {_()} compilation results will have 32-bit compatibility."
+    )
 
 # SOURCE_FOLDER = Path("./themera copy")
 SOURCE_FOLDER = Path("./themera")
@@ -63,7 +90,7 @@ APP_NAME = (
     f"themera"
     f"-v{VERSION}"
     f"-{platforms[SYSTEM]}"
-    f"{('-x86' if _IS_32_BITS else '-x86_64') if SYSTEM == 'Windows' else ''}"
+    f"{('-x86' if COMPILER_PYTHON_VERSION_IS_32_BITS else '-x86_64') if SYSTEM == 'Windows' else ''}"
 ).lower()
 
 if SYSTEM == "Windows":
