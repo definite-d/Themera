@@ -153,18 +153,17 @@ def zip_output_into_archive(remove_output_dir_after=True):
         with ZipFile(ZIPFILE_PATH, "w") as archive:
             for index, item in enumerate(OUTPUT_FILES):
                 print(
-                    f"\r{index+1:6d} of {TOTAL_NUMBER_OF_OUTPUT_FILES} added to archive ({(index/TOTAL_NUMBER_OF_OUTPUT_FILES)*100:.0f}%).",
+                    f"\r{index+1:4d} of {TOTAL_NUMBER_OF_OUTPUT_FILES} added to archive ({(index/TOTAL_NUMBER_OF_OUTPUT_FILES)*100:.0f}%).",
                     end="",
                 )
                 archive.write(item, item.relative_to(NUITKA_OUTPUT_PATH))
-            print("\n", end="\r")
-        if remove_output_dir_after:
-            print("Removing original output files.")
-            rmtree(NUITKA_OUTPUT_PATH)
         write_hashes(ZIPFILE_PATH)
         print("Done with archiving.")
     else:
         print("The output path was not found. The archive was not created.")
+    if remove_output_dir_after:
+            print("Removing original output files.")
+            rmtree(NUITKA_OUTPUT_PATH)
 
 
 def prep_innosetup_script():
