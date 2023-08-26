@@ -2,20 +2,48 @@
 Compile Script.
 Performs the jobs for compling Themera.
 
+Since this project was primarily built on Windows, this script is 
+guaranteed to work for Windows compilation, but it "should" work on 
+other platforms (Mac and Linux).
+
+The configuration functions are at the bottom of the script, 
+if modification is required.
+
 Compiling for Windows requires InnoSetup installed and the 
-installation directory added to PATH.
+installation directory added to PATH, and Nuitka with a suitable 
+C compiler.
+
+While this script runs with whatever Python version available to it, 
+you may choose to use a specific version of Python for compiling 
+with Nuitka. If you have multiple Python versions installed, modify 
+the PYTHON_VERSION variable below to suit the one you wish to use for 
+compilation, before running this script. Leave it as None to use the 
+default available.
+
+Supporting 32-bit Windows also requires the MSVC compiler, and 
+a 32-bit version of Python available (3.7.9 has been tested by 
+me) to allow cross-compilation for 32 bit Windows as well. 
+Setting PYTHON_VERSION to a 32-bit version of Python will 
+automatically compile for 32-bit compatibility.
 """
+
+PYTHON_VERSION = "3.7"
+
+
 import re
 from datetime import datetime
 from hashlib import md5, sha256
 from os import system as run
 from pathlib import Path
-from platform import system
+from platform import architecture, system
 from shutil import rmtree
 from sys import path
 from zipfile import ZipFile
 
 from PySimpleGUI import running_linux, running_mac, running_windows
+
+_IS_32_BITS = True if architecture()[0].startswith("32") else False
+SYSTEM = system()
 
 # SOURCE_FOLDER = Path("./themera copy")
 SOURCE_FOLDER = Path("./themera")
@@ -31,10 +59,22 @@ platforms = {
 }
 
 DESCRIPTION = "PySimpleGUI Theme Code Generator"
-APP_NAME = f"themera-v{VERSION}-{platforms[system()]}{'-x86' if system() == 'Windows' else ''}".lower()
+APP_NAME = (
+    f"themera"
+    f"-v{VERSION}"
+    f"-{platforms[SYSTEM]}"
+    f"{('-x86' if _IS_32_BITS else '-x86_64') if SYSTEM == 'Windows' else ''}"
+).lower()
 
-with open(".uuid", "r") as env:
-    APP_UUID = env.readline()
+if SYSTEM == "Windows":
+    with open(".uuid", "r") as env:
+        APP_UUID = env.readline()
+        if APP_UUID == "":
+            message = (
+                "The UUID for compiling the Installer was not found.\n"
+                "Please request that information from Divine Afam-Ifediogor."
+            )
+            raise Exception(message)
 
 ROOT_PATH = Path(".").resolve()
 OUTPUT_PATH = Path(f"bin/v{VERSION.split('.', 1)[0]}/{VERSION}/{APP_NAME}")
@@ -98,7 +138,15 @@ OTHER_SETTINGS = (
 
 
 def perform_nuitka_compilation():
-    run(f"py -3.7 -m nuitka {GENERAL_SETTINGS} {OS_SETTINGS} {OTHER_SETTINGS}")
+    run(
+        "py "
+        f"-{PYTHON_VERSION} "
+        "-m "
+        "nuitka "
+        f"{GENERAL_SETTINGS} "
+        f"{OS_SETTINGS} "
+        f"{OTHER_SETTINGS}"
+    )
 
 
 def update_copyright(filepath):
@@ -157,13 +205,14 @@ def zip_output_into_archive(remove_output_dir_after=True):
                     end="",
                 )
                 archive.write(item, item.relative_to(NUITKA_OUTPUT_PATH))
+        print('\n', end='')
         write_hashes(ZIPFILE_PATH)
         print("Done with archiving.")
     else:
         print("The output path was not found. The archive was not created.")
     if remove_output_dir_after:
-            print("Removing original output files.")
-            rmtree(NUITKA_OUTPUT_PATH)
+        print("Removing original output files.")
+        rmtree(NUITKA_OUTPUT_PATH)
 
 
 def prep_innosetup_script():
@@ -194,10 +243,10 @@ def prep_innosetup_script():
 
 
 def compile_installer_for_windows():
-    if system() == "Windows":
+    if SYSTEM == "Windows":
         print("Starting compilation of the Windows installer for Themera.")
         prep_innosetup_script()
-        run("iscc temp.iss")
+        run("iscc /Q temp.iss")
         Path("temp.iss").unlink()
         if INSTALLER_PATH.is_file():
             write_hashes(INSTALLER_PATH)
@@ -228,8 +277,8 @@ def git_commit(message: str = f"New Commit at {datetime.now()}"):
 
 # update_version_in_readme()
 # update_and_format_source_files()
-perform_nuitka_compilation()
+# perform_nuitka_compilation()
 compile_installer_for_windows()
 zip_output_into_archive()
-git_commit()
+# git_commit()
 print("compile.py has completed execution.")

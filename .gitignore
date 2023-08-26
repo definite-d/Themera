@@ -9,3 +9,4 @@ __pycache__
 *.tmp
 build
 temp.iss
+themera.dist*
