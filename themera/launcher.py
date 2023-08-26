@@ -14,7 +14,6 @@ Copyright 2023 Divine Afam-Ifediogor
 # IMPORTS ______________________________________________________________________________________________________________
 from base64 import b64decode, b64encode
 from io import BytesIO
-from math import lcm
 from random import getrandbits
 from tkinter import StringVar
 from typing import Dict, List, Tuple, Union

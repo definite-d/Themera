@@ -98,7 +98,7 @@ OTHER_SETTINGS = (
 
 
 def perform_nuitka_compilation():
-    run(f"python -m nuitka {GENERAL_SETTINGS} {OS_SETTINGS} {OTHER_SETTINGS}")
+    run(f"py -3.7 -m nuitka {GENERAL_SETTINGS} {OS_SETTINGS} {OTHER_SETTINGS}")
 
 
 def update_copyright(filepath):
