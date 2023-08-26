@@ -7,14 +7,14 @@ installation directory added to PATH.
 """
 import re
 from datetime import datetime
-from hashlib import sha256, md5
+from hashlib import md5, sha256
 from os import system as run
 from pathlib import Path
 from platform import system
 from shutil import rmtree
 from sys import path
 from zipfile import ZipFile
-pip
+
 from PySimpleGUI import running_linux, running_mac, running_windows
 
 # SOURCE_FOLDER = Path("./themera copy")
@@ -98,7 +98,7 @@ OTHER_SETTINGS = (
 
 
 def perform_nuitka_compilation():
-    run(f"nuitka {GENERAL_SETTINGS} {OS_SETTINGS} {OTHER_SETTINGS}")
+    run(f"python nuitka {GENERAL_SETTINGS} {OS_SETTINGS} {OTHER_SETTINGS}")
 
 
 def update_copyright(filepath):
