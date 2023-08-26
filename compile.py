@@ -14,7 +14,7 @@ from platform import system
 from shutil import rmtree
 from sys import path
 from zipfile import ZipFile
-
+pip
 from PySimpleGUI import running_linux, running_mac, running_windows
 
 # SOURCE_FOLDER = Path("./themera copy")

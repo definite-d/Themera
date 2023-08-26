@@ -1,0 +1,6 @@
+colour>=0.1.5
+darkdetect>=0.8.0
+Pillow
+psg_reskinner>=2.3.13
+pyperclip>=1.8.2
+PySimpleGUI>=4.60.5
