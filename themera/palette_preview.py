@@ -42,13 +42,12 @@ def palette_preview(theme_name, themedict):
     """
     Displays a card type preview of the colors used in the theme.
     """
-    flat = flatten_themedict(themedict)
+    flat = {k: v for k, v in flatten_themedict(themedict).items() if check_if_color(v)}
     layout = [
         [sg.Text(f"{theme_name} Palette Preview", font=FONTS["icon"])],
         [
             palette_block(Color(_color).get_web())
             for _color in sorted(set(flat.values()), key=lambda x: Color(x).get_hue())
-            if check_if_color(_color)
         ],
         [sg.Text("Click on a button to copy its color.", key="instruction")],
     ]

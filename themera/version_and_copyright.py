@@ -15,6 +15,6 @@ Copyright 2023 Divine Afam-Ifediogor
 from datetime import datetime
 
 # VERSION AND COPYRIGHT ________________________________________________________________________________________________
-__version__ = "2.1.0"
+__version__ = "2.1.1"
 YEAR = datetime.now().year
 COPYRIGHT = f"Copyright {YEAR} Divine Afam-Ifediogor"
