@@ -1,6 +1,6 @@
 # Themera
 
-## Latest Version: v2.1.0
+## Latest Version: v2.1.1
 
 Themera is currently available in compiled form for:  
 

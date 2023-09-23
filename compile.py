@@ -232,7 +232,8 @@ def zip_output_into_archive(remove_output_dir_after=True):
                     end="",
                 )
                 archive.write(item, item.relative_to(NUITKA_OUTPUT_PATH))
-        print("\n", end="")
+            archive.close()
+        print("", end="")
         write_hashes(ZIPFILE_PATH)
         print("Done with archiving.")
     else:
@@ -307,5 +308,5 @@ update_and_format_source_files()
 perform_nuitka_compilation()
 compile_installer_for_windows()
 zip_output_into_archive()
-# git_commit()
+git_commit()
 print("compile.py has completed execution.")
