@@ -68,9 +68,7 @@ if PYTHON_VERSION:
     )
 if COMPILER_PYTHON_VERSION_IS_32_BITS:
     _ = lambda: SYSTEM if SYSTEM != "Darwin" else "MacOS"
-    print(
-        f"Your {_()} compilation results will have 32-bit compatibility."
-    )
+    print(f"Your {_()} compilation results will have 32-bit compatibility.")
 
 # SOURCE_FOLDER = Path("./themera copy")
 SOURCE_FOLDER = Path("./themera")
